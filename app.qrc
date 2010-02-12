@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="icon.ico">images/icon.ico</file>
+        <file alias="logout.png">images/meeting-attending-tentative.png</file>
+        <file alias="login.png">images/meeting-attending.png</file>
+        <file alias="settings.png">images/preferences-system.png</file>
+        <file alias="exit.png">images/application-exit.png</file>
+        <file alias="loading.gif">images/loading.gif</file>
+        <file alias="documents.png">images/accessories-text-editor.png</file>
+        <file alias="notes.png">images/basket.png</file>
+        <file alias="save.png">images/media-floppy.png</file>
+    </qresource>
+</RCC>
