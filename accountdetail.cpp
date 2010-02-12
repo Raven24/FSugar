@@ -107,12 +107,6 @@ void AccountDetail::fillData()
 	layout->addWidget(notesTable, 2);
 
 	setLayout(layout);
-	qApp->setStyleSheet("AccountDetail { background: qradialgradient(cx:0, cy:-0.2, radius: 1, fx:0.5, fy:0.5, stop:0 #888, stop:1 #555); } "
-						"QLabel { color: rgba(255, 255, 255, 60%); font-size: 9px; } "
-						"QLineEdit, QTextEdit { background: #FdFdFd; border: 1px solid qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop:0 white, stop: 1 #989889); } "
-						"QPushButton { border: none; background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #343434, stop: 0.7 #222, stop: 1 #121212); color: #FFF; border-radius: 4px; padding: 5px; }"
-						"QPushButton:pressed { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #121212, stop: 0.7 #222, stop: 1 #343434); }"
-					   );
 }
 
 void AccountDetail::displayNotes()

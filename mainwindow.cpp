@@ -92,6 +92,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	// ordinary display
 	listView = new QListView();
+	listView->setAlternatingRowColors(true);
+
 	mainWidget = new QTabWidget(this);
 	mainWidget->setVisible(false);
 	mainWidget->setTabsClosable(true);

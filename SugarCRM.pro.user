@@ -200,7 +200,6 @@
     <value type="QString">KDE_SESSION_UID=1000</value>
     <value type="QString">KDE_SESSION_VERSION=4</value>
     <value type="QString">LANG=de_AT.UTF-8</value>
-    <value type="QString">LANGUAGE=</value>
     <value type="QString">LD_LIBRARY_PATH=/home/florian/opt/qtsdk-2009.05/lib/qtcreator:</value>
     <value type="QString">LIBGL_DRIVERS_PATH=/usr/lib/dri</value>
     <value type="QString">LOGNAME=florian</value>
@@ -250,7 +249,6 @@
     <value type="QString">KDE_SESSION_UID=1000</value>
     <value type="QString">KDE_SESSION_VERSION=4</value>
     <value type="QString">LANG=de_AT.UTF-8</value>
-    <value type="QString">LANGUAGE=</value>
     <value type="QString">LD_LIBRARY_PATH=/home/florian/opt/qtsdk-2009.05/lib/qtcreator:</value>
     <value type="QString">LIBGL_DRIVERS_PATH=/usr/lib/dri</value>
     <value type="QString">LOGNAME=florian</value>
