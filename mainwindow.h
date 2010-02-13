@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QtDeclarative>
+
 #include "logindialog.h"
 #include "loadingdialog.h"
 #include "dockwidget.h"
@@ -38,9 +38,6 @@ protected:
 
 private:
     Ui::MainWindow *ui;
-	QmlContext *contx;
-	QmlView *centerView;
-	QObject *rootComponent;
 
 	LoginDialog *loginDialog;
 	LoadingDialog *loadingDialog;

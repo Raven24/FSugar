@@ -205,7 +205,7 @@ void MainWindow::unknownAction(QString action)
 
 void MainWindow::doSearch()
 {
-	qDebug() << rootComponent->property("searchTerm").toString();
+
 }
 
 void MainWindow::setStatusMsg(QString msg, int time)
