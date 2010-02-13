@@ -3,6 +3,11 @@
 #include "sugarcrm.h"
 #include "account.h"
 
+bool compareNotesGreaterThan(const Note *n1, const Note *n2)
+{
+	return n1->date_modified > n2->date_modified;
+}
+
 Account::Account(QObject *parent) :
 		QObject(parent)
 {
@@ -39,6 +44,7 @@ void Account::populateNotes()
 
 		notes.append(tmp);
 	}
+	qSort(notes.begin(), notes.end(), compareNotesGreaterThan);
 	emit notesAvailable();
 }
 

@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
 						"QListView { background: url(:stripes.png); alternate-background-color: rgba(0, 0, 0, 60%); border: 1px solid #333; }"
 						"QListView::item { padding: 4px 2px; }"
 
+						"QTabWidget { margin-top: 3px; }"
 						"QTabWidget::pane { border: 1px solid #222; margin-top: 7px; }"
 						"QTabBar::tab { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #444, stop: 1 #888); border-top-left-radius: 4px; border-top-right-radius: 4px; margin-left: 2px; padding: 4px 8px; }"
 

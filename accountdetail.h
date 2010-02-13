@@ -5,6 +5,7 @@
 #include <QtGui>
 
 #include "account.h"
+#include "createnotedialog.h"
 
 class AccountDetail : public QWidget
 {
@@ -17,6 +18,8 @@ public:
 public slots:
 	void displayNotes();
 	void saveChanges();
+	void createNewNote();
+	void progress(bool p);
 
 private:
 	void paintEvent(QPaintEvent *);
@@ -25,6 +28,7 @@ private:
 
 	Account *acc;
 	QTableView *notesTable;
+	bool inProgress;
 
 	QLineEdit *accountName, *accountAddress1,
 		*accountAddress2, *accountAddress3,
@@ -36,6 +40,11 @@ private:
 
 	QPushButton *save, *newNote,
 		*newDocument;
+
+	QLabel *loading;
+
+	CreateNoteDialog *newNoteDialog;
+	SugarCrm *crm;
 };
 
 #endif // ACCOUNTDETAIL_H

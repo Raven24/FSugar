@@ -66,7 +66,7 @@
   <variable>buildConfiguration-Release</variable>
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
-   <value key="QtVersionId" type="int">6</value>
+   <value key="QtVersionId" type="int">0</value>
    <value key="ToolChain" type="int">0</value>
    <value key="addQDumper" type=""></value>
    <value key="buildConfiguration" type="int">0</value>
@@ -204,9 +204,9 @@
     <value type="QString">LD_LIBRARY_PATH=/home/florian/opt/qtsdk-2009.05/lib/qtcreator:</value>
     <value type="QString">LIBGL_DRIVERS_PATH=/usr/lib/dri</value>
     <value type="QString">LOGNAME=florian</value>
-    <value type="QString">PATH=/home/florian/src/kinetic-build/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/florian/bin</value>
+    <value type="QString">PATH=/home/florian/opt/qtsdk-2009.05/qt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/florian/bin</value>
     <value type="QString">PWD=/home/florian/opt/qtsdk-2009.05/bin</value>
-    <value type="QString">QTDIR=/home/florian/src/kinetic-build</value>
+    <value type="QString">QTDIR=/home/florian/opt/qtsdk-2009.05/qt</value>
     <value type="QString">QT_PLUGIN_PATH=/home/florian/.kde/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
     <value type="QString">SESSION_MANAGER=local/florian:@/tmp/.ICE-unix/2011,unix/florian:/tmp/.ICE-unix/2011</value>
     <value type="QString">SHELL=/bin/bash</value>
@@ -226,7 +226,7 @@
     <value type="QString">linux-g++</value>
     <value type="QString">-r</value>
    </valuelist>
-   <value key="abstractProcess.command" type="QString">/home/florian/src/kinetic-build/bin/qmake</value>
+   <value key="abstractProcess.command" type="QString">/home/florian/opt/qtsdk-2009.05/qt/bin/qmake</value>
    <value key="abstractProcess.enabled" type="bool">false</value>
    <value key="abstractProcess.workingDirectory" type="QString">/home/florian/src/SugarSoap</value>
   </valuemap>
@@ -254,9 +254,9 @@
     <value type="QString">LD_LIBRARY_PATH=/home/florian/opt/qtsdk-2009.05/lib/qtcreator:</value>
     <value type="QString">LIBGL_DRIVERS_PATH=/usr/lib/dri</value>
     <value type="QString">LOGNAME=florian</value>
-    <value type="QString">PATH=/home/florian/src/kinetic-build/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/florian/bin</value>
+    <value type="QString">PATH=/home/florian/opt/qtsdk-2009.05/qt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/florian/bin</value>
     <value type="QString">PWD=/home/florian/opt/qtsdk-2009.05/bin</value>
-    <value type="QString">QTDIR=/home/florian/src/kinetic-build</value>
+    <value type="QString">QTDIR=/home/florian/opt/qtsdk-2009.05/qt</value>
     <value type="QString">QT_PLUGIN_PATH=/home/florian/.kde/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
     <value type="QString">SESSION_MANAGER=local/florian:@/tmp/.ICE-unix/2011,unix/florian:/tmp/.ICE-unix/2011</value>
     <value type="QString">SHELL=/bin/bash</value>

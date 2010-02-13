@@ -2,7 +2,6 @@
 # Project created by QtCreator 2010-01-14T17:49:12
 # -------------------------------------------------
 include(qtsoap/src/qtsoap.pri)
-
 RC_FILE = app.rc
 TARGET = SugarCRM
 TEMPLATE = app
@@ -19,7 +18,8 @@ SOURCES += main.cpp \
     sugarsettings.cpp \
     accountdetail.cpp \
     note.cpp \
-    notesmodel.cpp
+    notesmodel.cpp \
+    createnotedialog.cpp
 HEADERS += mainwindow.h \
     sugarcrmsoap.h \
     logindialog.h \
@@ -32,7 +32,8 @@ HEADERS += mainwindow.h \
     sugarsettings.h \
     accountdetail.h \
     note.h \
-    notesmodel.h
+    notesmodel.h \
+    createnotedialog.h
 FORMS += mainwindow.ui
 RESOURCES += app.qrc
 OTHER_FILES += SugarCrm.qml \

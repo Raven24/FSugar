@@ -28,7 +28,6 @@ public:
 
 	void setName(const QString _name);
 
-	void getNotes();
 	QString toString();
 
 	bool operator<(const Account *other) const;
@@ -38,6 +37,7 @@ signals:
 
 public slots:
 	void populateNotes();
+	void getNotes();
 
 private:
 	SugarCrm *crm;

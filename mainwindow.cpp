@@ -1,5 +1,4 @@
 #include <QtGui>
-#include <QtDeclarative>
 
 #include "mainwindow.h"
 #include "logindialog.h"

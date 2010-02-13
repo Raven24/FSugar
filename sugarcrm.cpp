@@ -39,6 +39,37 @@ void SugarCrm::login(QString _user, QString _pass)
 	submit(msg, "login");
 }
 
+void SugarCrm::createNote(const QString _module, const QString _name, const QString _description, const QString _parentType, const QString _parentId)
+{
+	QtSoapStruct *name = new QtSoapStruct(QtSoapQName("name_value"));
+	name->insert(new QtSoapSimpleType(QtSoapQName("name"), "name"));
+	name->insert(new QtSoapSimpleType(QtSoapQName("value"), _name));
+
+	QtSoapStruct *desc = new QtSoapStruct(QtSoapQName("name_value"));
+	desc->insert(new QtSoapSimpleType(QtSoapQName("name"), "description"));
+	desc->insert(new QtSoapSimpleType(QtSoapQName("value"), _description));
+
+	QtSoapStruct *parType = new QtSoapStruct(QtSoapQName("name_value"));
+	parType->insert(new QtSoapSimpleType(QtSoapQName("name"), "parent_type"));
+	parType->insert(new QtSoapSimpleType(QtSoapQName("value"), _parentType));
+
+	QtSoapStruct *parId = new QtSoapStruct(QtSoapQName("name_value"));
+	parId->insert(new QtSoapSimpleType(QtSoapQName("name"), "parent_id"));
+	parId->insert(new QtSoapSimpleType(QtSoapQName("value"), _parentId));
+
+	QtSoapArray *note = new QtSoapArray(QtSoapQName("name_value_list"));
+	note->insert(0, name);
+	note->insert(1, desc);
+	note->insert(2, parType);
+	note->insert(3, parId);
+
+	QtSoapMessage msg = createMessage("set_entry");
+	msg.addMethodArgument("session", "", session);
+	msg.addMethodArgument("module_name", "", _module);
+	msg.addMethodArgument(note);
+	submit(msg, "set_entry");
+}
+
 SugarCrm* SugarCrm::getInstance()
 {
 	if(SugarCrm::instance == NULL) {
@@ -88,6 +119,13 @@ void SugarCrm::getRelatedNotes(const QString _module, const QString _id)
 	msg.addMethodArgument("module_name", "", _module);
 	msg.addMethodArgument("module_id", "", _id);
 	submit(msg, "get_related_notes");
+}
+
+void SugarCrm::updateAccount(const QString _id, const QString _name, const QString _description,
+							 const QString _addressStreet, const QString _addressCity, const QString _addressPostalcode,
+							 const QString _addressCountry, const QString _phoneOffice, const QString _phoneFax,
+							 const QString _phoneAlternate, const QString _email, const QString _website)
+{
 }
 
 void SugarCrm::submit(QtSoapMessage msg, QString action)
@@ -343,6 +381,26 @@ void SugarCrm::decideAction(const QString action, const QtSoapStruct data)
 
 		}
 		emit notesAvailable();
+		return;
+	}
+
+	/**
+	 * set_entry returns:
+	 *
+	 *	<message name="set_entryResponse">
+	 *		<part name="return" type="tns:set_entry_result"/>
+	 *	</message>
+	 *
+	 *	<xsd:complexType name="set_entry_result">
+	 *		<xsd:all>
+	 *			<xsd:element name="id" type="xsd:string"/>
+	 *			<xsd:element name="error" type="tns:error_value"/>
+	 *		</xsd:all>
+	 *	</xsd:complexType>
+	 */
+	if(action == "set_entryResponse") {
+		//qDebug() << data["return"]["id"].value().toString();
+		emit entryCreated(data["return"]["id"].value().toString());
 		return;
 	}
 

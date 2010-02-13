@@ -5,6 +5,7 @@
 #include "accountmodel.h"
 #include "account.h"
 #include "notesmodel.h"
+#include "createnotedialog.h"
 
 AccountDetail::AccountDetail(QWidget *parent) :
 	QWidget(parent)
@@ -14,11 +15,30 @@ AccountDetail::AccountDetail(QWidget *parent) :
 
 AccountDetail::AccountDetail(const QModelIndex *index)
 {
+	newNoteDialog = new CreateNoteDialog(this);
+	newNoteDialog->hide();
+
+	loading = new QLabel(this);
+	QMovie *mov = new QMovie();
+	mov->setCacheMode(QMovie::CacheAll);
+	loading->setMovie(mov);
+	mov->setFileName(":loading.gif");
+	mov->setScaledSize(QSize(20, 20));
+	mov->start();
+
+	crm = SugarCrm::getInstance();
+
 	retrieveAccount(index);
 	fillData();
 
 	connect(save, SIGNAL(pressed()),
 			this, SLOT(saveChanges()));
+	connect(newNote, SIGNAL(pressed()),
+			newNoteDialog, SLOT(show()));
+	connect(newNoteDialog, SIGNAL(accepted()),
+			this, SLOT(createNewNote()));
+	connect(crm, SIGNAL(entryCreated(QString)),
+			acc, SLOT(getNotes()));
 }
 
 void AccountDetail::retrieveAccount(const QModelIndex *index)
@@ -82,8 +102,10 @@ void AccountDetail::fillData()
 	newNote = new QPushButton(QIcon(":notes.png"), tr("Neue Notiz"));
 	newDocument = new QPushButton(QIcon(":documents.png"), tr("Neues Dokument"));
 	itemsContainer->addWidget(save, 0, Qt::AlignLeft);
-	itemsContainer->addWidget(newNote, 3, Qt::AlignRight);
-	itemsContainer->addWidget(newDocument, 0, Qt::AlignRight);
+	itemsContainer->addStretch(3);
+	itemsContainer->addWidget(loading, 0, Qt::AlignRight);
+	itemsContainer->addWidget(newNote, 0, Qt::AlignRight);
+	//itemsContainer->addWidget(newDocument, 0, Qt::AlignRight);
 
 	QHBoxLayout *contactInfo = new QHBoxLayout();
 	contactInfo->addLayout(address);
@@ -114,6 +136,7 @@ void AccountDetail::displayNotes()
 	//qDebug() << "notes:" << acc->notes.size();
 	notesTable->setModel(new NotesModel(acc));
 	notesTable->resizeRowsToContents();
+	progress(false);
 }
 
 void AccountDetail::saveChanges()
@@ -135,4 +158,21 @@ void AccountDetail::saveChanges()
 	acc->description = accountDescription->toPlainText();
 
 	qDebug() << acc->toString();
+}
+
+void AccountDetail::createNewNote()
+{
+	progress(true);
+	//qDebug() << "should create a note right about here";
+	crm->createNote("Notes",
+					newNoteDialog->noteName,
+					newNoteDialog->noteDescription,
+					"Accounts",
+					acc->id);
+}
+
+void AccountDetail::progress(bool p)
+{
+	if(p) loading->show();
+	else loading->hide();
 }
