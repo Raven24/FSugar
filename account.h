@@ -5,6 +5,7 @@
 
 #include "sugarcrm.h"
 #include "note.h"
+#include "notesmodel.h"
 
 class Account : public QObject
 {
@@ -34,13 +35,16 @@ public:
 
 signals:
 	void notesAvailable();
+	void saved();
 
 public slots:
 	void populateNotes();
 	void getNotes();
+	void save();
 
 private:
 	SugarCrm *crm;
+	void seeWhoSaved(QString _id);
 };
 
 #endif // ACCOUNT_H

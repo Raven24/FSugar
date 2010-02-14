@@ -2,6 +2,8 @@
 
 #include "sugarcrm.h"
 #include "account.h"
+#include "note.h"
+#include "notesmodel.h"
 
 bool compareNotesGreaterThan(const Note *n1, const Note *n2)
 {
@@ -12,6 +14,8 @@ Account::Account(QObject *parent) :
 		QObject(parent)
 {
 	crm = SugarCrm::getInstance();
+	connect(crm, SIGNAL(entryUpdated(QString)),
+			this, SLOT(seeWhoSaved(QString)));
 }
 
 void Account::setName(const QString _name)
@@ -21,6 +25,7 @@ void Account::setName(const QString _name)
 
 void Account::getNotes()
 {
+	notes.clear();
 	connect(crm, SIGNAL(notesAvailable()),
 			this, SLOT(populateNotes()));
 
@@ -67,4 +72,19 @@ QString Account::toString()
 			.arg(id, name, address_street, address_postalcode)
 			.arg(address_city, address_country, phone_office, phone_fax)
 			.arg(phone_alternate, email, website, description);
+}
+
+void Account::save()
+{
+	crm->updateAccount(id, name, description, address_street, address_city,
+					   address_postalcode, address_country, phone_office,
+					   phone_fax, phone_alternate, email, website);
+}
+
+void Account::seeWhoSaved(QString _id)
+{
+	qDebug() << _id;
+	if(id == _id){
+		emit saved();
+	}
 }

@@ -29,6 +29,7 @@ signals:
 	void dataAvailable();
 	void notesAvailable();
 	void entryCreated(QString id);
+	void entryUpdated(QString id);
 	void unknownAction(QString action);
 
 public slots:

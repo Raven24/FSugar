@@ -1,4 +1,5 @@
 #include <QtCore>
+#include "qfont.h"
 
 #include "notesmodel.h"
 #include "account.h"
@@ -8,15 +9,15 @@ NotesModel::NotesModel(QObject *parent) :
 {
 }
 
-NotesModel::NotesModel(Account *acc, QObject *parent) :
+/*NotesModel::NotesModel(Account *acc, QObject *parent) :
 		QAbstractTableModel(parent), acc(acc)
 {
-}
+}*/
 
 int NotesModel::rowCount(const QModelIndex &parent) const
 {
 	Q_UNUSED(parent)
-	return acc->notes.size();
+	return notes->size();
 }
 
 int NotesModel::columnCount(const QModelIndex &parent) const
@@ -67,13 +68,31 @@ QVariant NotesModel::data(const QModelIndex &index, int role) const
 		case Qt::ToolTipRole:
 			switch(index.column()) {
 				case 0:
-					return acc->notes.at(index.row())->name;
+					return notes->at(index.row())->name;
 				case 1:
-					return acc->notes.at(index.row())->date_modified.toString("d. MMM yyyy, HH:mm");
+					return notes->at(index.row())->date_modified.toString("d. MMM yyyy, HH:mm");
 				case 2:
-					return acc->notes.at(index.row())->description;
+					return notes->at(index.row())->description;
+			}
+		case Qt::FontRole:
+			QFont f;
+			f.setPixelSize(10);
+			switch(index.column()) {
+				case 0:
+					f.setBold(true);
+					return f;
+				case 1:
+					f.setPixelSize(9);
+					return f;
+				case 2:
+					return f;
 			}
 	}
 
 	return QVariant();
+}
+
+void NotesModel::read(QList<Note *> *_notes)
+{
+	notes = _notes;
 }

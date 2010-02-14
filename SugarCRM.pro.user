@@ -190,11 +190,13 @@
     <value type="QString">DESKTOP_SESSION=kde</value>
     <value type="QString">DISPLAY=:0.0</value>
     <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
+    <value type="QString">EDITOR=</value>
     <value type="QString">GS_LIB=/home/florian/.fonts</value>
     <value type="QString">GTK2_RC_FILES=/etc/gtk-2.0/gtkrc:/home/florian/.gtkrc-2.0:/home/florian/.gtkrc-2.0-kde4:/home/florian/.kde/share/config/gtkrc-2.0</value>
     <value type="QString">GTK_MODULES=canberra-gtk-module</value>
     <value type="QString">GTK_RC_FILES=/etc/gtk/gtkrc:/home/florian/.gtkrc::/home/florian/.kde/share/config/gtkrc</value>
     <value type="QString">HOME=/home/florian</value>
+    <value type="QString">KATE_PID=14821</value>
     <value type="QString">KDE_FULL_SESSION=true</value>
     <value type="QString">KDE_MULTIHEAD=false</value>
     <value type="QString">KDE_SESSION_UID=1000</value>
@@ -240,11 +242,13 @@
     <value type="QString">DESKTOP_SESSION=kde</value>
     <value type="QString">DISPLAY=:0.0</value>
     <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
+    <value type="QString">EDITOR=</value>
     <value type="QString">GS_LIB=/home/florian/.fonts</value>
     <value type="QString">GTK2_RC_FILES=/etc/gtk-2.0/gtkrc:/home/florian/.gtkrc-2.0:/home/florian/.gtkrc-2.0-kde4:/home/florian/.kde/share/config/gtkrc-2.0</value>
     <value type="QString">GTK_MODULES=canberra-gtk-module</value>
     <value type="QString">GTK_RC_FILES=/etc/gtk/gtkrc:/home/florian/.gtkrc::/home/florian/.kde/share/config/gtkrc</value>
     <value type="QString">HOME=/home/florian</value>
+    <value type="QString">KATE_PID=14821</value>
     <value type="QString">KDE_FULL_SESSION=true</value>
     <value type="QString">KDE_MULTIHEAD=false</value>
     <value type="QString">KDE_SESSION_UID=1000</value>

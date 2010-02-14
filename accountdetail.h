@@ -19,7 +19,7 @@ public slots:
 	void displayNotes();
 	void saveChanges();
 	void createNewNote();
-	void progress(bool p);
+	void progress(bool p = false);
 
 private:
 	void paintEvent(QPaintEvent *);
@@ -44,6 +44,7 @@ private:
 	QLabel *loading;
 
 	CreateNoteDialog *newNoteDialog;
+	NotesModel *notesModel;
 	SugarCrm *crm;
 };
 

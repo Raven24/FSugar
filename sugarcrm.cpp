@@ -126,6 +126,73 @@ void SugarCrm::updateAccount(const QString _id, const QString _name, const QStri
 							 const QString _addressCountry, const QString _phoneOffice, const QString _phoneFax,
 							 const QString _phoneAlternate, const QString _email, const QString _website)
 {
+	QtSoapStruct *id = new QtSoapStruct(QtSoapQName("name_value"));
+	id->insert(new QtSoapSimpleType(QtSoapQName("name"), "id"));
+	id->insert(new QtSoapSimpleType(QtSoapQName("value"), _id));
+
+	QtSoapStruct *name = new QtSoapStruct(QtSoapQName("name_value"));
+	name->insert(new QtSoapSimpleType(QtSoapQName("name"), "name"));
+	name->insert(new QtSoapSimpleType(QtSoapQName("value"), _name));
+
+	QtSoapStruct *desc = new QtSoapStruct(QtSoapQName("name_value"));
+	desc->insert(new QtSoapSimpleType(QtSoapQName("name"), "description"));
+	desc->insert(new QtSoapSimpleType(QtSoapQName("value"), _description));
+
+	QtSoapStruct *addrSt = new QtSoapStruct(QtSoapQName("name_value"));
+	addrSt->insert(new QtSoapSimpleType(QtSoapQName("name"), "billing_address_street"));
+	addrSt->insert(new QtSoapSimpleType(QtSoapQName("value"), _addressStreet));
+
+	QtSoapStruct *addrCi = new QtSoapStruct(QtSoapQName("name_value"));
+	addrCi->insert(new QtSoapSimpleType(QtSoapQName("name"), "billing_address_city"));
+	addrCi->insert(new QtSoapSimpleType(QtSoapQName("value"), _addressCity));
+
+	QtSoapStruct *addrPo = new QtSoapStruct(QtSoapQName("name_value"));
+	addrPo->insert(new QtSoapSimpleType(QtSoapQName("name"), "billing_address_postalcode"));
+	addrPo->insert(new QtSoapSimpleType(QtSoapQName("value"), _addressPostalcode));
+
+	QtSoapStruct *addrCo = new QtSoapStruct(QtSoapQName("name_value"));
+	addrCo->insert(new QtSoapSimpleType(QtSoapQName("name"), "billing_address_country"));
+	addrCo->insert(new QtSoapSimpleType(QtSoapQName("value"), _addressCountry));
+
+	QtSoapStruct *phO = new QtSoapStruct(QtSoapQName("name_value"));
+	phO->insert(new QtSoapSimpleType(QtSoapQName("name"), "phone_office"));
+	phO->insert(new QtSoapSimpleType(QtSoapQName("value"), _phoneOffice));
+
+	QtSoapStruct *phF = new QtSoapStruct(QtSoapQName("name_value"));
+	phF->insert(new QtSoapSimpleType(QtSoapQName("name"), "phone_fax"));
+	phF->insert(new QtSoapSimpleType(QtSoapQName("value"), _phoneFax));
+
+	QtSoapStruct *phA = new QtSoapStruct(QtSoapQName("name_value"));
+	phA->insert(new QtSoapSimpleType(QtSoapQName("name"), "phone_alternate"));
+	phA->insert(new QtSoapSimpleType(QtSoapQName("value"), _phoneAlternate));
+
+	QtSoapStruct *email = new QtSoapStruct(QtSoapQName("name_value"));
+	email->insert(new QtSoapSimpleType(QtSoapQName("name"), "email1"));
+	email->insert(new QtSoapSimpleType(QtSoapQName("value"), _email));
+
+	QtSoapStruct *web = new QtSoapStruct(QtSoapQName("name_value"));
+	web->insert(new QtSoapSimpleType(QtSoapQName("name"), "website"));
+	web->insert(new QtSoapSimpleType(QtSoapQName("value"), _website));
+
+	QtSoapArray *account = new QtSoapArray(QtSoapQName("name_value_list"));
+	account->insert(0, id);
+	account->insert(1, name);
+	account->insert(2, desc);
+	account->insert(3, addrSt);
+	account->insert(4, addrCi);
+	account->insert(5, addrPo);
+	account->insert(6, addrCo);
+	account->insert(7, phO);
+	account->insert(8, phF);
+	account->insert(9, phA);
+	account->insert(10, email);
+	account->insert(11, web);
+
+	QtSoapMessage msg = createMessage("set_entry");
+	msg.addMethodArgument("session", "", session);
+	msg.addMethodArgument("module_name", "", "Accounts");
+	msg.addMethodArgument(account);
+	submit(msg, "set_entry");
 }
 
 void SugarCrm::submit(QtSoapMessage msg, QString action)
@@ -313,7 +380,7 @@ void SugarCrm::decideAction(const QString action, const QtSoapStruct data)
 			entries.insert(QString(listEntries.value("id")), listEntries);
 
 		}
-		qDebug() << entries.size() << "=" << ent.count();
+		//qDebug() << entries.size() << "=" << ent.count();
 		emit dataAvailable();
 		return;
 	}
@@ -401,6 +468,7 @@ void SugarCrm::decideAction(const QString action, const QtSoapStruct data)
 	if(action == "set_entryResponse") {
 		//qDebug() << data["return"]["id"].value().toString();
 		emit entryCreated(data["return"]["id"].value().toString());
+		emit entryUpdated(data["return"]["id"].value().toString());
 		return;
 	}
 

@@ -24,17 +24,20 @@ int main(int argc, char *argv[])
 						"QListView { background: url(:stripes.png); alternate-background-color: rgba(0, 0, 0, 60%); border: 1px solid #333; }"
 						"QListView::item { padding: 4px 2px; }"
 
-						"QTabWidget { margin-top: 3px; }"
+						"QTabWidget { padding-top: 3px; }"
 						"QTabWidget::pane { border: 1px solid #222; margin-top: 7px; }"
 						"QTabBar::tab { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #444, stop: 1 #888); border-top-left-radius: 4px; border-top-right-radius: 4px; margin-left: 2px; padding: 4px 8px; }"
 
 						"QTableView QHeaderView::section { background: #000; border: 1px solid #000; border-right: 1px solid #454545; color: #AAA; }"
 						"QTableView { border: 1px solid #222; }"
+						"QTableView * * * * { font-size: 9px; }"
 
-						"QLabel { color: rgba(255, 255, 255, 70%); font-size: 9px; background: none; } "
+						"QLabel { color: rgba(255, 255, 255, 75%); font-size: 9px; background: none; } "
 						"QLineEdit, QTextEdit { background: #FdFdFd; border: 1px solid qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop:0 white, stop: 1 #989889); color: #010101; } "
 						"QPushButton { border: none; background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #343434, stop: 0.7 #222, stop: 1 #121212); color: #FFF; border-radius: 4px; padding: 5px; }"
 						"QPushButton:pressed { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #121212, stop: 0.7 #222, stop: 1 #343434); }"
+
+						"*[mandatoryField=\"true\"] { border: 2px solid #B22222; border-radius: 2px; background-color: #eec0c0; }"
 					   );
 
     return a.exec();

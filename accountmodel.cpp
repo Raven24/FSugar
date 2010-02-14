@@ -127,8 +127,7 @@ void AccountModel::fetchData()
 
 void AccountModel::processData()
 {
-	qDebug() << "processing data";
-
+	//qDebug() << "processing data";
 	accounts.clear();
 	QMapIterator<QString, QMap<QString, QString> > i(crm->entries);
 

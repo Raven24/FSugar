@@ -125,7 +125,9 @@ void MainWindow::displayAccount(const QModelIndex index)
 
 void MainWindow::closeAccountTab(const int index)
 {
+	QWidget *tab = mainWidget->widget(index);
 	mainWidget->removeTab(index);
+	tab->deleteLater();
 }
 
 MainWindow::~MainWindow()
@@ -193,7 +195,7 @@ void MainWindow::debug(QString msg)
 {
 	setStatusMsg(tr("Antwort erhalten"), 1000);
 	dockWidget->text->append(msg);
-	qDebug() << msg;
+	//qDebug() << msg;
 
 }
 

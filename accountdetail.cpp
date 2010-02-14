@@ -17,7 +17,7 @@ AccountDetail::AccountDetail(const QModelIndex *index)
 {
 	newNoteDialog = new CreateNoteDialog(this);
 	newNoteDialog->hide();
-
+	notesModel = new NotesModel(this);
 	loading = new QLabel(this);
 	QMovie *mov = new QMovie();
 	mov->setCacheMode(QMovie::CacheAll);
@@ -39,6 +39,8 @@ AccountDetail::AccountDetail(const QModelIndex *index)
 			this, SLOT(createNewNote()));
 	connect(crm, SIGNAL(entryCreated(QString)),
 			acc, SLOT(getNotes()));
+	connect(acc, SIGNAL(saved()),
+			this, SLOT(progress(bool)));
 }
 
 void AccountDetail::retrieveAccount(const QModelIndex *index)
@@ -103,7 +105,8 @@ void AccountDetail::fillData()
 	newDocument = new QPushButton(QIcon(":documents.png"), tr("Neues Dokument"));
 	itemsContainer->addWidget(save, 0, Qt::AlignLeft);
 	itemsContainer->addStretch(3);
-	itemsContainer->addWidget(loading, 0, Qt::AlignRight);
+	itemsContainer->addWidget(loading, 0, Qt::AlignCenter);
+	itemsContainer->addStretch(3);
 	itemsContainer->addWidget(newNote, 0, Qt::AlignRight);
 	//itemsContainer->addWidget(newDocument, 0, Qt::AlignRight);
 
@@ -114,7 +117,7 @@ void AccountDetail::fillData()
 	QLabel *accountDescLbl = new QLabel(tr("Beschreibung"));
 	accountDescription = new QTextEdit(acc->description);
 
-	notesTable = new QTableView();
+	notesTable = new QTableView(this);
 	notesTable->verticalHeader()->hide();
 	notesTable->horizontalHeader()->setStretchLastSection(true);
 	notesTable->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -124,7 +127,7 @@ void AccountDetail::fillData()
 	layout->addLayout(contactInfo, 3);
 	layout->addWidget(accountDescLbl);
 	layout->addWidget(accountDescription, 1);
-	layout->addStretch(1);
+	layout->addStretch(2);
 	layout->addLayout(itemsContainer, 1);
 	layout->addWidget(notesTable, 2);
 
@@ -134,13 +137,15 @@ void AccountDetail::fillData()
 void AccountDetail::displayNotes()
 {
 	//qDebug() << "notes:" << acc->notes.size();
-	notesTable->setModel(new NotesModel(acc));
+	notesModel->read(&acc->notes);
+	notesTable->setModel(notesModel);
 	notesTable->resizeRowsToContents();
 	progress(false);
 }
 
 void AccountDetail::saveChanges()
 {
+	progress(true);
 	acc->name = accountName->text();
 
 	acc->address_street = accountAddress1->text();
@@ -157,7 +162,9 @@ void AccountDetail::saveChanges()
 
 	acc->description = accountDescription->toPlainText();
 
-	qDebug() << acc->toString();
+	//qDebug() << acc->toString();
+
+	acc->save();
 }
 
 void AccountDetail::createNewNote()
