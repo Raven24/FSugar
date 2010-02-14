@@ -10,7 +10,7 @@
 AccountDetail::AccountDetail(QWidget *parent) :
 	QWidget(parent)
 {
-	qDebug() << "something's wrong (missing parameter in constructor)";
+	qDebug() << "AccountDetail(): something's wrong (missing parameter in constructor)";
 }
 
 AccountDetail::AccountDetail(const QModelIndex *index)

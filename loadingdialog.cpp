@@ -28,7 +28,7 @@ void LoadingDialog::paintEvent(QPaintEvent *)
 
 	QPainter painter(this);
 	painter.setPen(Qt::NoPen);
-	painter.setBrush(QColor(55, 55, 55, 100));
+	painter.setBrush(QColor(65, 65, 65, 100));
 	painter.drawRect(r);
 	r.setSize(QSize(160, 160));
 	r.moveTopLeft(QPoint(this->rect().width()/2 - 80,

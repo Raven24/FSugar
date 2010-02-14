@@ -17,20 +17,18 @@ int main(int argc, char *argv[])
 						"QMenuBar::item:selected { border: none; background: qradialgradient(cx:0.5, cy:0, radius: 1, fx:0.5, fy:0, stop:0 #777, stop:1 #333); }"
 
 						"QMenu { border: 1px solid #111; }"
-						"QMenu::item { padding: 4px 4px 4px 22px; margin-top: 2px; }"
+						"QMenu::item { padding: 4px 4px 4px 22px; }"
 						"QMenu::item:selected { background: #777; border-radius: 4px; }"
 						"QMenu::item::icon:selected { border: none; }"
 
 						"QListView { background: url(:stripes.png); alternate-background-color: rgba(0, 0, 0, 60%); border: 1px solid #333; }"
 						"QListView::item { padding: 4px 2px; }"
 
-						"QTabWidget { padding-top: 3px; }"
 						"QTabWidget::pane { border: 1px solid #222; margin-top: 7px; }"
-						"QTabBar::tab { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #444, stop: 1 #888); border-top-left-radius: 4px; border-top-right-radius: 4px; margin-left: 2px; padding: 4px 8px; }"
+						"QTabBar::tab { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #444, stop: 1 #888); border-top-left-radius: 4px; border-top-right-radius: 4px; margin: 3px 1px 0px; padding: 4px 8px; }"
 
 						"QTableView QHeaderView::section { background: #000; border: 1px solid #000; border-right: 1px solid #454545; color: #AAA; }"
 						"QTableView { border: 1px solid #222; }"
-						"QTableView * * * * { font-size: 9px; }"
 
 						"QLabel { color: rgba(255, 255, 255, 75%); font-size: 9px; background: none; } "
 						"QLineEdit, QTextEdit { background: #FdFdFd; border: 1px solid qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop:0 white, stop: 1 #989889); color: #010101; } "
