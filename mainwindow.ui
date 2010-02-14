@@ -41,13 +41,20 @@
     <addaction name="actionServer_Zeit"/>
     <addaction name="actionSugarFlavor"/>
    </widget>
+   <widget class="QMenu" name="menuHilfe">
+    <property name="title">
+     <string>Hilfe</string>
+    </property>
+    <addaction name="actionAboutQt"/>
+   </widget>
    <addaction name="menuTest"/>
    <addaction name="menuExtras"/>
+   <addaction name="menuHilfe"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionLogin">
    <property name="icon">
-    <iconset>
+    <iconset resource="app.qrc">
      <normaloff>:/login.png</normaloff>:/login.png</iconset>
    </property>
    <property name="text">
@@ -55,8 +62,11 @@
    </property>
   </action>
   <action name="actionEinstellungen">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="app.qrc">
      <normaloff>:/settings.png</normaloff>:/settings.png</iconset>
    </property>
    <property name="text">
@@ -65,7 +75,7 @@
   </action>
   <action name="actionBeenden">
    <property name="icon">
-    <iconset>
+    <iconset resource="app.qrc">
      <normaloff>:/exit.png</normaloff>:/exit.png</iconset>
    </property>
    <property name="text">
@@ -77,7 +87,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="app.qrc">
      <normaloff>:/logout.png</normaloff>:/logout.png</iconset>
    </property>
    <property name="text">
@@ -94,8 +104,19 @@
     <string>Sugar Flavour</string>
    </property>
   </action>
+  <action name="actionAboutQt">
+   <property name="icon">
+    <iconset resource="app.qrc">
+     <normaloff>:/help.png</normaloff>:/help.png</iconset>
+   </property>
+   <property name="text">
+    <string>Über Qt</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="app.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionBeenden</sender>

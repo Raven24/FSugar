@@ -53,6 +53,9 @@ MainWindow::MainWindow(QWidget *parent) :
 			crm, SLOT(getServerTime()));
 	connect(ui->actionSugarFlavor, SIGNAL(triggered()),
 			crm, SLOT(getSugarFlavor()));
+	connect(ui->actionAboutQt, SIGNAL(triggered()),
+			qApp, SLOT(aboutQt()));
+
 	connect(crm, SIGNAL(sendingMessage(QString)),
 			this, SLOT(debug(QString)));
 	connect(crm->trans, SIGNAL(newSoapMessage(QString)),

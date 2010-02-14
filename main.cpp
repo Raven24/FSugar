@@ -19,7 +19,9 @@ int main(int argc, char *argv[])
 						"QMenu { border: 1px solid #111; }"
 						"QMenu::item { padding: 4px 4px 4px 22px; }"
 						"QMenu::item:selected { background: #777; border-radius: 4px; }"
+						"QMenu::item:disabled { background: none; border: 1px dotted #444; color: #787878; }"
 						"QMenu::item::icon:selected { border: none; }"
+						"QMenu::separator { border-top: 1px solid qlineargradient(x1:0, y1:0, x2:1, y2: 0, stop: 0 transparent, stop: 0.5 #888, stop: 1 transparent); }"
 
 						"QListView { background: url(:stripes.png); alternate-background-color: rgba(0, 0, 0, 60%); border: 1px solid #333; }"
 						"QListView::item { padding: 4px 2px; }"

@@ -10,5 +10,6 @@
         <file alias="notes.png">images/basket.png</file>
         <file alias="save.png">images/media-floppy.png</file>
         <file alias="stripes.png">images/stripes.png</file>
+        <file alias="help.png">images/system-help.png</file>
     </qresource>
 </RCC>
