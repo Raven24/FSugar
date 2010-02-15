@@ -25,7 +25,9 @@ void LoadingDialog::paintEvent(QPaintEvent *)
 {
 	QRect r(this->parentWidget()->rect());
 	resize(this->parentWidget()->size());
-
+#ifndef Q_WS_X11
+	r.moveTopLeft(QPoint(r.width()/2, r.height()/2));
+#endif
 	QPainter painter(this);
 	painter.setPen(Qt::NoPen);
 	painter.setBrush(QColor(65, 65, 65, 100));
