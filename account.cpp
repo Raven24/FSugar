@@ -36,6 +36,7 @@ void Account::getNotes()
 
 void Account::populateNotes(QString _id)
 {
+	if(_id.isEmpty()) emit notesAvailable();
 	if(_id != id) return;
 
 	notes.clear();

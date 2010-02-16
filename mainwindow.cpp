@@ -11,6 +11,7 @@
 #include "accountmodel.h"
 #include "accountproxymodel.h"
 #include "accountdetail.h"
+#include "settingsdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -66,6 +67,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	connect(ui->actionLogin, SIGNAL(triggered()),
 			this, SLOT(login()));
+	connect(ui->actionEinstellungen, SIGNAL(triggered()),
+			this, SLOT(displaySettings()));
 	connect(ui->actionServer_Zeit, SIGNAL(triggered()),
 			crm, SLOT(getServerTime()));
 	connect(ui->actionSugarFlavor, SIGNAL(triggered()),
@@ -160,6 +163,16 @@ void MainWindow::addAccount()
 {
 	//qDebug() << "here we will show the form to add an account";
 	mainWidget->setCurrentIndex(mainWidget->addTab(new AccountDetail(new Account), tr("Neue Firma")));
+}
+
+void MainWindow::displaySettings()
+{
+	if(mainWidget->isHidden()) {
+		setCentralWidget(new SettingsDialog);
+		return;
+	}
+
+	mainWidget->setCurrentIndex(mainWidget->addTab(new SettingsDialog, tr("Einstellungen")));
 }
 
 void MainWindow::changeEvent(QEvent *e)

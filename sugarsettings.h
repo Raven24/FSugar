@@ -13,10 +13,9 @@ public:
 
 	QString sugarHost, sugarPath;
 	bool useSsl;
-
-private:
 	QSettings *m_settings;
 
+private:
 	static SugarSettings *instance;
 };
 

@@ -5,11 +5,10 @@ SugarSettings *SugarSettings::instance = NULL;
 SugarSettings::SugarSettings(QObject *parent) :
 	QObject(parent)
 {
-	m_settings = new QSettings(QSettings::IniFormat, QSettings::UserScope,
-							   "FSugar", "SugarSoap", this);
+	m_settings = new QSettings("config.ini", QSettings::IniFormat, this);
 
-	sugarHost = m_settings->value("SugarCrm/hostname", "aristoteles.serveftp.org").toString();
-	sugarPath = m_settings->value("SugarCrm/path", "/Test/8/soap.php").toString();
+	sugarHost = m_settings->value("SugarCrm/hostname", "www.example.com").toString();
+	sugarPath = m_settings->value("SugarCrm/path", "/sugar/soap.php").toString();
 	useSsl = m_settings->value("SugarCrm/useSsl", true).toBool();
 }
 

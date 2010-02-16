@@ -32,6 +32,7 @@ public slots:
 	void displayAccounts();
 	void displayAccount(const QModelIndex index);
 	void addAccount();
+	void displaySettings();
 
 protected:
     void changeEvent(QEvent *e);

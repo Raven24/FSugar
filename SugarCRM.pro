@@ -19,7 +19,8 @@ SOURCES += main.cpp \
     accountdetail.cpp \
     note.cpp \
     notesmodel.cpp \
-    createnotedialog.cpp
+    createnotedialog.cpp \
+    settingsdialog.cpp
 HEADERS += mainwindow.h \
     sugarcrmsoap.h \
     logindialog.h \
@@ -33,7 +34,8 @@ HEADERS += mainwindow.h \
     accountdetail.h \
     note.h \
     notesmodel.h \
-    createnotedialog.h
+    createnotedialog.h \
+    settingsdialog.h
 FORMS += mainwindow.ui
 RESOURCES += app.qrc
 OTHER_FILES += SugarCrm.qml \
@@ -43,3 +45,5 @@ OTHER_FILES += SugarCrm.qml \
     content/PropertyEdit.qml \
     content/Button.qml \
     content/SearchField.qml
+CODECFORTR      = UTF-8
+CODECFORSRC     = UTF-8

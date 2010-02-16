@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
 						"QPushButton:pressed { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #121212, stop: 0.7 #222, stop: 1 #343434); }"
 
 						"*[mandatoryField=\"true\"] { border: 2px solid #B22222; border-radius: 2px; background-color: #eec0c0; }"
+						"*[heading=\"true\"] { font-size: 15px; font-weight: bold; }"
 					   );
 
     return a.exec();
