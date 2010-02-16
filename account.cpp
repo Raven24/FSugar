@@ -16,6 +16,8 @@ Account::Account(QObject *parent) :
 	crm = SugarCrm::getInstance();
 	connect(crm, SIGNAL(entryUpdated(QString)),
 			this, SLOT(seeWhoSaved(QString)));
+	connect(crm, SIGNAL(entryCreated(QString)),
+			this, SLOT(gotCreated(QString)));
 }
 
 void Account::setName(const QString _name)
@@ -26,14 +28,16 @@ void Account::setName(const QString _name)
 void Account::getNotes()
 {
 	notes.clear();
-	connect(crm, SIGNAL(notesAvailable()),
-			this, SLOT(populateNotes()));
+	connect(crm, SIGNAL(notesAvailable(QString)),
+			this, SLOT(populateNotes(QString)));
 
 	crm->getRelatedNotes("Accounts", id);
 }
 
-void Account::populateNotes()
+void Account::populateNotes(QString _id)
 {
+	if(_id != id) return;
+
 	notes.clear();
 	QMapIterator<QString, QMap<QString, QString> > i(crm->notes);
 
@@ -83,8 +87,16 @@ void Account::save()
 
 void Account::seeWhoSaved(QString _id)
 {
-	qDebug() << _id;
+	//qDebug() << _id;
 	if(id == _id){
+		emit saved();
+	}
+}
+
+void Account::gotCreated(QString _id)
+{
+	if(id.isEmpty()) {
+		id = _id;
 		emit saved();
 	}
 }

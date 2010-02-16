@@ -50,7 +50,7 @@
  </data>
  <data>
   <variable>activebuildconfiguration</variable>
-  <value type="QString">Release</value>
+  <value type="QString">Debug</value>
  </data>
  <data>
   <variable>buildConfiguration-Debug</variable>
@@ -77,7 +77,7 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-RUMo7PKrjh,guid=3c5c39d1d189bac04aeb7af74b4dba17</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-VrCpmGQBe1,guid=e816171192bdae922a33225c4b786e5a</value>
     <value type="QString">DESKTOP_SESSION=kde</value>
     <value type="QString">DISPLAY=:0.0</value>
     <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
@@ -99,16 +99,16 @@
     <value type="QString">PWD=/home/florian/opt/qtsdk-2009.05/bin</value>
     <value type="QString">QTDIR=/home/florian/opt/qtsdk-2009.05/qt</value>
     <value type="QString">QT_PLUGIN_PATH=/home/florian/.kde/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString">SESSION_MANAGER=local/florian:@/tmp/.ICE-unix/2050,unix/florian:/tmp/.ICE-unix/2050</value>
+    <value type="QString">SESSION_MANAGER=local/florian:@/tmp/.ICE-unix/5924,unix/florian:/tmp/.ICE-unix/5924</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=0</value>
-    <value type="QString">SSH_AGENT_PID=1955</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-fdFPft1904/agent.1904</value>
+    <value type="QString">SSH_AGENT_PID=5825</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-vHIXwU5774/agent.5774</value>
     <value type="QString">USER=florian</value>
     <value type="QString">WINDOWPATH=7</value>
     <value type="QString">XCURSOR_THEME=oxy-white</value>
     <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
-    <value type="QString">XDG_SESSION_COOKIE=7c1b132c8d1abb3766dd717c4af6c05c-1263385110.205141-1435027499</value>
+    <value type="QString">XDG_SESSION_COOKIE=7c1b132c8d1abb3766dd717c4af6c05c-1266183769.81131-1607572444</value>
     <value type="QString">XDM_MANAGED=method=classic</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
@@ -128,7 +128,7 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-RUMo7PKrjh,guid=3c5c39d1d189bac04aeb7af74b4dba17</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-VrCpmGQBe1,guid=e816171192bdae922a33225c4b786e5a</value>
     <value type="QString">DESKTOP_SESSION=kde</value>
     <value type="QString">DISPLAY=:0.0</value>
     <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
@@ -150,16 +150,16 @@
     <value type="QString">PWD=/home/florian/opt/qtsdk-2009.05/bin</value>
     <value type="QString">QTDIR=/home/florian/opt/qtsdk-2009.05/qt</value>
     <value type="QString">QT_PLUGIN_PATH=/home/florian/.kde/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString">SESSION_MANAGER=local/florian:@/tmp/.ICE-unix/2050,unix/florian:/tmp/.ICE-unix/2050</value>
+    <value type="QString">SESSION_MANAGER=local/florian:@/tmp/.ICE-unix/5924,unix/florian:/tmp/.ICE-unix/5924</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=0</value>
-    <value type="QString">SSH_AGENT_PID=1955</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-fdFPft1904/agent.1904</value>
+    <value type="QString">SSH_AGENT_PID=5825</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-vHIXwU5774/agent.5774</value>
     <value type="QString">USER=florian</value>
     <value type="QString">WINDOWPATH=7</value>
     <value type="QString">XCURSOR_THEME=oxy-white</value>
     <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
-    <value type="QString">XDG_SESSION_COOKIE=7c1b132c8d1abb3766dd717c4af6c05c-1263385110.205141-1435027499</value>
+    <value type="QString">XDG_SESSION_COOKIE=7c1b132c8d1abb3766dd717c4af6c05c-1266183769.81131-1607572444</value>
     <value type="QString">XDM_MANAGED=method=classic</value>
    </valuelist>
    <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>
@@ -200,6 +200,7 @@
     <value type="QString">KDE_SESSION_UID=1000</value>
     <value type="QString">KDE_SESSION_VERSION=4</value>
     <value type="QString">LANG=de_AT.UTF-8</value>
+    <value type="QString">LANGUAGE=</value>
     <value type="QString">LD_LIBRARY_PATH=/home/florian/opt/qtsdk-2009.05/lib/qtcreator:</value>
     <value type="QString">LIBGL_DRIVERS_PATH=/usr/lib/dri</value>
     <value type="QString">LOGNAME=florian</value>
@@ -249,6 +250,7 @@
     <value type="QString">KDE_SESSION_UID=1000</value>
     <value type="QString">KDE_SESSION_VERSION=4</value>
     <value type="QString">LANG=de_AT.UTF-8</value>
+    <value type="QString">LANGUAGE=</value>
     <value type="QString">LD_LIBRARY_PATH=/home/florian/opt/qtsdk-2009.05/lib/qtcreator:</value>
     <value type="QString">LIBGL_DRIVERS_PATH=/usr/lib/dri</value>
     <value type="QString">LOGNAME=florian</value>

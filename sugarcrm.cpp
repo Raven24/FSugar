@@ -114,6 +114,8 @@ void SugarCrm::getEntryList(const QString _module, const QString _query,
 
 void SugarCrm::getRelatedNotes(const QString _module, const QString _id)
 {
+	notes.clear();
+
 	QtSoapMessage msg = createMessage("get_related_notes");
 	msg.addMethodArgument("session", "", session);
 	msg.addMethodArgument("module_name", "", _module);
@@ -429,6 +431,7 @@ void SugarCrm::decideAction(const QString action, const QtSoapStruct data)
 	 */
 	if(action == "get_related_notesResponse") {
 		notes.clear();
+		QString parentId;
 		QtSoapArray ent((QtSoapArray &) data["return"]["entry_list"]);
 		for(int i = 0; i < ent.count(); i++) {
 
@@ -445,9 +448,9 @@ void SugarCrm::decideAction(const QString action, const QtSoapStruct data)
 				listEntries[pair["name"].value().toString()] = pair["value"].value().toString();
 			}
 			notes.insert(QString(listEntries.value("id")), listEntries);
-
+			parentId = listEntries["parent_id"];
 		}
-		emit notesAvailable();
+		emit notesAvailable(parentId);
 		return;
 	}
 

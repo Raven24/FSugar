@@ -16,6 +16,8 @@ int main(int argc, char *argv[])
 						"QMenuBar::item { padding: 4px 8px; spacing: 2px; border-radius: 4px; }"
 						"QMenuBar::item:selected { border: none; background: qradialgradient(cx:0.5, cy:0, radius: 1, fx:0.5, fy:0, stop:0 #777, stop:1 #333); }"
 
+						"QStatusBar { background: #222; border-top: 1px solid #BBB; padding: 2px; }"
+
 						"QMenu { border: 1px solid #111; }"
 						"QMenu::item { padding: 4px 4px 4px 22px; }"
 						"QMenu::item:selected { background: #777; border-radius: 4px; }"
@@ -23,10 +25,16 @@ int main(int argc, char *argv[])
 						"QMenu::item::icon:selected { border: none; }"
 						"QMenu::separator { border-top: 1px solid qlineargradient(x1:0, y1:0, x2:1, y2: 0, stop: 0 transparent, stop: 0.5 #888, stop: 1 transparent); }"
 
+						"QToolBar { background: #222; border-right: 1px solid #121212; }"
+						"QToolBar::handle, QToolBar::separator { border-top: qlineargradient(x1:0, y1:0, x2:1, y2: 0, stop: 0 transparent, stop: 0.5 #888, stop: 1 transparent); border-bottom: qlineargradient(x1:0, y1:0, x2:1, y2: 0, stop: 0 transparent, stop: 0.5 #888, stop: 1 transparent); }"
+						"QToolBar QToolButton { margin: 0px 0px -1px; padding: 5px; }"
+						"QToolBar QToolButton, QToolBar QToolButton:hover { border-top: 1px solid #454545; border-right: 1px solid #454545; border-bottom: 1px solid #101010; }"
+						"QToolBar QToolButton:hover { background: rgba(200, 200, 200, 50); }"
+
 						"QListView { background: url(:stripes.png); alternate-background-color: rgba(0, 0, 0, 60%); border: 1px solid #333; }"
 						"QListView::item { padding: 4px 2px; }"
 
-						"QTabWidget::pane { border: 1px solid #222; margin-top: 7px; }"
+						"QTabWidget::pane { border: 1px solid #222; margin: 3px 0 0; }"
 						"QTabBar::tab { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #444, stop: 1 #888); border-top-left-radius: 4px; border-top-right-radius: 4px; margin: 3px 1px 0px; padding: 4px 8px; }"
 
 						"QTableView QHeaderView::section { background: #000; border: 1px solid #000; border-right: 1px solid #454545; color: #AAA; }"
@@ -41,5 +49,5 @@ int main(int argc, char *argv[])
 					   );
 
     return a.exec();
-}
 
+}

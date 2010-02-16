@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>798</width>
+    <height>598</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>21</height>
+     <width>798</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuTest">
@@ -54,7 +54,7 @@
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionLogin">
    <property name="icon">
-    <iconset resource="app.qrc">
+    <iconset>
      <normaloff>:/login.png</normaloff>:/login.png</iconset>
    </property>
    <property name="text">
@@ -66,7 +66,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="app.qrc">
+    <iconset>
      <normaloff>:/settings.png</normaloff>:/settings.png</iconset>
    </property>
    <property name="text">
@@ -75,7 +75,7 @@
   </action>
   <action name="actionBeenden">
    <property name="icon">
-    <iconset resource="app.qrc">
+    <iconset>
      <normaloff>:/exit.png</normaloff>:/exit.png</iconset>
    </property>
    <property name="text">
@@ -87,7 +87,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="app.qrc">
+    <iconset>
      <normaloff>:/logout.png</normaloff>:/logout.png</iconset>
    </property>
    <property name="text">
@@ -106,7 +106,7 @@
   </action>
   <action name="actionAboutQt">
    <property name="icon">
-    <iconset resource="app.qrc">
+    <iconset>
      <normaloff>:/help.png</normaloff>:/help.png</iconset>
    </property>
    <property name="text">
@@ -114,9 +114,7 @@
    </property>
   </action>
  </widget>
- <resources>
-  <include location="app.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>actionBeenden</sender>

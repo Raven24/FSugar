@@ -24,6 +24,23 @@ MainWindow::MainWindow(QWidget *parent) :
 	dockWidget = new DockWidget;
 	addDockWidget(Qt::BottomDockWidgetArea, dockWidget);
 
+	toolBar = new QToolBar(tr("Aktionen"));
+	toolBar->setIconSize(QSize(42, 42));
+	toolBar->setMovable(false);
+
+	addAccountAct = new QAction(QIcon(":add-account.png"), tr("Neue Firma"), this);
+	//toolBar->addAction(QIcon(":add-contact.png"), tr("Neuer Kontakt"));
+	//toolBar->addAction(QIcon(":add-task.png"),    tr("Neue Aufgabe"));
+
+	connect(addAccountAct, SIGNAL(triggered()),
+			this, SLOT(addAccount()));
+
+	toolBar->addAction(addAccountAct);
+
+	addToolBar(Qt::LeftToolBarArea, toolBar);
+	toolBar->hide();
+
+
 	// initialize dialogs
 	loadingDialog = new LoadingDialog(this);
 	loginDialog   = new LoginDialog(this);
@@ -116,6 +133,7 @@ void MainWindow::displayAccounts()
 	loadingDialog->hide();
 	listView->setModel(accountModel);
 	setCentralWidget(mainWidget);
+	toolBar->show();
 	mainWidget->show();
 }
 
@@ -136,6 +154,12 @@ void MainWindow::closeAccountTab(const int index)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::addAccount()
+{
+	//qDebug() << "here we will show the form to add an account";
+	mainWidget->setCurrentIndex(mainWidget->addTab(new AccountDetail(new Account), tr("Neue Firma")));
 }
 
 void MainWindow::changeEvent(QEvent *e)

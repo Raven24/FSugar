@@ -38,10 +38,11 @@ signals:
 	void saved();
 
 public slots:
-	void populateNotes();
+	void populateNotes(QString _id);
 	void getNotes();
 	void seeWhoSaved(QString _id);
 	void save();
+	void gotCreated(QString _id);
 
 private:
 	SugarCrm *crm;

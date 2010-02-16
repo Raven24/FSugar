@@ -95,4 +95,5 @@ QVariant NotesModel::data(const QModelIndex &index, int role) const
 void NotesModel::read(QList<Note *> *_notes)
 {
 	notes = _notes;
+	reset();
 }

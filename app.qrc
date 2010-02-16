@@ -11,5 +11,8 @@
         <file alias="save.png">images/media-floppy.png</file>
         <file alias="stripes.png">images/stripes.png</file>
         <file alias="help.png">images/system-help.png</file>
+        <file alias="add-account.png">images/add-account.png</file>
+        <file alias="add-task.png">images/add-task.png</file>
+        <file alias="add-contact.png">images/add-contact.png</file>
     </qresource>
 </RCC>

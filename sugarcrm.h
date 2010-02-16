@@ -27,7 +27,7 @@ signals:
 	void loginSuccessful();
 	void loginFailed();
 	void dataAvailable();
-	void notesAvailable();
+	void notesAvailable(QString id);
 	void entryCreated(QString id);
 	void entryUpdated(QString id);
 	void unknownAction(QString action);

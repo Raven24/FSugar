@@ -14,17 +14,20 @@ class AccountDetail : public QWidget
 public:
 	AccountDetail(QWidget *parent = 0);
 	AccountDetail(const QModelIndex *index);
+	AccountDetail(Account *_acc);
 
 public slots:
 	void displayNotes();
 	void saveChanges();
 	void createNewNote();
 	void progress(bool p = false);
+	void afterSaveAct();
 
 private:
 	void paintEvent(QPaintEvent *);
 	void retrieveAccount(const QModelIndex *index);
 	void fillData();
+	void initDialog();
 
 	Account *acc;
 	QTableView *notesTable;

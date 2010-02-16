@@ -31,6 +31,7 @@ public slots:
 
 	void displayAccounts();
 	void displayAccount(const QModelIndex index);
+	void addAccount();
 
 protected:
     void changeEvent(QEvent *e);
@@ -42,9 +43,10 @@ private:
 	LoginDialog *loginDialog;
 	LoadingDialog *loadingDialog;
 	DockWidget *dockWidget;
+	QToolBar *toolBar;
 	SugarCrm *crm;
 
-	// ordinary view
+	QAction *addAccountAct;
 	QListView *listView;
 	QTabWidget *mainWidget;
 	AccountDetail *accountDetail;
