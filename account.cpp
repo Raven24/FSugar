@@ -5,11 +5,6 @@
 #include "note.h"
 #include "notesmodel.h"
 
-bool compareNotesGreaterThan(const Note *n1, const Note *n2)
-{
-	return n1->date_modified > n2->date_modified;
-}
-
 Account::Account(QObject *parent) :
 		QObject(parent)
 {
@@ -57,7 +52,6 @@ void Account::populateNotes(QString _id)
 
 		notes.append(tmp);
 	}
-	qSort(notes.begin(), notes.end(), compareNotesGreaterThan);
 	emit notesAvailable();
 }
 

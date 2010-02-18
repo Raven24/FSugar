@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	dockWidget = new DockWidget;
 	addDockWidget(Qt::BottomDockWidgetArea, dockWidget);
+	dockWidget->hide();
 
 	toolBar = new QToolBar(tr("Aktionen"));
 	toolBar->setIconSize(QSize(42, 42));
@@ -76,10 +77,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui->actionAboutQt, SIGNAL(triggered()),
 			qApp, SLOT(aboutQt()));
 
-	connect(crm, SIGNAL(sendingMessage(QString)),
-			this, SLOT(debug(QString)));
-	connect(crm->trans, SIGNAL(newSoapMessage(QString)),
-			this, SLOT(debug(QString)));
+	//connect(crm, SIGNAL(sendingMessage(QString)),
+	//		this, SLOT(debug(QString)));
+	//connect(crm->trans, SIGNAL(newSoapMessage(QString)),
+	//		this, SLOT(debug(QString)));
 	connect(crm, SIGNAL(unknownAction(QString)),
 			this, SLOT(unknownAction(QString)));
 

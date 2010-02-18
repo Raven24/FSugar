@@ -5,6 +5,11 @@
 #include "notesmodel.h"
 #include "account.h"
 
+bool compareNotesGreaterThan(const Note *n1, const Note *n2)
+{
+	return n1->date_modified > n2->date_modified;
+}
+
 NotesModel::NotesModel(QObject *parent) :
 		QAbstractTableModel(parent)
 {
@@ -102,5 +107,25 @@ QVariant NotesModel::data(const QModelIndex &index, int role) const
 void NotesModel::read(QList<Note *> *_notes)
 {
 	notes = _notes;
+	processNewNote();
+}
+
+Note* NotesModel::newNote()
+{
+	Note *_note = new Note();
+	notes->append(_note);
+	connect(_note, SIGNAL(saved()),
+			this, SLOT(processNewNote()));
+	return _note;
+}
+
+void NotesModel::processNewNote()
+{
+	sortData();
 	reset();
+}
+
+void NotesModel::sortData()
+{
+	qSort(notes->begin(), notes->end(), compareNotesGreaterThan);
 }

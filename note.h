@@ -19,7 +19,7 @@ public:
 	void save();
 
 signals:
-	void noteSaved();
+	void saved();
 
 public slots:
 	void afterSave(const QString _id);

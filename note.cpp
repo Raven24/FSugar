@@ -30,7 +30,7 @@ void Note::afterSave(const QString _id)
 {
 	//qDebug() << "inside Note::afterSave()";
 	if(_id == id) {
-		emit noteSaved();
+		emit saved();
 		return;
 	}
 
@@ -42,7 +42,7 @@ void Note::afterSave(const QString _id)
 		crm->setNoteAttachment(id, fileName, fileData);
 		gotAttachment = false;
 	} else {
-		emit noteSaved();
+		emit saved();
 	}
 
 }

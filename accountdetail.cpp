@@ -28,8 +28,6 @@ AccountDetail::AccountDetail(Account *_acc)
 			this, SLOT(displayNotes()));
 	connect(acc, SIGNAL(saved()),
 			this, SLOT(afterSaveAct()));
-	connect(acc, SIGNAL(notesAvailable()),
-			this, SLOT(displayNotes()));
 
 	initDialog();
 	hideButtons(true);
@@ -222,10 +220,7 @@ void AccountDetail::createNewNote()
 	progress(true);
 	//qDebug() << "should create a note right about here";
 
-	connect(crm, SIGNAL(entryCreated(QString)),
-			acc, SLOT(getNotes()));
-
-	Note *newNote = new Note();
+	Note *newNote = notesModel->newNote();
 	newNote->name = newNoteDialog->noteName;
 	newNote->description = newNoteDialog->noteDescription;
 	if(!newNoteDialog->fileName.isEmpty())
@@ -234,6 +229,9 @@ void AccountDetail::createNewNote()
 	newNote->parentId = acc->id;
 
 	newNote->save();
+
+	connect(newNote, SIGNAL(saved()),
+			this, SLOT(displayNotes()));
 }
 
 void AccountDetail::progress(bool p)

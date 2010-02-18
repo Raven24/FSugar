@@ -46,6 +46,7 @@ public slots:
 
 private:
 	SugarCrm *crm;
+
 };
 
 #endif // ACCOUNT_H

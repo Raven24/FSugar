@@ -481,7 +481,9 @@ void SugarCrm::decideAction(const QString action, const QtSoapStruct data)
 	 *		</xsd:all>
 	 *	</xsd:complexType>
 	 */
-	if(action == "set_entryResponse") {
+	if(action == "set_entryResponse" ||
+	   action == "set_note_attachmentResponse")
+	{
 		//qDebug() << data["return"]["id"].value().toString();
 		emit entryCreated(data["return"]["id"].value().toString());
 		emit entryUpdated(data["return"]["id"].value().toString());

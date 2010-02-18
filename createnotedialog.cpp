@@ -65,7 +65,7 @@ void CreateNoteDialog::saveNote()
 		return;
 	}
 	description->setStyleSheet(""); description->setProperty("mandatoryField", false);
-	if (fileNameEdit->text().isEmpty() && fileUpload) {
+	if (fileNameEdit->text().isEmpty() && fileNameEdit->isVisible()) {
 		fileNameEdit->setProperty("mandatoryField", true);
 		fileNameEdit->setStyleSheet("border: 2px solid #B22222; border-radius: 2px; background-color: #eec0c0;");
 		return;

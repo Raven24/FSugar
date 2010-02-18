@@ -24,8 +24,15 @@ public:
 
 	void read(QList<Note*> *_notes);
 
+	Note* newNote();
+
+public slots:
+	void processNewNote();
+
 private:
 	QList<Note* > *notes;
+
+	void sortData();
 };
 
 #endif // NOTESMODEL_H
