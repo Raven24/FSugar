@@ -14,5 +14,6 @@
         <file alias="add-account.png">images/add-account.png</file>
         <file alias="add-task.png">images/add-task.png</file>
         <file alias="add-contact.png">images/add-contact.png</file>
+        <file alias="attachment.png">images/attachment.png</file>
     </qresource>
 </RCC>

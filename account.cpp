@@ -49,6 +49,9 @@ void Account::populateNotes(QString _id)
 		tmp->id = i.value().value("id");
 		tmp->name = i.value().value("name");
 		tmp->description = i.value().value("description");
+		tmp->fileName = i.value().value("filename");
+		tmp->parentId = i.value().value("parent_id");
+		tmp->parentType = i.value().value("parent_type");
 		tmp->date_entered = QDateTime::fromString(i.value().value("date_entered"), "yyyy-MM-dd hh:mm:ss");
 		tmp->date_modified = QDateTime::fromString(i.value().value("date_modified"), "yyyy-MM-dd hh:mm:ss");
 

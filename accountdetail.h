@@ -22,12 +22,15 @@ public slots:
 	void createNewNote();
 	void progress(bool p = false);
 	void afterSaveAct();
+	void showNewDocumentDialog();
+	void showNewNoteDialog();
 
 private:
 	void paintEvent(QPaintEvent *);
 	void retrieveAccount(const QModelIndex *index);
 	void fillData();
 	void initDialog();
+	void hideButtons(const bool _var);
 
 	Account *acc;
 	QTableView *notesTable;

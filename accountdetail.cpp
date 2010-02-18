@@ -32,7 +32,7 @@ AccountDetail::AccountDetail(Account *_acc)
 			this, SLOT(displayNotes()));
 
 	initDialog();
-	newNote->hide();
+	hideButtons(true);
 	progress(false);
 }
 
@@ -101,7 +101,7 @@ void AccountDetail::initDialog()
 	itemsContainer->addWidget(loading, 0, Qt::AlignCenter);
 	itemsContainer->addStretch(3);
 	itemsContainer->addWidget(newNote, 0, Qt::AlignRight);
-	//itemsContainer->addWidget(newDocument, 0, Qt::AlignRight);
+	itemsContainer->addWidget(newDocument, 0, Qt::AlignRight);
 
 	contactInfo->addLayout(address);
 	contactInfo->addLayout(phone);
@@ -125,9 +125,11 @@ void AccountDetail::initDialog()
 	connect(save, SIGNAL(pressed()),
 			this, SLOT(saveChanges()));
 	connect(newNote, SIGNAL(pressed()),
-			newNoteDialog, SLOT(show()));
+			this, SLOT(showNewNoteDialog()));
 	connect(newNoteDialog, SIGNAL(accepted()),
 			this, SLOT(createNewNote()));
+	connect(newDocument, SIGNAL(pressed()),
+			this, SLOT(showNewDocumentDialog()));
 }
 
 void AccountDetail::retrieveAccount(const QModelIndex *index)
@@ -159,7 +161,7 @@ void AccountDetail::paintEvent(QPaintEvent *)
 void AccountDetail::afterSaveAct()
 {
 	progress(false);
-	newNote->show();
+	hideButtons(false);
 
 	acc->getNotes();
 }
@@ -223,15 +225,44 @@ void AccountDetail::createNewNote()
 	connect(crm, SIGNAL(entryCreated(QString)),
 			acc, SLOT(getNotes()));
 
-	crm->createNote("Notes",
-					newNoteDialog->noteName,
-					newNoteDialog->noteDescription,
-					"Accounts",
-					acc->id);
+	Note *newNote = new Note();
+	newNote->name = newNoteDialog->noteName;
+	newNote->description = newNoteDialog->noteDescription;
+	if(!newNoteDialog->fileName.isEmpty())
+		newNote->fileName = newNoteDialog->fileName;
+	newNote->parentType = "Accounts";
+	newNote->parentId = acc->id;
+
+	newNote->save();
 }
 
 void AccountDetail::progress(bool p)
 {
 	if(p) loading->show();
 	else loading->hide();
+}
+
+void AccountDetail::hideButtons(const bool _var)
+{
+	if(_var) {
+		newNote->hide();
+		newDocument->hide();
+		notesTable->hide();
+	} else {
+		newNote->show();
+		newDocument->show();
+		notesTable->show();
+	}
+}
+
+void AccountDetail::showNewDocumentDialog()
+{
+	newNoteDialog->setUpload(true);
+	newNoteDialog->show();
+}
+
+void AccountDetail::showNewNoteDialog()
+{
+	newNoteDialog->setUpload(false);
+	newNoteDialog->show();
 }

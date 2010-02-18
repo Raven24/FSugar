@@ -1,4 +1,5 @@
 #include <QtCore>
+#include <QtGui>
 #include "qfont.h"
 
 #include "notesmodel.h"
@@ -23,7 +24,7 @@ int NotesModel::rowCount(const QModelIndex &parent) const
 int NotesModel::columnCount(const QModelIndex &parent) const
 {
 	Q_UNUSED(parent)
-	return 3;
+	return 4;
 }
 
 QVariant NotesModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -41,6 +42,8 @@ QVariant NotesModel::headerData(int section, Qt::Orientation orientation, int ro
 				case 1:
 					return QString(tr("Datum"));
 				case 2:
+					return QString(tr("Attachment"));
+				case 3:
 					return QString(tr("Beschreibung"));
 			}
 		case 13:
@@ -48,8 +51,9 @@ QVariant NotesModel::headerData(int section, Qt::Orientation orientation, int ro
 				case 0:
 					return QSize(150, 20);
 				case 1:
-					return QSize(170, 20);
 				case 2:
+					return QSize(170, 20);
+				case 3:
 					return QSize(200, 20);
 			}
 	}
@@ -72,6 +76,8 @@ QVariant NotesModel::data(const QModelIndex &index, int role) const
 				case 1:
 					return notes->at(index.row())->date_modified.toString("d. MMM yyyy, HH:mm");
 				case 2:
+					return notes->at(index.row())->fileName;
+				case 3:
 					return notes->at(index.row())->description;
 			}
 		case Qt::FontRole:
@@ -82,9 +88,10 @@ QVariant NotesModel::data(const QModelIndex &index, int role) const
 					f.setBold(true);
 					return f;
 				case 1:
+				case 2:
 					f.setPixelSize(9);
 					return f;
-				case 2:
+				case 3:
 					return f;
 			}
 	}

@@ -20,6 +20,7 @@ public:
 	bool setData(const QModelIndex &index, const QVariant &value, int role);
 	Qt::ItemFlags flags(const QModelIndex &index);
 
+	Account* newAccount();
 	void debug();
 	Account* getAccount(const int num);
 
@@ -29,12 +30,15 @@ signals:
 public slots:
 	void fetchData();
 	void processData();
+	void processNewAccount();
 
 private:
 	SugarCrm *crm;
 	QList<Account*> accounts;
 
 	static AccountModel *instance;
+
+	void sortData();
 };
 
 #endif // ACCOUNTMODEL_H

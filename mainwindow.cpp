@@ -162,7 +162,7 @@ MainWindow::~MainWindow()
 void MainWindow::addAccount()
 {
 	//qDebug() << "here we will show the form to add an account";
-	mainWidget->setCurrentIndex(mainWidget->addTab(new AccountDetail(new Account), tr("Neue Firma")));
+	mainWidget->setCurrentIndex(mainWidget->addTab(new AccountDetail(accountModel->newAccount()), tr("Neue Firma")));
 }
 
 void MainWindow::displaySettings()

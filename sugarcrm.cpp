@@ -70,6 +70,19 @@ void SugarCrm::createNote(const QString _module, const QString _name, const QStr
 	submit(msg, "set_entry");
 }
 
+void SugarCrm::setNoteAttachment(const QString _id, const QString _filename, const QString _file)
+{
+	QtSoapStruct *noteAttachment = new QtSoapStruct(QtSoapQName("note_attachment"));
+	noteAttachment->insert(new QtSoapSimpleType(QtSoapQName("id"), _id ));
+	noteAttachment->insert(new QtSoapSimpleType(QtSoapQName("filename"), _filename));
+	noteAttachment->insert(new QtSoapSimpleType(QtSoapQName("file"), _file));
+
+	QtSoapMessage msg = createMessage("set_note_attachment");
+	msg.addMethodArgument("session", "", session);
+	msg.addMethodArgument(noteAttachment);
+	submit(msg, "set_note_attachment");
+}
+
 SugarCrm* SugarCrm::getInstance()
 {
 	if(SugarCrm::instance == NULL) {

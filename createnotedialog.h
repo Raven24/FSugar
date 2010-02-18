@@ -7,6 +7,7 @@ class QLineEdit;
 class QTextEdit;
 class QPushButton;
 class QString;
+class QWidget;
 
 class CreateNoteDialog : public QDialog
 {
@@ -14,15 +15,19 @@ class CreateNoteDialog : public QDialog
 
 public:
 	CreateNoteDialog(QWidget *parent = 0);
+	void setUpload(const bool val);
 
-	QString noteName, noteDescription;
+	QString noteName, noteDescription, fileName;
 
 public slots:
 	void saveNote();
+	void showFileChooser();
 
 private:
-	QLineEdit *name;
+	QLineEdit *name, *fileNameEdit;
 	QTextEdit *description;
+	QWidget *fileLayout;
+	bool fileUpload;
 
 };
 

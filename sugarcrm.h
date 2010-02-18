@@ -52,6 +52,7 @@ public slots:
 					   const QString _phoneOffice, const QString _phoneFax,
 					   const QString _phoneAlternate, const QString _email,
 					   const QString _website);
+	void setNoteAttachment(const QString _id, const QString _filename, const QString _file);
 
 private:
 	void submit(QtSoapMessage msg, QString action);

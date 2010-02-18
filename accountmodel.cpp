@@ -152,9 +152,30 @@ void AccountModel::processData()
 		accounts.append(tmp);
 	}
 
-	qSort(accounts.begin(), accounts.end(), compareAccountsLessThan);
 	//emit dataChanged(QModelIndex(), QModelIndex());
+	sortData();
 	reset();
 	//qDebug() << accounts.size();
 	emit dataReady();
+}
+
+Account* AccountModel::newAccount()
+{
+	Account *_acc = new Account();
+	accounts.append(_acc);
+	connect(_acc, SIGNAL(saved()),
+			this, SLOT(processNewAccount()));
+	return _acc;
+}
+
+void AccountModel::processNewAccount()
+{
+	sortData();
+	reset();
+}
+
+void AccountModel::sortData()
+{
+	qSort(accounts.begin(), accounts.end(), compareAccountsLessThan);
+	//reset();
 }
