@@ -20,9 +20,12 @@ public:
 
 signals:
 	void saved();
+	void openingAttachment();
 
 public slots:
 	void afterSave(const QString _id);
+	void downloadAttachment();
+	void checkAttachment(const QString _id);
 
 private:
 	SugarCrm *crm;

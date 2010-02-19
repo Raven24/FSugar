@@ -1,4 +1,5 @@
 #include <QObject>
+#include <QtGui>
 
 #include "note.h"
 #include "sugarcrm.h"
@@ -10,6 +11,8 @@ Note::Note(QObject *parent) :
 
 	connect(crm, SIGNAL(entryCreated(QString)),
 			this, SLOT(afterSave(QString)));
+	connect(crm, SIGNAL(attachmentAvailable(QString)),
+			this, SLOT(checkAttachment(QString)));
 }
 
 void Note::save()
@@ -47,15 +50,62 @@ void Note::afterSave(const QString _id)
 
 }
 
+/**
+ * convert the file to a base64 string
+ */
 void Note::prepareAttachment()
 {
 	QFileInfo fi(fileName);
 	QFile file(fileName);
-	if(!file.open(QIODevice::ReadOnly))
+	if(!file.open(QIODevice::ReadOnly)) {
 		qDebug() << "unable to open file";
+		return;
+	}
 
 	QByteArray ba = file.readAll();
 	fileData = ba.toBase64();
 	fileName = fi.fileName();
 	gotAttachment = true;
+}
+
+/**
+ * download and open the attachment
+ */
+void Note::downloadAttachment()
+{
+	QByteArray ba;
+
+	if(fileData.isEmpty()) {
+		//qDebug() << "fetch attachment here!";
+		crm->getNoteAttachment(id);
+		return;
+	} else {
+		ba = QByteArray::fromBase64(fileData.toAscii());
+	}
+
+	QDir curr = QDir::current();
+	QDir::setCurrent(QDesktopServices::storageLocation(QDesktopServices::TempLocation));
+	QFile f(fileName);
+	if (!f.open(QIODevice::ReadWrite)) {
+		qDebug() << "unable to save file";
+		// TODO: in case this happens, make the directory chooseable
+		return;
+	}
+	f.write(ba);
+	QFileInfo fi(f);
+	QString localFilePath = fi.absoluteFilePath();
+	// reset the directory
+	QDir::setCurrent(curr.absolutePath());
+
+	// open the just created file in the associated application
+	emit openingAttachment();
+	QDesktopServices::openUrl(QUrl::fromLocalFile(localFilePath));
+}
+
+void Note::checkAttachment(const QString _id)
+{
+	if (id != _id) return;
+
+	fileData = crm->noteAttachment;
+	downloadAttachment();
 }

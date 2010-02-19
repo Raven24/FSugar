@@ -21,9 +21,11 @@ public slots:
 	void saveChanges();
 	void createNewNote();
 	void progress(bool p = false);
+	void endProgress();
 	void afterSaveAct();
 	void showNewDocumentDialog();
 	void showNewNoteDialog();
+	void downloadNoteAttachment(const QModelIndex _index);
 
 private:
 	void paintEvent(QPaintEvent *);

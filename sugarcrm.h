@@ -17,7 +17,7 @@ public:
 
 	SugarCrmSoap *trans;
 	bool loggedin;
-	QString user, pass, session, uid;
+	QString user, pass, session, uid, noteAttachment;
 	QList<QString> availableModules;
 	QMap<QString, QMap<QString, QString> > entries;
 	QMap<QString, QMap<QString, QString> > notes;
@@ -28,6 +28,7 @@ signals:
 	void loginFailed();
 	void dataAvailable();
 	void notesAvailable(QString id);
+	void attachmentAvailable(QString id);
 	void entryCreated(QString id);
 	void entryUpdated(QString id);
 	void unknownAction(QString action);
@@ -53,6 +54,7 @@ public slots:
 					   const QString _phoneAlternate, const QString _email,
 					   const QString _website);
 	void setNoteAttachment(const QString _id, const QString _filename, const QString _file);
+	void getNoteAttachment(const QString _id);
 
 private:
 	void submit(QtSoapMessage msg, QString action);

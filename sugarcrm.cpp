@@ -83,6 +83,16 @@ void SugarCrm::setNoteAttachment(const QString _id, const QString _filename, con
 	submit(msg, "set_note_attachment");
 }
 
+void SugarCrm::getNoteAttachment(const QString _id)
+{
+	noteAttachment.clear();
+
+	QtSoapMessage msg = createMessage("get_note_attachment");
+	msg.addMethodArgument("session", "", session);
+	msg.addMethodArgument("id", "", _id);
+	submit(msg, "get_note_attachment");
+}
+
 SugarCrm* SugarCrm::getInstance()
 {
 	if(SugarCrm::instance == NULL) {
@@ -487,6 +497,35 @@ void SugarCrm::decideAction(const QString action, const QtSoapStruct data)
 		//qDebug() << data["return"]["id"].value().toString();
 		emit entryCreated(data["return"]["id"].value().toString());
 		emit entryUpdated(data["return"]["id"].value().toString());
+		return;
+	}
+
+	/**
+	 * get_note_attachment returns
+	 *
+	 *	<message name="get_note_attachmentResponse">
+	 *		<part name="return" type="tns:return_note_attachment"/>
+	 *	</message>
+	 *
+	 *	<xsd:complexType name="return_note_attachment">
+	 *		<xsd:all>
+	 *			<xsd:element name="note_attachment" type="tns:note_attachment"/>
+	 *			<xsd:element name="error" type="tns:error_value"/>
+	 *		</xsd:all>
+	 *	</xsd:complexType>
+	 *
+	 *	<xsd:complexType name="note_attachment">
+	 *		<xsd:all>
+	 *			<xsd:element name="id" type="xsd:string"/>
+	 *			<xsd:element name="filename" type="xsd:string"/>
+	 *			<xsd:element name="file" type="xsd:string"/>
+	 *		</xsd:all>
+	 *	</xsd:complexType>
+	 */
+	if(action == "get_note_attachmentResponse") {
+		//qDebug() << data["return"]["note_attachment"]["id"].toString();
+		noteAttachment = data["return"]["note_attachment"]["file"].toString();
+		emit attachmentAvailable(data["return"]["note_attachment"]["id"].toString());
 		return;
 	}
 

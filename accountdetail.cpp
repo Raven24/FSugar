@@ -128,6 +128,8 @@ void AccountDetail::initDialog()
 			this, SLOT(createNewNote()));
 	connect(newDocument, SIGNAL(pressed()),
 			this, SLOT(showNewDocumentDialog()));
+	connect(notesTable, SIGNAL(doubleClicked(QModelIndex)),
+			this, SLOT(downloadNoteAttachment(QModelIndex)));
 }
 
 void AccountDetail::retrieveAccount(const QModelIndex *index)
@@ -263,4 +265,19 @@ void AccountDetail::showNewNoteDialog()
 {
 	newNoteDialog->setUpload(false);
 	newNoteDialog->show();
+}
+
+void AccountDetail::downloadNoteAttachment(const QModelIndex _index)
+{
+	if (acc->notes.at(_index.row())->fileName.isEmpty()) return;
+
+	progress(true);
+	connect(acc->notes.at(_index.row()), SIGNAL(openingAttachment()),
+			this, SLOT(endProgress()));
+	acc->notes.at(_index.row())->downloadAttachment();
+}
+
+void AccountDetail::endProgress()
+{
+	progress(false);
 }
