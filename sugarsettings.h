@@ -10,13 +10,21 @@ public:
 	SugarSettings(QObject *parent = 0);
 
 	static SugarSettings *getInstance();
+	void makeUpdate();
 
-	QString sugarHost, sugarPath;
+	QString sugarHost, sugarPath, calendarUrl;
 	bool useSsl;
 	QSettings *m_settings;
 
+signals:
+	void settingsChanged();
+
+public slots:
+	void assignVars();
+
 private:
 	static SugarSettings *instance;
+
 };
 
 #endif // SUGARSETTINGS_H

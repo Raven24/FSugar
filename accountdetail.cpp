@@ -110,11 +110,11 @@ void AccountDetail::initDialog()
 	notesTable->setSelectionBehavior(QAbstractItemView::SelectRows);
 	notesTable->setSelectionMode(QAbstractItemView::SingleSelection);
 
-	layout->addWidget(accountName, 2);
-	layout->addLayout(contactInfo, 3);
-	layout->addWidget(accountDescLbl);
-	layout->addWidget(accountDescription, 1);
-	layout->addStretch(2);
+	layout->addWidget(accountName, 1);
+	layout->addLayout(contactInfo, 1);
+	layout->addWidget(accountDescLbl, 0, Qt::AlignTop);
+	layout->addWidget(accountDescription, 1, Qt::AlignTop);
+	layout->addStretch(3);
 	layout->addLayout(itemsContainer, 1);
 	layout->addWidget(notesTable, 2);
 

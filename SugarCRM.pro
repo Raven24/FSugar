@@ -2,6 +2,7 @@
 # Project created by QtCreator 2010-01-14T17:49:12
 # -------------------------------------------------
 include(qtsoap/src/qtsoap.pri)
+QT += webkit
 RC_FILE = app.rc
 TARGET = SugarCRM
 TEMPLATE = app

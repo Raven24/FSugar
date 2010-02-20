@@ -8,6 +8,7 @@
 #include "dockwidget.h"
 #include "sugarcrmsoap.h"
 #include "sugarcrm.h"
+#include "sugarsettings.h"
 #include "accountmodel.h"
 #include "accountproxymodel.h"
 #include "accountdetail.h"
@@ -32,6 +33,7 @@ public slots:
 	void displayAccounts();
 	void displayAccount(const QModelIndex index);
 	void addAccount();
+	void displayCalendar();
 	void displaySettings();
 
 protected:
@@ -46,8 +48,9 @@ private:
 	DockWidget *dockWidget;
 	QToolBar *toolBar;
 	SugarCrm *crm;
+	SugarSettings *settings;
 
-	QAction *addAccountAct;
+	QAction *addAccountAct, *openCalAct;
 	QListView *listView;
 	QTabWidget *mainWidget;
 	AccountDetail *accountDetail;

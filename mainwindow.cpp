@@ -1,4 +1,5 @@
 #include <QtGui>
+#include <QtWebKit>
 
 #include "mainwindow.h"
 #include "logindialog.h"
@@ -31,13 +32,17 @@ MainWindow::MainWindow(QWidget *parent) :
 	toolBar->setMovable(false);
 
 	addAccountAct = new QAction(QIcon(":add-account.png"), tr("Neue Firma"), this);
+	openCalAct = new QAction(QIcon(":calendar.png"), tr("Kalender"), this);
 	//toolBar->addAction(QIcon(":add-contact.png"), tr("Neuer Kontakt"));
 	//toolBar->addAction(QIcon(":add-task.png"),    tr("Neue Aufgabe"));
 
 	connect(addAccountAct, SIGNAL(triggered()),
 			this, SLOT(addAccount()));
+	connect(openCalAct, SIGNAL(triggered()),
+			this, SLOT(displayCalendar()));
 
 	toolBar->addAction(addAccountAct);
+	toolBar->addAction(openCalAct);
 
 	addToolBar(Qt::LeftToolBarArea, toolBar);
 	toolBar->hide();
@@ -51,6 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	crm = SugarCrm::getInstance();
 	accountModel = AccountModel::getInstance();
+	settings = SugarSettings::getInstance();
 	//proxyModel = new AccountProxyModel(this);
 	//proxyModel->setSourceModel(accountModel);
 
@@ -230,6 +236,13 @@ void MainWindow::loginResponse()
 	loadingDialog->hide();
 	//rootComponent->setProperty("state", "loginFailed");
 	setStatusMsg(tr("Login fehlgeschlagen!"));
+}
+
+void MainWindow::displayCalendar()
+{
+	QWebView *webView = new QWebView();
+	webView->load(QUrl(settings->calendarUrl));
+	mainWidget->setCurrentIndex(mainWidget->addTab(webView, tr("Kalender")));
 }
 
 void MainWindow::debug(QString msg)

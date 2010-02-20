@@ -1,4 +1,4 @@
-#include <QtGui/QApplication>
+#include <QtGui>
 #include "mainwindow.h"
 
 int main(int argc, char *argv[])
@@ -9,6 +9,7 @@ int main(int argc, char *argv[])
     w.show();
 
 	qApp->setStyleSheet("QWidget { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop:0 #333, stop:0.3 #232323 stop: 1 #333); color: #FFF; }"
+						"QWebView { background: #FFF; color: #000 }"
 						"AccountDetail { background: qradialgradient(cx:0, cy:-0.2, radius: 1, fx:0.5, fy:0.5, stop:0 #888, stop:1 #555); } "
 						"LoadingDialog { background: none; }"
 
