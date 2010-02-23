@@ -13,15 +13,18 @@
 #include "accountproxymodel.h"
 #include "accountdetail.h"
 #include "settingsdialog.h"
+#include "cookiejar.h"
+
+QString MainWindow::appPath = QString("");
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
-
-	//QMainWindowLayout layout = this->layout();
 	setWindowIcon(QIcon(":icon.ico"));
+
+	MainWindow::appPath = qApp->applicationDirPath();
 
 	dockWidget = new DockWidget;
 	addDockWidget(Qt::BottomDockWidgetArea, dockWidget);
@@ -123,6 +126,11 @@ MainWindow::MainWindow(QWidget *parent) :
 	listView = new QListView();
 	listView->setAlternatingRowColors(true);
 
+	QNetworkAccessManager *nwManager = new QNetworkAccessManager();
+	nwManager->setCookieJar(new CookieJar(this));
+	webView = new QWebView();
+	webView->page()->setNetworkAccessManager(nwManager);
+
 	mainWidget = new QTabWidget(this);
 	mainWidget->setVisible(false);
 	mainWidget->setTabsClosable(true);
@@ -158,12 +166,15 @@ void MainWindow::closeAccountTab(const int index)
 {
 	QWidget *tab = mainWidget->widget(index);
 	mainWidget->removeTab(index);
-	tab->deleteLater();
+	if(!tab->property("doNotDelete").toBool()) {
+		tab->deleteLater();
+	}
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+	delete webView->page()->networkAccessManager()->cookieJar();
+	delete ui;
 }
 
 void MainWindow::addAccount()
@@ -240,7 +251,7 @@ void MainWindow::loginResponse()
 
 void MainWindow::displayCalendar()
 {
-	QWebView *webView = new QWebView();
+	webView->setProperty("doNotDelete", true);
 	webView->load(QUrl(settings->calendarUrl));
 	mainWidget->setCurrentIndex(mainWidget->addTab(webView, tr("Kalender")));
 }

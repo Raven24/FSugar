@@ -1,10 +1,13 @@
+#include <QtGui>
 #include "sugarsettings.h"
+#include "mainwindow.h"
 
 SugarSettings *SugarSettings::instance = NULL;
 
 SugarSettings::SugarSettings(QObject *parent) :
 	QObject(parent)
 {
+	QDir::setCurrent(MainWindow::appPath);
 	m_settings = new QSettings("config.ini", QSettings::IniFormat, this);
 	assignVars();
 
