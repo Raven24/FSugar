@@ -3,6 +3,7 @@
 
 #include "note.h"
 #include "sugarcrm.h"
+#include "mainwindow.h"
 
 Note::Note(QObject *parent) :
 		QObject(parent)
@@ -83,7 +84,6 @@ void Note::downloadAttachment()
 		ba = QByteArray::fromBase64(fileData.toAscii());
 	}
 
-	QDir curr = QDir::current();
 	QDir::setCurrent(QDesktopServices::storageLocation(QDesktopServices::TempLocation));
 	QFile f(fileName);
 	if (!f.open(QIODevice::ReadWrite)) {
@@ -94,12 +94,18 @@ void Note::downloadAttachment()
 	f.write(ba);
 	QFileInfo fi(f);
 	QString localFilePath = fi.absoluteFilePath();
+
 	// reset the directory
-	QDir::setCurrent(curr.absolutePath());
+	QDir::setCurrent(MainWindow::appPath);
 
 	// open the just created file in the associated application
 	emit openingAttachment();
-	QDesktopServices::openUrl(QUrl::fromLocalFile(localFilePath));
+	if(!QDesktopServices::openUrl(QUrl::fromLocalFile(localFilePath))) {
+		QMessageBox msg;
+		msg.setText(tr("Die Datei wurde unter \n%1 gespeichert.").arg(QDesktopServices::TempLocation));
+		msg.setIcon(QMessageBox::Information);
+		msg.exec();
+	}
 }
 
 void Note::checkAttachment(const QString _id)

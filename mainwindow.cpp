@@ -79,6 +79,8 @@ MainWindow::MainWindow(QWidget *parent) :
 			this, SLOT(login()));
 	connect(ui->actionEinstellungen, SIGNAL(triggered()),
 			this, SLOT(displaySettings()));
+	connect(ui->actionLogout, SIGNAL(triggered()),
+			qApp, SLOT(quit()));
 	connect(ui->actionServer_Zeit, SIGNAL(triggered()),
 			crm, SLOT(getServerTime()));
 	connect(ui->actionSugarFlavor, SIGNAL(triggered()),
