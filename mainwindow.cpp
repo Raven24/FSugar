@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	addAccountAct = new QAction(QIcon(":add-account.png"), tr("Neue Firma"), this);
 	openCalAct = new QAction(QIcon(":calendar.png"), tr("Kalender"), this);
+	pressViewAct = new QAction(QIcon(":news.png"), tr("Pressekontakte"), this);
 	//toolBar->addAction(QIcon(":add-contact.png"), tr("Neuer Kontakt"));
 	//toolBar->addAction(QIcon(":add-task.png"),    tr("Neue Aufgabe"));
 
@@ -43,9 +44,12 @@ MainWindow::MainWindow(QWidget *parent) :
 			this, SLOT(addAccount()));
 	connect(openCalAct, SIGNAL(triggered()),
 			this, SLOT(displayCalendar()));
+	connect(pressViewAct, SIGNAL(triggered()),
+			this, SLOT(displayPressList()));
 
 	toolBar->addAction(addAccountAct);
 	toolBar->addAction(openCalAct);
+	toolBar->addAction(pressViewAct);
 
 	addToolBar(Qt::LeftToolBarArea, toolBar);
 	toolBar->hide();
@@ -135,6 +139,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	// ordinary display
 	listView = new QListView();
 	listView->setAlternatingRowColors(true);
+	pressList = new QListView();
+	pressList->setAlternatingRowColors(true);
 
 	QNetworkAccessManager *nwManager = new QNetworkAccessManager();
 	nwManager->setCookieJar(new CookieJar(this));
@@ -150,6 +156,8 @@ MainWindow::MainWindow(QWidget *parent) :
 			this, SLOT(displayAccounts()));
 	connect(listView, SIGNAL(doubleClicked(QModelIndex)),
 			this, SLOT(displayAccount(QModelIndex)));
+	connect(pressList, SIGNAL(doubleClicked(QModelIndex)),
+			this, SLOT(displayPressAccount(QModelIndex)));
 	connect(mainWidget, SIGNAL(tabCloseRequested(int)),
 			this, SLOT(closeAccountTab(int)));
 
@@ -170,6 +178,11 @@ void MainWindow::displayAccount(const QModelIndex index)
 	//qDebug() << index;
 	mainWidget->setCurrentIndex(mainWidget->addTab(new AccountDetail(&index), tr("Detailansicht")));
 
+}
+
+void MainWindow::displayPressAccount(const QModelIndex index)
+{
+	displayAccount(filterModel->mapToSource(index));
 }
 
 void MainWindow::closeAccountTab(const int index)
@@ -278,6 +291,19 @@ void MainWindow::debug(QString msg)
 void MainWindow::unknownAction(QString action)
 {
 	setStatusMsg(tr("Unbekannte Antwort: '%1'").arg(action), 2500);
+}
+
+void MainWindow::displayPressList()
+{
+	//qDebug() << "here we show the list through a filter";
+	filterModel = new AccountProxyModel(this);
+	filterModel->setSourceModel(accountModel);
+	filterModel->setFilterRole(256); // 265 == acc.category;
+	filterModel->setFilterRegExp(QRegExp("press", Qt::CaseInsensitive, QRegExp::FixedString));
+
+	pressList->setModel(filterModel);
+
+	mainWidget->setCurrentIndex(mainWidget->addTab(pressList, tr("Pressekontakte")));
 }
 
 void MainWindow::doSearch()

@@ -6,20 +6,20 @@ AccountProxyModel::AccountProxyModel(QObject *parent) :
 {
 }
 
-const QHash<int, QByteArray> & AccountProxyModel::roleNames() const
+/*const QHash<int, QByteArray> & AccountProxyModel::roleNames() const
 {
 	qDebug() << "roleNames() called";
 	return sourceModel()->roleNames();
 }
 
-/*void AccountProxyModel::setRoleNames(const QHash<int, QByteArray> &roleNames)
+void AccountProxyModel::setRoleNames(const QHash<int, QByteArray> &roleNames)
 {
 	sourceModel()->setRoleNames(roleNames);
-}*/
+}
 
 QVariant AccountProxyModel::data(const QModelIndex &index, int role)
 {
 	qDebug() << index;
 	qDebug() << role;
 	return QVariant();
-}
+}*/

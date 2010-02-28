@@ -35,8 +35,10 @@ public slots:
 
 	void displayAccounts();
 	void displayAccount(const QModelIndex index);
+	void displayPressAccount(const QModelIndex index);
 	void addAccount();
 	void displayCalendar();
+	void displayPressList();
 	void displaySettings();
 
 protected:
@@ -53,14 +55,14 @@ private:
 	SugarCrm *crm;
 	SugarSettings *settings;
 
-	QAction *addAccountAct, *openCalAct;
-	QListView *listView;
+	QAction *addAccountAct, *openCalAct, *pressViewAct;
+	QListView *listView, *pressList;
 	QTabWidget *mainWidget;
 	AccountDetail *accountDetail;
 	QWebView *webView;
 
 	AccountModel *accountModel;
-	AccountProxyModel *proxyModel;
+	AccountProxyModel *filterModel;
 
 private slots:
 	void login();

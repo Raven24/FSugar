@@ -1,4 +1,5 @@
 #include <QtGui>
+#include "account.h"
 #include "accountmodel.h"
 #include "sugarcrm.h"
 
@@ -52,28 +53,28 @@ int AccountModel::columnCount(const QModelIndex &parent)
 
 QVariant AccountModel::data(const QModelIndex &index, int role) const
 {
-	if(!accounts.isEmpty()) {
-		Account *acc = accounts[index.row()];
+	//qDebug() << QString("request: [%1,%2], %3").arg(index.row()).arg(index.column()).arg(role);
 
-		switch(role) {
-			case 16:
-			case Qt::DisplayRole:
-				//qDebug() << "name requested";
-				return acc->name.simplified();
-			case 32:
-				//qDebug() << "address requested";
-				return acc->address_street.simplified();
-			case 64:
-				//qDebug() << "address2 requested";
-				return acc->address_postalcode.append(", ").append(acc->address_city).simplified();
-			case 128:
-				//qDebug() << "phone requested";
-				return acc->phone_office.simplified();
-		}
-
+	if(accounts.isEmpty()) {
 		return QVariant();
 	}
-	qDebug() << QString("test: %1, %2").arg(index.row()).arg(role);
+
+	Account *acc = accounts[index.row()];
+
+	switch(role) {
+		case 16:
+		case Qt::DisplayRole:
+			return acc->name.simplified();
+		case 32:
+			return acc->address_street.simplified();
+		case 64:
+			return acc->address_postalcode.append(", ").append(acc->address_city).simplified();
+		case 128:
+			return acc->phone_office.simplified();
+		case 256:
+			return acc->cateogry;
+	}
+
 	return QVariant();
 }
 

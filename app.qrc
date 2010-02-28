@@ -16,5 +16,6 @@
         <file alias="add-contact.png">images/add-contact.png</file>
         <file alias="attachment.png">images/attachment.png</file>
         <file alias="calendar.png">images/calendar.png</file>
+        <file alias="news.png">images/news.png</file>
     </qresource>
 </RCC>

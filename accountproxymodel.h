@@ -7,9 +7,9 @@ class AccountProxyModel : public QSortFilterProxyModel
 {
 public:
 	AccountProxyModel(QObject *parent = 0);
-	const QHash<int, QByteArray> & roleNames() const;
+	//const QHash<int, QByteArray> & roleNames() const;
 	//void setRoleNames(const QHash<int, QByteArray> &roleNames);
-	QVariant data(const QModelIndex &index, int role);
+	//QVariant data(const QModelIndex &index, int role);
 };
 
 #endif // ACCOUNTPROXYMODEL_H
