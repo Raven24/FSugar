@@ -71,10 +71,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	crm = SugarCrm::getInstance();
 	accountModel = AccountModel::getInstance();
-	settings = SugarSettings::getInstance();
-	//proxyModel = new AccountProxyModel(this);
-	//proxyModel->setSourceModel(accountModel);
+        filterModel = new AccountProxyModel(this);
+        filterModel->setSourceModel(accountModel);
+        settings = SugarSettings::getInstance();;
 
+        // QML display
 	//centerView = new QmlView(this);
 
 	//centerView->setUrl(QUrl("SugarCrm.qml"));
@@ -284,7 +285,7 @@ void MainWindow::debug(QString msg)
 {
 	setStatusMsg(tr("Antwort erhalten"), 1000);
 	dockWidget->text->append(msg);
-	//qDebug() << msg;
+        //qDebug() << msg;
 
 }
 
@@ -296,12 +297,11 @@ void MainWindow::unknownAction(QString action)
 void MainWindow::displayPressList()
 {
 	//qDebug() << "here we show the list through a filter";
-	filterModel = new AccountProxyModel(this);
-	filterModel->setSourceModel(accountModel);
 	filterModel->setFilterRole(256); // 265 == acc.category;
 	filterModel->setFilterRegExp(QRegExp("press", Qt::CaseInsensitive, QRegExp::FixedString));
 
 	pressList->setModel(filterModel);
+        pressList->setProperty("doNotDelete", true);
 
 	mainWidget->setCurrentIndex(mainWidget->addTab(pressList, tr("Pressekontakte")));
 }
