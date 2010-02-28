@@ -23,7 +23,7 @@ public:
 	QString phone_fax, phone_alternate,
 		phone_office;
 
-	QString email, website;
+	QString email, website, cateogry;
 
 	QList<Note*> notes;
 

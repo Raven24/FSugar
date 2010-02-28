@@ -29,7 +29,7 @@ signals:
 
 public slots:
 	void fetchData();
-	void processData();
+	void processData(const QString _id);
 	void processNewAccount();
 
 private:

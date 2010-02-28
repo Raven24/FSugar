@@ -50,6 +50,14 @@ MainWindow::MainWindow(QWidget *parent) :
 	addToolBar(Qt::LeftToolBarArea, toolBar);
 	toolBar->hide();
 
+	QPushButton *loginBtn = new QPushButton(QIcon(":login.png"), tr("Login"), this);
+	connect(loginBtn, SIGNAL(pressed()),
+			this, SLOT(login()));
+	QGridLayout *l = new QGridLayout(this);
+	QWidget *c = new QWidget(this);
+	l->addWidget(loginBtn, 1, 1, Qt::AlignCenter);
+	c->setLayout(l);
+	setCentralWidget(c);
 
 	// initialize dialogs
 	loadingDialog = new LoadingDialog(this);
@@ -219,6 +227,7 @@ void MainWindow::login()
 {
 	QString user;
 	QByteArray pass;
+	centralWidget()->hide();
 
 	// ordinary table view
 	if(loginDialog->exec() == QDialog::Accepted) {

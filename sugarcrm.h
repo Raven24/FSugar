@@ -26,7 +26,7 @@ signals:
 	void sendingMessage(QString msg);
 	void loginSuccessful();
 	void loginFailed();
-	void dataAvailable();
+	void dataAvailable(QString id);
 	void notesAvailable(QString id);
 	void attachmentAvailable(QString id);
 	void entryCreated(QString id);

@@ -22,8 +22,8 @@ AccountModel::AccountModel(QObject *parent) :
 
 	crm = SugarCrm::getInstance();
 
-	connect(crm, SIGNAL(dataAvailable()),
-			this, SLOT(processData()));
+	connect(crm, SIGNAL(dataAvailable(QString)),
+			this, SLOT(processData(QString)));
 }
 
 AccountModel *AccountModel::getInstance()
@@ -125,8 +125,10 @@ void AccountModel::fetchData()
 	crm->getEntryList("Accounts");
 }
 
-void AccountModel::processData()
+void AccountModel::processData(const QString _id)
 {
+	if(!_id.isEmpty()) return;
+
 	//qDebug() << "processing data";
 	accounts.clear();
 	QMapIterator<QString, QMap<QString, QString> > i(crm->entries);
@@ -148,6 +150,7 @@ void AccountModel::processData()
 		tmp->email = i.value().value("email1");
 		tmp->website = i.value().value("website");
 		tmp->description = i.value().value("description");
+		tmp->cateogry = i.value().value("kategorie_c");
 
 		accounts.append(tmp);
 	}

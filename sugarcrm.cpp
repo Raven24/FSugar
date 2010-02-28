@@ -387,6 +387,7 @@ void SugarCrm::decideAction(const QString action, const QtSoapStruct data)
 	 */
 	if(action == "get_entry_listResponse") {
 		entries.clear();
+		QString parentId;
 		QtSoapArray ent((QtSoapArray &) data["return"]["entry_list"]);
 		for(int i = 0; i < ent.count(); i++) {
 
@@ -403,10 +404,10 @@ void SugarCrm::decideAction(const QString action, const QtSoapStruct data)
 				listEntries[pair["name"].value().toString()] = pair["value"].value().toString();
 			}
 			entries.insert(QString(listEntries.value("id")), listEntries);
-
+			parentId = listEntries["parent_id"];
 		}
 		//qDebug() << entries.size() << "=" << ent.count();
-		emit dataAvailable();
+		emit dataAvailable(parentId);
 		return;
 	}
 
