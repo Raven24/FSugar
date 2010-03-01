@@ -129,6 +129,7 @@ void AccountModel::fetchData()
 void AccountModel::processData(const QString _id)
 {
 	if(!_id.isEmpty()) return;
+	if (crm->entries->size() < 1) return;
 
 	//qDebug() << "processing data";
 	accounts.clear();
