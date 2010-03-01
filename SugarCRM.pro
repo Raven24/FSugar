@@ -22,7 +22,11 @@ SOURCES += main.cpp \
     notesmodel.cpp \
     createnotedialog.cpp \
     settingsdialog.cpp \
-    cookiejar.cpp
+    cookiejar.cpp \
+    contact.cpp \
+    abstractitem.cpp \
+    contactmodel.cpp \
+
 HEADERS += mainwindow.h \
     sugarcrmsoap.h \
     logindialog.h \
@@ -38,7 +42,11 @@ HEADERS += mainwindow.h \
     notesmodel.h \
     createnotedialog.h \
     settingsdialog.h \
-    cookiejar.h
+    cookiejar.h \
+    contact.h \
+    abstractitem.h \
+    contactmodel.h \
+
 FORMS += mainwindow.ui
 RESOURCES += app.qrc
 OTHER_FILES += SugarCrm.qml \

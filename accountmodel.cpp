@@ -72,7 +72,7 @@ QVariant AccountModel::data(const QModelIndex &index, int role) const
 		case 128:
 			return acc->phone_office.simplified();
 		case 256:
-			return acc->cateogry;
+			return acc->category;
 	}
 
 	return QVariant();
@@ -93,7 +93,7 @@ bool AccountModel::setData(const QModelIndex &index, const QVariant &value, int 
 
 		switch(role) {
 			case 16:
-				accounts[index.row()]->setName(newVal);
+				accounts[index.row()]->name = newVal;
 				return true;
 		/*	case 32:
 				accounts.at(index.row()).address_street = newVal;
@@ -132,10 +132,9 @@ void AccountModel::processData(const QString _id)
 
 	//qDebug() << "processing data";
 	accounts.clear();
-	QMapIterator<QString, QMap<QString, QString> > i(crm->entries);
+	QMap<QString, QMap<QString, QString> >::const_iterator i = crm->entries->begin();
 
-	while (i.hasNext()) {
-		i.next();
+	while (i != crm->entries->end()) {
 		Account *tmp = new Account();
 
 		//qDebug() << i.value().value("id");
@@ -151,9 +150,10 @@ void AccountModel::processData(const QString _id)
 		tmp->email = i.value().value("email1");
 		tmp->website = i.value().value("website");
 		tmp->description = i.value().value("description");
-		tmp->cateogry = i.value().value("kategorie_c");
+		tmp->category = i.value().value("kategorie_c");
 
 		accounts.append(tmp);
+		i++;
 	}
 
 	//emit dataChanged(QModelIndex(), QModelIndex());

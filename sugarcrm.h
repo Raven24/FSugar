@@ -19,7 +19,7 @@ public:
 	bool loggedin;
 	QString user, pass, session, uid, noteAttachment;
 	QList<QString> availableModules;
-	QMap<QString, QMap<QString, QString> > entries;
+	QMap<QString, QMap<QString, QString> > *entries;
 	QMap<QString, QMap<QString, QString> > notes;
 
 signals:
@@ -52,7 +52,7 @@ public slots:
 					   const QString _addressPostalcode, const QString _addressCountry,
 					   const QString _phoneOffice, const QString _phoneFax,
 					   const QString _phoneAlternate, const QString _email,
-					   const QString _website);
+					   const QString _website, const QString _category);
 	void setNoteAttachment(const QString _id, const QString _filename, const QString _file);
 	void getNoteAttachment(const QString _id);
 

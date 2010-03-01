@@ -26,6 +26,8 @@ AccountDetail::AccountDetail(Account *_acc)
 
 	connect(acc, SIGNAL(notesAvailable()),
 			this, SLOT(displayNotes()));
+	connect(acc, SIGNAL(contactsAvailable()),
+			this, SLOT(displayContacts()));
 	connect(acc, SIGNAL(saved()),
 			this, SLOT(afterSaveAct()));
 
@@ -38,7 +40,11 @@ void AccountDetail::initDialog()
 {
 	newNoteDialog = new CreateNoteDialog(this);
 	newNoteDialog->hide();
+
+	//initialize models
 	notesModel = new NotesModel(this);
+	contactsModel = new ContactModel(this);
+
 	loading = new QLabel(this);
 	QMovie *mov = new QMovie();
 	mov->setCacheMode(QMovie::CacheAll);
@@ -51,8 +57,10 @@ void AccountDetail::initDialog()
 
 	// layouts
 	QVBoxLayout *layout = new QVBoxLayout();
+	QVBoxLayout *rightLayout = new QVBoxLayout();
 	QFormLayout *address = new QFormLayout();
 	QFormLayout *phone = new QFormLayout();
+	QFormLayout *catLayout = new QFormLayout();
 	QHBoxLayout *itemsContainer = new QHBoxLayout();
 	QHBoxLayout *contactInfo = new QHBoxLayout();
 
@@ -72,8 +80,10 @@ void AccountDetail::initDialog()
 	accountFax = new QLineEdit();
 	accountPhoneAlt = new QLineEdit();
 	accountDescription = new QTextEdit();
+	catChkBox = new QCheckBox();
 
 	QLabel *accountDescLbl = new QLabel(tr("Beschreibung"));
+	QTabWidget *childrenTab = new QTabWidget(this);
 
 	// buttons
 	save = new QPushButton(QIcon(":save.png"), tr("Speichern"));
@@ -89,10 +99,15 @@ void AccountDetail::initDialog()
 	address->addRow(tr("Email"), accountEmail);
 	address->addRow(tr("Homepage"), accountWebsite);
 
+	catLayout->addRow(tr("Pressekontakt"), catChkBox);
+
 	phone->setLabelAlignment(Qt::AlignRight);
 	phone->addRow(tr("Tel"), accountPhone);
 	phone->addRow(tr("Fax"), accountFax);
 	phone->addRow(tr("Alt"), accountPhoneAlt);
+
+	rightLayout->addLayout(phone);
+	rightLayout->addLayout(catLayout);
 
 	itemsContainer->addWidget(save, 0, Qt::AlignLeft);
 	itemsContainer->addStretch(3);
@@ -102,7 +117,7 @@ void AccountDetail::initDialog()
 	itemsContainer->addWidget(newDocument, 0, Qt::AlignRight);
 
 	contactInfo->addLayout(address);
-	contactInfo->addLayout(phone);
+	contactInfo->addLayout(rightLayout);
 
 	notesTable = new QTableView(this);
 	notesTable->verticalHeader()->hide();
@@ -110,13 +125,22 @@ void AccountDetail::initDialog()
 	notesTable->setSelectionBehavior(QAbstractItemView::SelectRows);
 	notesTable->setSelectionMode(QAbstractItemView::SingleSelection);
 
+	contactsTable = new QTableView(this);
+	contactsTable->verticalHeader()->hide();
+	contactsTable->horizontalHeader()->setStretchLastSection(true);
+	contactsTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+	contactsTable->setSelectionMode(QAbstractItemView::SingleSelection);
+
+	childrenTab->addTab(notesTable, QIcon(":notes.png"), tr("Notizen"));
+	childrenTab->addTab(contactsTable, QIcon(":login.png"), tr("Kontakte"));
+
 	layout->addWidget(accountName, 1);
 	layout->addLayout(contactInfo, 1);
 	layout->addWidget(accountDescLbl, 0, Qt::AlignTop);
 	layout->addWidget(accountDescription, 1, Qt::AlignTop);
 	layout->addStretch(3);
 	layout->addLayout(itemsContainer, 1);
-	layout->addWidget(notesTable, 2);
+	layout->addWidget(childrenTab, 3);
 
 	setLayout(layout);
 
@@ -138,15 +162,17 @@ void AccountDetail::retrieveAccount(const QModelIndex *index)
 
 	AccountModel *model = AccountModel::getInstance();
 	acc = model->getAccount(index->row());
-	connect(acc, SIGNAL(notesAvailable()),
-			this, SLOT(displayNotes()));
+
 	connect(crm, SIGNAL(entryCreated(QString)),
 			acc, SLOT(getNotes()));
 	connect(acc, SIGNAL(saved()),
 			this, SLOT(afterSaveAct()));
 	connect(acc, SIGNAL(notesAvailable()),
 			this, SLOT(displayNotes()));
-	acc->getNotes();
+	connect(acc, SIGNAL(contactsAvailable()),
+			this, SLOT(displayContacts()));
+
+	acc->getChildren();
 }
 
 void AccountDetail::paintEvent(QPaintEvent *)
@@ -163,7 +189,7 @@ void AccountDetail::afterSaveAct()
 	progress(false);
 	hideButtons(false);
 
-	acc->getNotes();
+	acc->getChildren();
 }
 
 void AccountDetail::fillData()
@@ -182,6 +208,10 @@ void AccountDetail::fillData()
 	accountPhoneAlt->setText(acc->phone_alternate);
 
 	accountDescription->setText(acc->description);
+
+	if(acc->category.contains(QRegExp("press", Qt::CaseInsensitive, QRegExp::FixedString))) {
+		catChkBox->setChecked(true);
+	}
 }
 
 void AccountDetail::displayNotes()
@@ -190,6 +220,14 @@ void AccountDetail::displayNotes()
 	notesModel->read(&acc->notes);
 	notesTable->setModel(notesModel);
 	notesTable->resizeRowsToContents();
+	progress(false);
+}
+
+void AccountDetail::displayContacts()
+{
+	contactsModel->read(&acc->contacts);
+	contactsTable->setModel(contactsModel);
+	contactsTable->resizeRowsToContents();
 	progress(false);
 }
 
@@ -211,6 +249,12 @@ void AccountDetail::saveChanges()
 	acc->phone_alternate = accountPhoneAlt->text();
 
 	acc->description = accountDescription->toPlainText();
+
+	if(catChkBox->isChecked()) {
+		acc->category = "presse";
+	} else {
+		acc->category = "";
+	}
 
 	//qDebug() << acc->toString();
 

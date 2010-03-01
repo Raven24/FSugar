@@ -122,6 +122,8 @@ void SugarCrm::getEntryList(const QString _module, const QString _query,
 							const QString _orderBy, const int _offset,
 							const int _maxResults, const int _deleted)
 {
+	entries = new QMap<QString, QMap<QString, QString> > ();
+
 	QtSoapMessage msg = createMessage("get_entry_list");
 	msg.addMethodArgument("session", "", session);
 	msg.addMethodArgument("module_name", "", _module );
@@ -149,7 +151,7 @@ void SugarCrm::getRelatedNotes(const QString _module, const QString _id)
 void SugarCrm::updateAccount(const QString _id, const QString _name, const QString _description,
 							 const QString _addressStreet, const QString _addressCity, const QString _addressPostalcode,
 							 const QString _addressCountry, const QString _phoneOffice, const QString _phoneFax,
-							 const QString _phoneAlternate, const QString _email, const QString _website)
+							 const QString _phoneAlternate, const QString _email, const QString _website, const QString _category)
 {
 	QtSoapStruct *id = new QtSoapStruct(QtSoapQName("name_value"));
 	id->insert(new QtSoapSimpleType(QtSoapQName("name"), "id"));
@@ -199,6 +201,10 @@ void SugarCrm::updateAccount(const QString _id, const QString _name, const QStri
 	web->insert(new QtSoapSimpleType(QtSoapQName("name"), "website"));
 	web->insert(new QtSoapSimpleType(QtSoapQName("value"), _website));
 
+	QtSoapStruct *cat = new QtSoapStruct(QtSoapQName("name_value"));
+	cat->insert(new QtSoapSimpleType(QtSoapQName("name"), "kategorie_c"));
+	cat->insert(new QtSoapSimpleType(QtSoapQName("value"), _category));
+
 	QtSoapArray *account = new QtSoapArray(QtSoapQName("name_value_list"));
 	account->insert(0, id);
 	account->insert(1, name);
@@ -212,6 +218,7 @@ void SugarCrm::updateAccount(const QString _id, const QString _name, const QStri
 	account->insert(9, phA);
 	account->insert(10, email);
 	account->insert(11, web);
+	account->insert(12, cat);
 
 	QtSoapMessage msg = createMessage("set_entry");
 	msg.addMethodArgument("session", "", session);
@@ -386,7 +393,7 @@ void SugarCrm::decideAction(const QString action, const QtSoapStruct data)
 	 *	</xsd:complexType>
 	 */
 	if(action == "get_entry_listResponse") {
-		entries.clear();
+		entries->clear();
 		QString parentId;
 		QtSoapArray ent((QtSoapArray &) data["return"]["entry_list"]);
 		for(int i = 0; i < ent.count(); i++) {
@@ -403,10 +410,11 @@ void SugarCrm::decideAction(const QString action, const QtSoapStruct data)
 
 				listEntries[pair["name"].value().toString()] = pair["value"].value().toString();
 			}
-			entries.insert(QString(listEntries.value("id")), listEntries);
-			parentId = listEntries["parent_id"];
+			entries->insert(QString(listEntries.value("id")), listEntries);
+			parentId = (listEntries["parent_id"].isEmpty()) ? listEntries["account_id"] : listEntries["parent_id"];
 		}
 		//qDebug() << entries.size() << "=" << ent.count();
+		//qDebug() << "parent" << parentId;
 		emit dataAvailable(parentId);
 		return;
 	}

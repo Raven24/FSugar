@@ -1,58 +1,14 @@
 #include <QtGui>
 
 #include "sugarcrm.h"
+#include "abstractitem.h"
 #include "account.h"
 #include "note.h"
 #include "notesmodel.h"
 
 Account::Account(QObject *parent) :
-		QObject(parent)
+		AbstractItem(parent)
 {
-	crm = SugarCrm::getInstance();
-	connect(crm, SIGNAL(entryUpdated(QString)),
-			this, SLOT(seeWhoSaved(QString)));
-	connect(crm, SIGNAL(entryCreated(QString)),
-			this, SLOT(gotCreated(QString)));
-}
-
-void Account::setName(const QString _name)
-{
-	name = _name.simplified();
-}
-
-void Account::getNotes()
-{
-	notes.clear();
-	connect(crm, SIGNAL(notesAvailable(QString)),
-			this, SLOT(populateNotes(QString)));
-
-	crm->getRelatedNotes("Accounts", id);
-}
-
-void Account::populateNotes(QString _id)
-{
-	if(_id.isEmpty()) emit notesAvailable();
-	if(_id != id) return;
-
-	notes.clear();
-	QMapIterator<QString, QMap<QString, QString> > i(crm->notes);
-
-	while(i.hasNext()) {
-		i.next();
-
-		Note *tmp = new Note();
-		tmp->id = i.value().value("id");
-		tmp->name = i.value().value("name");
-		tmp->description = i.value().value("description");
-		tmp->fileName = i.value().value("filename");
-		tmp->parentId = i.value().value("parent_id");
-		tmp->parentType = i.value().value("parent_type");
-		tmp->date_entered = QDateTime::fromString(i.value().value("date_entered"), "yyyy-MM-dd hh:mm:ss");
-		tmp->date_modified = QDateTime::fromString(i.value().value("date_modified"), "yyyy-MM-dd hh:mm:ss");
-
-		notes.append(tmp);
-	}
-	emit notesAvailable();
 }
 
 bool Account::operator<(const Account *other) const
@@ -64,37 +20,53 @@ bool Account::operator<(const Account *other) const
 	return false;
 }
 
-QString Account::toString()
-{
-	return QString("Account %1: \n\tName: %2\n\t"
-				   "Address: %3, %4, %5, %6\n\t"
-				   "Phone: %7, %8, %9\n\t"
-				   "%10, %11\n\t"
-				   "Desc: %12")
-			.arg(id, name, address_street, address_postalcode)
-			.arg(address_city, address_country, phone_office, phone_fax)
-			.arg(phone_alternate, email, website, description);
-}
-
 void Account::save()
 {
 	crm->updateAccount(id, name, description, address_street, address_city,
 					   address_postalcode, address_country, phone_office,
-					   phone_fax, phone_alternate, email, website);
+					   phone_fax, phone_alternate, email, website, category);
 }
 
-void Account::seeWhoSaved(QString _id)
+void Account::getChildren()
 {
-	//qDebug() << _id;
-	if(id == _id){
-		emit saved();
-	}
+	AbstractItem::getChildren();
+	getContacts();
 }
 
-void Account::gotCreated(QString _id)
+void Account::getContacts()
 {
-	if(id.isEmpty()) {
-		id = _id;
-		emit saved();
+	contacts.clear();
+	connect(crm, SIGNAL(dataAvailable(QString)),
+			this, SLOT(populateContacts(QString)));
+	crm->getEntryList("Contacts",
+					  QString("account_id = \"%1\"").arg(id),
+					  "last_name",
+					  0,
+					  70,
+					  0);
+}
+
+void Account::populateContacts(const QString _id)
+{
+	if(_id.isEmpty()) emit contactsAvailable();
+	if(_id != id) return;
+
+	contacts.clear();
+
+	QMap<QString, QMap<QString, QString> >::const_iterator i = crm->entries->begin();
+
+	while (i != crm->entries->end()) {
+		Contact *tmp = new Contact();
+		tmp->id = i.value().value("id");
+		tmp->firstName = i.value().value("first_name");
+		tmp->lastName = i.value().value("last_name");
+		tmp->phoneWork = i.value().value("phone_work");
+		tmp->phoneFax = i.value().value("phone_fax");
+		tmp->email1 = i.value().value("email1");
+
+		contacts.append(tmp);
+		i++;
 	}
+
+	emit contactsAvailable();
 }

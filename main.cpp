@@ -11,6 +11,9 @@ int main(int argc, char *argv[])
 	qApp->setStyleSheet("QWidget { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop:0 #333, stop:0.3 #232323 stop: 1 #333); color: #FFF; }"
 						"QWebView { background: #FFF; color: #000 }"
 						"AccountDetail { background: qradialgradient(cx:0, cy:-0.2, radius: 1, fx:0.5, fy:0.5, stop:0 #888, stop:1 #555); } "
+						"AccountDetail QTabBar { background: transparent; }"
+						"AccountDetail QTabBar::tab { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #444, stop: 1 #222); }"
+						"AccountDetail QTabBar::tab:selected { background: #222; }"
 						"LoadingDialog { background: none; }"
 
 						"QMenuBar { background: #222; border-bottom: 1px solid #BBB; padding: 2px; }"
@@ -36,7 +39,8 @@ int main(int argc, char *argv[])
 						"QListView::item { padding: 4px 2px; }"
 
 						"QTabWidget::pane { border: 1px solid #222; margin: 3px 0 0; }"
-						"QTabBar::tab { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #444, stop: 1 #888); border-top-left-radius: 4px; border-top-right-radius: 4px; margin: 3px 1px 0px; padding: 4px 8px; }"
+						"QTabBar::tab { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #888, stop: 1 #444); border-top-left-radius: 4px; border-top-right-radius: 4px; margin: 3px 1px 0px; padding: 4px 8px; }"
+						"QTabBar::tab:selected { background: #656565; }"
 
 						"QTableView QHeaderView::section { background: #000; border: 1px solid #000; border-right: 1px solid #454545; color: #AAA; }"
 						"QTableView { border: 1px solid #222; }"

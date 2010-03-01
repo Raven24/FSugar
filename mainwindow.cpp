@@ -103,8 +103,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	//connect(crm, SIGNAL(sendingMessage(QString)),
 	//		this, SLOT(debug(QString)));
-	//connect(crm->trans, SIGNAL(newSoapMessage(QString)),
-	//		this, SLOT(debug(QString)));
+	connect(crm->trans, SIGNAL(newSoapMessage(QString)),
+			this, SLOT(debug(QString)));
 	connect(crm, SIGNAL(unknownAction(QString)),
 			this, SLOT(unknownAction(QString)));
 
@@ -284,8 +284,8 @@ void MainWindow::displayCalendar()
 void MainWindow::debug(QString msg)
 {
 	setStatusMsg(tr("Antwort erhalten"), 1000);
-	dockWidget->text->append(msg);
-        //qDebug() << msg;
+	//dockWidget->text->append(msg);
+	qDebug() << msg;
 
 }
 
