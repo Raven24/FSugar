@@ -283,9 +283,11 @@ void MainWindow::displayCalendar()
 
 void MainWindow::debug(QString msg)
 {
+	Q_UNUSED(msg)
+
 	setStatusMsg(tr("Antwort erhalten"), 1000);
 	//dockWidget->text->append(msg);
-	qDebug() << msg;
+	//qDebug() << msg;
 
 }
 

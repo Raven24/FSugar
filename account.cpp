@@ -62,7 +62,14 @@ void Account::populateContacts(const QString _id)
 		tmp->lastName = i.value().value("last_name");
 		tmp->phoneWork = i.value().value("phone_work");
 		tmp->phoneFax = i.value().value("phone_fax");
-		tmp->email1 = i.value().value("email1");
+                tmp->phoneHome = i.value().value("phone_home");
+                tmp->phoneMobile = i.value().value("phone_mobile");
+                tmp->email1 = i.value().value("email1");
+                tmp->email2 = i.value().value("email2");
+                tmp->addressStreet = i.value().value("primary_address_street");
+                tmp->addressCity = i.value().value("primary_address_city");
+                tmp->addressPostalcode = i.value().value("primary_address_postalcode");
+                tmp->addressCountry = i.value().value("primary_address_country");
 
 		contacts.append(tmp);
 		i++;
