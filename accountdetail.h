@@ -8,8 +8,9 @@
 #include "notesmodel.h"
 #include "contactmodel.h"
 #include "createnotedialog.h"
+#include "abstractitemdetail.h"
 
-class AccountDetail : public QWidget
+class AccountDetail : public AbstractItemDetail
 {
 	Q_OBJECT
 
@@ -19,29 +20,14 @@ public:
 	AccountDetail(Account *_acc);
 
 public slots:
-	void displayNotes();
 	void displayContacts();
-
 	void saveChanges();
-	void createNewNote();
-	void progress(bool p = false);
-	void endProgress();
-	void afterSaveAct();
-	void showNewDocumentDialog();
-	void showNewNoteDialog();
-	void downloadNoteAttachment(const QModelIndex _index);
+	void initDialog();
 
 private:
-	void paintEvent(QPaintEvent *);
-	void retrieveAccount(const QModelIndex *index);
+	void retrieveItem(const QModelIndex *_index);
 	void fillData();
-	void initDialog();
-	void hideButtons(const bool _var);
-
-	Account *acc;
-	QTableView *notesTable;
 	QTableView *contactsTable;
-	bool inProgress;
 
 	QLineEdit *accountName, *accountAddress1,
 		*accountAddress2, *accountAddress3,
@@ -51,17 +37,11 @@ private:
 
 	QTextEdit *accountDescription;
 
-	QPushButton *save, *newNote,
-		*newDocument;
-
 	QCheckBox *catChkBox;
 
-	QLabel *loading;
+	Account *item;
 
-	CreateNoteDialog *newNoteDialog;
-	NotesModel *notesModel;
 	ContactModel *contactsModel;
-	SugarCrm *crm;
 };
 
 #endif // ACCOUNTDETAIL_H

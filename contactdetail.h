@@ -7,8 +7,9 @@
 #include "contact.h"
 #include "notesmodel.h"
 #include "createnotedialog.h"
+#include "abstractitemdetail.h"
 
-class ContactDetail : public QWidget
+class ContactDetail : public AbstractItemDetail
 {
 Q_OBJECT
 
@@ -18,26 +19,14 @@ public:
 	ContactDetail(Contact *_contact);
 
 public slots:
-	void displayNotes();
 	void saveChanges();
-	void createNewNote();
-	void progress(bool p = false);
-	void endProgress();
-	void afterSaveAct();
-	void showNewDocumentDialog();
-	void showNewNoteDialog();
-	void downloadNoteAttachment(const QModelIndex _index);
+	void initDialog();
 
 private:
-	void paintEvent(QPaintEvent *);
 	void retrieveContact();
 	void fillData();
-	void initDialog();
-	void hideButtons(const bool _var);
 
-	Contact *contact;
-	QTableView *notesTable;
-	bool inProgress;
+	Contact *item;
 
 	QLineEdit *firstNameEdit, *lastNameEdit,
 		*phoneHomeEdit, *phoneMobileEdit, *phoneWorkEdit,
@@ -47,13 +36,6 @@ private:
 		*addressCountryEdit, *leadSourceEdit;
 
 	QTextEdit *contactDescription;
-
-	QPushButton *save, *newNote, *newDocument;
-	QLabel *loading;
-
-	CreateNoteDialog *newNoteDialog;
-	NotesModel *notesModel;
-	SugarCrm *crm;
 
 };
 

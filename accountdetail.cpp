@@ -6,9 +6,10 @@
 #include "account.h"
 #include "notesmodel.h"
 #include "createnotedialog.h"
+#include "abstractitemdetail.h"
 
 AccountDetail::AccountDetail(QWidget *parent) :
-	QWidget(parent)
+	AbstractItemDetail(parent)
 {
 	qDebug() << "AccountDetail(): something's wrong (missing parameter in constructor)";
 }
@@ -16,19 +17,19 @@ AccountDetail::AccountDetail(QWidget *parent) :
 AccountDetail::AccountDetail(const QModelIndex *index)
 {
 	initDialog();
-	retrieveAccount(index);
+	retrieveItem(index);
 	fillData();
 }
 
 AccountDetail::AccountDetail(Account *_acc)
 {
-	acc = _acc;
+	item = _acc;
 
-	connect(acc, SIGNAL(notesAvailable()),
+	connect(item, SIGNAL(notesAvailable()),
 			this, SLOT(displayNotes()));
-	connect(acc, SIGNAL(contactsAvailable()),
+	connect(item, SIGNAL(contactsAvailable()),
 			this, SLOT(displayContacts()));
-	connect(acc, SIGNAL(saved()),
+	connect(item, SIGNAL(saved()),
 			this, SLOT(afterSaveAct()));
 
 	initDialog();
@@ -38,22 +39,10 @@ AccountDetail::AccountDetail(Account *_acc)
 
 void AccountDetail::initDialog()
 {
-	newNoteDialog = new CreateNoteDialog(this);
-	newNoteDialog->hide();
+	AbstractItemDetail::initDialog();
 
 	//initialize models
-	notesModel = new NotesModel(this);
 	contactsModel = new ContactModel(this);
-
-	loading = new QLabel(this);
-	QMovie *mov = new QMovie();
-	mov->setCacheMode(QMovie::CacheAll);
-	loading->setMovie(mov);
-	mov->setFileName(":loading.gif");
-	mov->setScaledSize(QSize(20, 20));
-	mov->start();
-
-	crm = SugarCrm::getInstance();
 
 	// layouts
 	QVBoxLayout *layout = new QVBoxLayout();
@@ -85,11 +74,6 @@ void AccountDetail::initDialog()
 	QLabel *accountDescLbl = new QLabel(tr("Beschreibung"));
 	QTabWidget *childrenTab = new QTabWidget(this);
 
-	// buttons
-	save = new QPushButton(QIcon(":save.png"), tr("Speichern"));
-	newNote = new QPushButton(QIcon(":notes.png"), tr("Neue Notiz"));
-	newDocument = new QPushButton(QIcon(":documents.png"), tr("Neues Dokument"));
-
 	// layout population
 	address->setLabelAlignment(Qt::AlignRight);
 	address->addRow(tr("Adresse"), accountAddress1);
@@ -119,12 +103,6 @@ void AccountDetail::initDialog()
 	contactInfo->addLayout(address);
 	contactInfo->addLayout(rightLayout);
 
-	notesTable = new QTableView(this);
-	notesTable->verticalHeader()->hide();
-	notesTable->horizontalHeader()->setStretchLastSection(true);
-	notesTable->setSelectionBehavior(QAbstractItemView::SelectRows);
-	notesTable->setSelectionMode(QAbstractItemView::SingleSelection);
-
 	contactsTable = new QTableView(this);
 	contactsTable->verticalHeader()->hide();
 	contactsTable->horizontalHeader()->setStretchLastSection(true);
@@ -143,88 +121,52 @@ void AccountDetail::initDialog()
 	layout->addWidget(childrenTab, 3);
 
 	setLayout(layout);
-
-	connect(save, SIGNAL(pressed()),
-			this, SLOT(saveChanges()));
-	connect(newNote, SIGNAL(pressed()),
-			this, SLOT(showNewNoteDialog()));
-	connect(newNoteDialog, SIGNAL(accepted()),
-			this, SLOT(createNewNote()));
-	connect(newDocument, SIGNAL(pressed()),
-			this, SLOT(showNewDocumentDialog()));
-	connect(notesTable, SIGNAL(doubleClicked(QModelIndex)),
-			this, SLOT(downloadNoteAttachment(QModelIndex)));
 }
 
-void AccountDetail::retrieveAccount(const QModelIndex *index)
+void AccountDetail::retrieveItem(const QModelIndex *index)
 {
 	//qDebug() << index->row();
 
 	AccountModel *model = AccountModel::getInstance();
-	acc = model->getAccount(index->row());
+	item = model->getAccount(index->row());
 
 	connect(crm, SIGNAL(entryCreated(QString)),
-			acc, SLOT(getNotes()));
-	connect(acc, SIGNAL(saved()),
+			item, SLOT(getNotes()));
+	connect(item, SIGNAL(saved()),
 			this, SLOT(afterSaveAct()));
-	connect(acc, SIGNAL(notesAvailable()),
+	connect(item, SIGNAL(notesAvailable()),
 			this, SLOT(displayNotes()));
-	connect(acc, SIGNAL(contactsAvailable()),
+	connect(item, SIGNAL(contactsAvailable()),
 			this, SLOT(displayContacts()));
 
-	acc->getChildren();
-}
-
-void AccountDetail::paintEvent(QPaintEvent *)
-{
-	QStyleOption opt;
-	opt.init(this);
-	QPainter p(this);
-	style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
-}
-
-void AccountDetail::afterSaveAct()
-{
-	progress(false);
-	hideButtons(false);
-
-	acc->getChildren();
+	item->getChildren();
 }
 
 void AccountDetail::fillData()
 {
 	//qDebug() << "supposed to fill in data now";
-	accountName->setText(acc->name);
-	accountAddress1->setText(acc->address_street);
-	accountAddress2->setText(acc->address_postalcode);
-	accountAddress3->setText(acc->address_city);
-	accountAddress4->setText(acc->address_country);
-	accountEmail->setText(acc->email);
-	accountWebsite->setText(acc->website);
+	accountName->setText(item->name);
+	accountAddress1->setText(item->address_street);
+	accountAddress2->setText(item->address_postalcode);
+	accountAddress3->setText(item->address_city);
+	accountAddress4->setText(item->address_country);
+	accountEmail->setText(item->email);
+	accountWebsite->setText(item->website);
 
-	accountPhone->setText(acc->phone_office);
-	accountFax->setText(acc->phone_fax);
-	accountPhoneAlt->setText(acc->phone_alternate);
+	accountPhone->setText(item->phone_office);
+	accountFax->setText(item->phone_fax);
+	accountPhoneAlt->setText(item->phone_alternate);
 
-	accountDescription->setText(acc->description);
+	accountDescription->setText(item->description);
 
-	if(acc->category.contains(QRegExp("press", Qt::CaseInsensitive, QRegExp::FixedString))) {
+	if(item->category.contains(QRegExp("press", Qt::CaseInsensitive, QRegExp::FixedString))) {
 		catChkBox->setChecked(true);
 	}
 }
 
-void AccountDetail::displayNotes()
-{
-	//qDebug() << "notes:" << acc->notes.size();
-	notesModel->read(&acc->notes);
-	notesTable->setModel(notesModel);
-	notesTable->resizeRowsToContents();
-	progress(false);
-}
-
 void AccountDetail::displayContacts()
 {
-	contactsModel->read(&acc->contacts);
+	contactsModel->read(&item->contacts);
 	contactsTable->setModel(contactsModel);
 	contactsTable->resizeRowsToContents();
 	progress(false);
@@ -233,94 +175,29 @@ void AccountDetail::displayContacts()
 void AccountDetail::saveChanges()
 {
 	progress(true);
-	acc->name = accountName->text();
+	item->name = accountName->text();
 
-	acc->address_street = accountAddress1->text();
-	acc->address_postalcode = accountAddress2->text();
-	acc->address_city = accountAddress3->text();
-	acc->address_country = accountAddress4->text();
+	item->address_street = accountAddress1->text();
+	item->address_postalcode = accountAddress2->text();
+	item->address_city = accountAddress3->text();
+	item->address_country = accountAddress4->text();
 
-	acc->email = accountEmail->text();
-	acc->website = accountWebsite->text();
+	item->email = accountEmail->text();
+	item->website = accountWebsite->text();
 
-	acc->phone_office = accountPhone->text();
-	acc->phone_fax = accountFax->text();
-	acc->phone_alternate = accountPhoneAlt->text();
+	item->phone_office = accountPhone->text();
+	item->phone_fax = accountFax->text();
+	item->phone_alternate = accountPhoneAlt->text();
 
-	acc->description = accountDescription->toPlainText();
+	item->description = accountDescription->toPlainText();
 
 	if(catChkBox->isChecked()) {
-		acc->category = "presse";
+		item->category = "presse";
 	} else {
-		acc->category = "";
+		item->category = "";
 	}
 
 	//qDebug() << acc->toString();
 
-	acc->save();
-}
-
-void AccountDetail::createNewNote()
-{
-	progress(true);
-	//qDebug() << "should create a note right about here";
-
-	Note *newNote = notesModel->newNote();
-	newNote->name = newNoteDialog->noteName;
-	newNote->description = newNoteDialog->noteDescription;
-	if(!newNoteDialog->fileName.isEmpty())
-		newNote->fileName = newNoteDialog->fileName;
-	newNote->parentType = "Accounts";
-	newNote->parentId = acc->id;
-
-	newNote->save();
-
-	connect(newNote, SIGNAL(saved()),
-			this, SLOT(displayNotes()));
-}
-
-void AccountDetail::progress(bool p)
-{
-	if(p) loading->show();
-	else loading->hide();
-}
-
-void AccountDetail::hideButtons(const bool _var)
-{
-	if(_var) {
-		newNote->hide();
-		newDocument->hide();
-		notesTable->hide();
-	} else {
-		newNote->show();
-		newDocument->show();
-		notesTable->show();
-	}
-}
-
-void AccountDetail::showNewDocumentDialog()
-{
-	newNoteDialog->setUpload(true);
-	newNoteDialog->show();
-}
-
-void AccountDetail::showNewNoteDialog()
-{
-	newNoteDialog->setUpload(false);
-	newNoteDialog->show();
-}
-
-void AccountDetail::downloadNoteAttachment(const QModelIndex _index)
-{
-	if (acc->notes.at(_index.row())->fileName.isEmpty()) return;
-
-	progress(true);
-	connect(acc->notes.at(_index.row()), SIGNAL(openingAttachment()),
-			this, SLOT(endProgress()));
-	acc->notes.at(_index.row())->downloadAttachment();
-}
-
-void AccountDetail::endProgress()
-{
-	progress(false);
+	item->save();
 }

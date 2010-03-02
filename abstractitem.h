@@ -12,10 +12,11 @@ class AbstractItem : public QObject
 public:
     explicit AbstractItem(QObject *parent = 0);
 
-	QString id, description, category;
+	QString id, description, category, type;
 
 	QDateTime date_entered, date_modified;
 
+	virtual QList<Note*>* getNotesList();
 	QList<Note*> notes;
 	SugarCrm *crm;
 

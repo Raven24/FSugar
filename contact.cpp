@@ -3,6 +3,7 @@
 Contact::Contact(QObject *parent) :
 	AbstractItem(parent)
 {
+	type = "Contacts";
 }
 
 void Contact::save()

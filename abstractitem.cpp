@@ -55,6 +55,11 @@ QString AbstractItem::toString()
 	return QString("Account %1, Cat %2").arg(id, category);
 }
 
+QList<Note*>* AbstractItem::getNotesList()
+{
+	return &notes;
+}
+
 void AbstractItem::seeWhoSaved(QString _id)
 {
 	//qDebug() << _id;

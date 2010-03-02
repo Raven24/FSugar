@@ -1,7 +1,8 @@
+#include "abstractitemdetail.h"
 #include "contactdetail.h"
 
 ContactDetail::ContactDetail(QWidget *parent) :
-    QWidget(parent)
+	AbstractItemDetail(parent)
 {
 }
 
@@ -10,7 +11,7 @@ void ContactDetail::initDialog()
 	//TODO
 }
 
-void ContactDetail::hideButtons(const bool _var)
+void ContactDetail::saveChanges()
 {
 	//TODO
 }

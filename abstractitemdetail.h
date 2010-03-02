@@ -1,29 +1,53 @@
 #ifndef ABSTRACTITEMDETAIL_H
 #define ABSTRACTITEMDETAIL_H
 
-#include <QWidget>
+#include <QtGui>
+
+#include "abstractitem.h"
+#include "sugarcrm.h"
+#include "notesmodel.h"
+#include "createnotedialog.h"
 
 class AbstractItemDetail : public QWidget
 {
 Q_OBJECT
 public:
 	AbstractItemDetail(QWidget *parent = 0);
-
-signals:
+	AbstractItemDetail(const QModelIndex *index);
+	AbstractItemDetail(AbstractItem *_item);
 
 public slots:
 	void displayNotes();
-	void saveChanges();
+	void createNewNote();
+
+	virtual void saveChanges() = 0;
+	void afterSaveAct();
+
 	void progress(bool _p = false);
 	void endProgress();
+
 	void showNewDocumentDialog();
 	void showNewNoteDialog();
-	void downloadAttachmentNote();
+	void downloadNoteAttachment(const QModelIndex _index);
 
 	virtual void initDialog();
 
 protected:
+	virtual void retrieveItem(const QModelIndex *_index);
+	virtual void fillData();
+	void hideButtons(const bool _var);
 	void paintEvent(QPaintEvent *);
+
+	bool inProgress;
+	AbstractItem *item;
+	QTableView *notesTable;
+	QLabel *loading;
+	QPushButton *save, *newNote,
+		*newDocument;
+
+	SugarCrm *crm;
+	CreateNoteDialog *newNoteDialog;
+	NotesModel *notesModel;
 
 };
 
