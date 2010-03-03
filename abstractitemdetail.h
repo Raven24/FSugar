@@ -35,7 +35,7 @@ public slots:
 	virtual void initDialog();
 
 protected:
-	virtual void retrieveItem(const QModelIndex *_index);
+	virtual void retrieveItem();
 	virtual void fillData();
 	void hideButtons(const bool _var);
 	void paintEvent(QPaintEvent *);

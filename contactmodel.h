@@ -19,6 +19,7 @@ public:
 
 	void read(QList<Contact*> *_contacts);
 	Contact* newContact();
+	Contact* getContact(const int num);
 
 signals:
 

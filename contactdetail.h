@@ -18,12 +18,14 @@ public:
 	ContactDetail(const QModelIndex *index);
 	ContactDetail(Contact *_contact);
 
+	Contact* getItem();
+
 public slots:
 	void saveChanges();
 	void initDialog();
+	void retrieveContact(Contact* _c);
 
 private:
-	void retrieveContact();
 	void fillData();
 
 	Contact *item;
@@ -35,7 +37,7 @@ private:
 		*addressStreetEdit, *addressCityEdit, *addressPostalcodeEdit,
 		*addressCountryEdit, *leadSourceEdit;
 
-	QTextEdit *contactDescription;
+	QTextEdit *contactDescriptionEdit;
 
 };
 

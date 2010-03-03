@@ -7,6 +7,7 @@
 #include "notesmodel.h"
 #include "createnotedialog.h"
 #include "abstractitemdetail.h"
+#include "contactdetail.h"
 
 AccountDetail::AccountDetail(QWidget *parent) :
 	AbstractItemDetail(parent)
@@ -120,6 +121,9 @@ void AccountDetail::initDialog()
 	layout->addLayout(itemsContainer, 1);
 	layout->addWidget(childrenTab, 3);
 
+	connect(contactsTable, SIGNAL(doubleClicked(QModelIndex)),
+			this, SLOT(openContact(QModelIndex)));
+
 	setLayout(layout);
 }
 
@@ -130,14 +134,14 @@ void AccountDetail::retrieveItem(const QModelIndex *index)
 	AccountModel *model = AccountModel::getInstance();
 	item = model->getAccount(index->row());
 
+	connect(getItem(), SIGNAL(contactsAvailable()),
+			this, SLOT(displayContacts()));
 	connect(crm, SIGNAL(entryCreated(QString)),
 			getItem(), SLOT(getNotes()));
 	connect(getItem(), SIGNAL(saved()),
 			this, SLOT(afterSaveAct()));
 	connect(getItem(), SIGNAL(notesAvailable()),
 			this, SLOT(displayNotes()));
-	connect(getItem(), SIGNAL(contactsAvailable()),
-			this, SLOT(displayContacts()));
 
 	getItem()->getChildren();
 }
@@ -170,6 +174,14 @@ void AccountDetail::displayContacts()
 	contactsTable->setModel(contactsModel);
 	contactsTable->resizeRowsToContents();
 	progress(false);
+}
+
+void AccountDetail::openContact(QModelIndex _index)
+{
+	ContactDetail *contactDetail = new ContactDetail();
+	contactDetail->retrieveContact(contactsModel->getContact(_index.row()));
+	dynamic_cast<QTabWidget *>(parent())->setCurrentIndex(dynamic_cast<QTabWidget *>(parent())->addTab(contactDetail, tr("Detailansicht")));
+	//parent()->objectName();
 }
 
 void AccountDetail::saveChanges()

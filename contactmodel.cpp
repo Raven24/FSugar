@@ -107,3 +107,8 @@ void ContactModel::sortData()
 {
 	qSort(contacts->begin(), contacts->end(), compareContactsGreaterThan);
 }
+
+Contact* ContactModel::getContact(const int num)
+{
+	return contacts->value(num);
+}

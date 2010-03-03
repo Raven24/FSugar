@@ -10,8 +10,10 @@ AbstractItemDetail::AbstractItemDetail(QWidget *parent) :
 
 AbstractItemDetail::AbstractItemDetail(const QModelIndex *index)
 {
+	Q_UNUSED(index)
+
 	initDialog();
-	retrieveItem(index);
+	retrieveItem();
 	fillData();
 }
 
@@ -150,7 +152,6 @@ void AbstractItemDetail::fillData()
 {
 }
 
-void AbstractItemDetail::retrieveItem(const QModelIndex *_index)
+void AbstractItemDetail::retrieveItem()
 {
-	Q_UNUSED(_index);
 }

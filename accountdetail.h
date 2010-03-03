@@ -25,6 +25,7 @@ public slots:
 	void displayContacts();
 	void saveChanges();
 	void initDialog();
+	void openContact(QModelIndex _index);
 
 private:
 	void retrieveItem(const QModelIndex *_index);
