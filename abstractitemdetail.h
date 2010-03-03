@@ -16,6 +16,8 @@ public:
 	AbstractItemDetail(const QModelIndex *index);
 	AbstractItemDetail(AbstractItem *_item);
 
+	virtual AbstractItem* getItem() = 0;
+
 public slots:
 	void displayNotes();
 	void createNewNote();
@@ -39,7 +41,6 @@ protected:
 	void paintEvent(QPaintEvent *);
 
 	bool inProgress;
-	AbstractItem *item;
 	QTableView *notesTable;
 	QLabel *loading;
 	QPushButton *save, *newNote,

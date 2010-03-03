@@ -68,14 +68,14 @@ void AbstractItemDetail::afterSaveAct()
 	progress(false);
 	hideButtons(false);
 
-	item->getChildren();
+	getItem()->getChildren();
 }
 
 void AbstractItemDetail::displayNotes()
 {
 //	qDebug() << "notes:" << item->getNotesList()->size();
 //	return;
-	notesModel->read(&item->notes);
+	notesModel->read(&getItem()->notes);
 	notesTable->setModel(notesModel);
 	notesTable->resizeRowsToContents();
 	progress(false);
@@ -91,8 +91,8 @@ void AbstractItemDetail::createNewNote()
 	newNote->description = newNoteDialog->noteDescription;
 	if(!newNoteDialog->fileName.isEmpty())
 		newNote->fileName = newNoteDialog->fileName;
-	newNote->parentType = item->type;
-	newNote->parentId = item->id;
+	newNote->parentType = getItem()->type;
+	newNote->parentId = getItem()->id;
 
 	newNote->save();
 
@@ -133,12 +133,12 @@ void AbstractItemDetail::showNewNoteDialog()
 
 void AbstractItemDetail::downloadNoteAttachment(const QModelIndex _index)
 {
-	if (item->notes.at(_index.row())->fileName.isEmpty()) return;
+	if (getItem()->notes.at(_index.row())->fileName.isEmpty()) return;
 
 	progress(true);
-	connect(item->notes.at(_index.row()), SIGNAL(openingAttachment()),
+	connect(getItem()->notes.at(_index.row()), SIGNAL(openingAttachment()),
 			this, SLOT(endProgress()));
-	item->notes.at(_index.row())->downloadAttachment();
+	getItem()->notes.at(_index.row())->downloadAttachment();
 }
 
 void AbstractItemDetail::endProgress()

@@ -19,6 +19,8 @@ public:
 	AccountDetail(const QModelIndex *index);
 	AccountDetail(Account *_acc);
 
+	Account* getItem();
+
 public slots:
 	void displayContacts();
 	void saveChanges();

@@ -131,42 +131,42 @@ void AccountDetail::retrieveItem(const QModelIndex *index)
 	item = model->getAccount(index->row());
 
 	connect(crm, SIGNAL(entryCreated(QString)),
-			item, SLOT(getNotes()));
-	connect(item, SIGNAL(saved()),
+			getItem(), SLOT(getNotes()));
+	connect(getItem(), SIGNAL(saved()),
 			this, SLOT(afterSaveAct()));
-	connect(item, SIGNAL(notesAvailable()),
+	connect(getItem(), SIGNAL(notesAvailable()),
 			this, SLOT(displayNotes()));
-	connect(item, SIGNAL(contactsAvailable()),
+	connect(getItem(), SIGNAL(contactsAvailable()),
 			this, SLOT(displayContacts()));
 
-	item->getChildren();
+	getItem()->getChildren();
 }
 
 void AccountDetail::fillData()
 {
 	//qDebug() << "supposed to fill in data now";
-	accountName->setText(item->name);
-	accountAddress1->setText(item->address_street);
-	accountAddress2->setText(item->address_postalcode);
-	accountAddress3->setText(item->address_city);
-	accountAddress4->setText(item->address_country);
-	accountEmail->setText(item->email);
-	accountWebsite->setText(item->website);
+	accountName->setText(getItem()->name);
+	accountAddress1->setText(getItem()->address_street);
+	accountAddress2->setText(getItem()->address_postalcode);
+	accountAddress3->setText(getItem()->address_city);
+	accountAddress4->setText(getItem()->address_country);
+	accountEmail->setText(getItem()->email);
+	accountWebsite->setText(getItem()->website);
 
-	accountPhone->setText(item->phone_office);
-	accountFax->setText(item->phone_fax);
-	accountPhoneAlt->setText(item->phone_alternate);
+	accountPhone->setText(getItem()->phone_office);
+	accountFax->setText(getItem()->phone_fax);
+	accountPhoneAlt->setText(getItem()->phone_alternate);
 
-	accountDescription->setText(item->description);
+	accountDescription->setText(getItem()->description);
 
-	if(item->category.contains(QRegExp("press", Qt::CaseInsensitive, QRegExp::FixedString))) {
+	if(getItem()->category.contains(QRegExp("press", Qt::CaseInsensitive, QRegExp::FixedString))) {
 		catChkBox->setChecked(true);
 	}
 }
 
 void AccountDetail::displayContacts()
 {
-	contactsModel->read(&item->contacts);
+	contactsModel->read(&(getItem()->contacts));
 	contactsTable->setModel(contactsModel);
 	contactsTable->resizeRowsToContents();
 	progress(false);
@@ -175,29 +175,34 @@ void AccountDetail::displayContacts()
 void AccountDetail::saveChanges()
 {
 	progress(true);
-	item->name = accountName->text();
+	getItem()->name = accountName->text();
 
-	item->address_street = accountAddress1->text();
-	item->address_postalcode = accountAddress2->text();
-	item->address_city = accountAddress3->text();
-	item->address_country = accountAddress4->text();
+	getItem()->address_street = accountAddress1->text();
+	getItem()->address_postalcode = accountAddress2->text();
+	getItem()->address_city = accountAddress3->text();
+	getItem()->address_country = accountAddress4->text();
 
-	item->email = accountEmail->text();
-	item->website = accountWebsite->text();
+	getItem()->email = accountEmail->text();
+	getItem()->website = accountWebsite->text();
 
-	item->phone_office = accountPhone->text();
-	item->phone_fax = accountFax->text();
-	item->phone_alternate = accountPhoneAlt->text();
+	getItem()->phone_office = accountPhone->text();
+	getItem()->phone_fax = accountFax->text();
+	getItem()->phone_alternate = accountPhoneAlt->text();
 
-	item->description = accountDescription->toPlainText();
+	getItem()->description = accountDescription->toPlainText();
 
 	if(catChkBox->isChecked()) {
-		item->category = "presse";
+		getItem()->category = "presse";
 	} else {
-		item->category = "";
+		getItem()->category = "";
 	}
 
 	//qDebug() << acc->toString();
 
-	item->save();
+	getItem()->save();
+}
+
+Account* AccountDetail::getItem()
+{
+	return item;
 }
