@@ -148,6 +148,15 @@ void SugarCrm::getRelatedNotes(const QString _module, const QString _id)
 	submit(msg, "get_related_notes");
 }
 
+void SugarCrm::updateContact(const QString _id, const QString _firstName, const QString _lastName, const QString _description,
+							 const QString _addressStreet, const QString _addressPostalcode, const QString _addressCity, const QString _addressCountry,
+							 const QString _phoneWork, const QString _phoneHome, const QString _phoneMobile, const QString _phoneFax, const QString _phoneOther,
+							 const QString _email1, const QString _email2)
+{
+	// TODO: write me!
+
+}
+
 void SugarCrm::updateAccount(const QString _id, const QString _name, const QString _description,
 							 const QString _addressStreet, const QString _addressCity, const QString _addressPostalcode,
 							 const QString _addressCountry, const QString _phoneOffice, const QString _phoneFax,

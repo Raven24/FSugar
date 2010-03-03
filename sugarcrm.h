@@ -53,6 +53,10 @@ public slots:
 					   const QString _phoneOffice, const QString _phoneFax,
 					   const QString _phoneAlternate, const QString _email,
 					   const QString _website, const QString _category);
+	void updateContact(const QString _id, const QString _firstName, const QString _lastName, const QString _description,
+					   const QString _addressStreet, const QString _addressPostalcode, const QString _addressCity, const QString _addressCountry,
+					   const QString _phoneWork, const QString _phoneHome, const QString _phoneMobile, const QString _phoneFax, const QString _phoneOther,
+					   const QString _email1, const QString _email2);
 	void setNoteAttachment(const QString _id, const QString _filename, const QString _file);
 	void getNoteAttachment(const QString _id);
 
