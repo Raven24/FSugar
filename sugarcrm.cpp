@@ -39,7 +39,7 @@ void SugarCrm::login(QString _user, QString _pass)
 	submit(msg, "login");
 }
 
-void SugarCrm::createNote(const QString _module, const QString _name, const QString _description, const QString _parentType, const QString _parentId)
+void SugarCrm::createNote(const QString _module, const QString _name, const QString _description, const QString _parentType, const QString _parentId, const QString _contactId)
 {
 	QtSoapStruct *name = new QtSoapStruct(QtSoapQName("name_value"));
 	name->insert(new QtSoapSimpleType(QtSoapQName("name"), "name"));
@@ -57,11 +57,16 @@ void SugarCrm::createNote(const QString _module, const QString _name, const QStr
 	parId->insert(new QtSoapSimpleType(QtSoapQName("name"), "parent_id"));
 	parId->insert(new QtSoapSimpleType(QtSoapQName("value"), _parentId));
 
+	QtSoapStruct *contId = new QtSoapStruct(QtSoapQName("name_value"));
+	contId->insert(new QtSoapSimpleType(QtSoapQName("name"), "contact_id"));
+	contId->insert(new QtSoapSimpleType(QtSoapQName("value"), _contactId));
+
 	QtSoapArray *note = new QtSoapArray(QtSoapQName("name_value_list"));
 	note->insert(0, name);
 	note->insert(1, desc);
 	note->insert(2, parType);
 	note->insert(3, parId);
+	note->insert(4, contId);
 
 	QtSoapMessage msg = createMessage("set_entry");
 	msg.addMethodArgument("session", "", session);

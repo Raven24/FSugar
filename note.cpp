@@ -27,7 +27,8 @@ void Note::save()
 					name,
 					description,
 					parentType,
-					parentId);
+					parentId,
+					contactId);
 }
 
 void Note::afterSave(const QString _id)

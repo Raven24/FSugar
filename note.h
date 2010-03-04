@@ -11,7 +11,7 @@ public:
 	Note(QObject *parent = 0);
 
 	QString id, name, description,
-	parentType, parentId,
+	parentType, parentId, contactId,
 	fileName, fileData;
 
 	QDateTime date_entered, date_modified;
