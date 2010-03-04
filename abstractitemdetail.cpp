@@ -77,7 +77,7 @@ void AbstractItemDetail::displayNotes()
 {
 //	qDebug() << "notes:" << item->getNotesList()->size();
 //	return;
-	notesModel->read(&getItem()->notes);
+	notesModel->read(&(getItem()->notes));
 	notesTable->setModel(notesModel);
 	notesTable->resizeRowsToContents();
 	progress(false);

@@ -151,7 +151,8 @@ void SugarCrm::getRelatedNotes(const QString _module, const QString _id)
 void SugarCrm::updateContact(const QString _id, const QString _firstName, const QString _lastName, const QString _description,
 							 const QString _addressStreet, const QString _addressPostalcode, const QString _addressCity, const QString _addressCountry,
 							 const QString _phoneWork, const QString _phoneHome, const QString _phoneMobile, const QString _phoneFax, const QString _phoneOther,
-							 const QString _email1, const QString _email2)
+							 const QString _email1, const QString _email2,
+							 const QString _accountId, const QString _accountName)
 {
 	QtSoapStruct *id = new QtSoapStruct(QtSoapQName("name_value"));
 	id->insert(new QtSoapSimpleType(QtSoapQName("name"), "id"));
@@ -213,6 +214,14 @@ void SugarCrm::updateContact(const QString _id, const QString _firstName, const 
 	email2->insert(new QtSoapSimpleType(QtSoapQName("name"), "email2"));
 	email2->insert(new QtSoapSimpleType(QtSoapQName("value"), _email2));
 
+	QtSoapStruct *accId = new QtSoapStruct(QtSoapQName("name_value"));
+	accId->insert(new QtSoapSimpleType(QtSoapQName("name"), "account_id"));
+	accId->insert(new QtSoapSimpleType(QtSoapQName("value"), _accountId));
+
+	QtSoapStruct *accName = new QtSoapStruct(QtSoapQName("name_value"));
+	accName->insert(new QtSoapSimpleType(QtSoapQName("name"), "account_name"));
+	accName->insert(new QtSoapSimpleType(QtSoapQName("value"), _accountName));
+
 	QtSoapArray *contact = new QtSoapArray(QtSoapQName("name_value_list"));
 	contact->insert(0, id);
 	contact->insert(1, firstName);
@@ -229,6 +238,8 @@ void SugarCrm::updateContact(const QString _id, const QString _firstName, const 
 	contact->insert(12, phO);
 	contact->insert(13, email);
 	contact->insert(14, email2);
+	contact->insert(15, accId);
+	contact->insert(16, accName);
 
 	QtSoapMessage msg = createMessage("set_entry");
 	msg.addMethodArgument("session", "", session);

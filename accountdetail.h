@@ -34,6 +34,7 @@ private:
 	void hideButtons(bool _var);
 
 	QTableView *contactsTable;
+	QTabWidget *childrenTab;
 
 	QLineEdit *accountName, *accountAddress1,
 		*accountAddress2, *accountAddress3,

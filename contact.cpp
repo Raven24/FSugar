@@ -12,5 +12,7 @@ void Contact::save()
 	crm->updateContact(id, firstName, lastName, description,
 					   addressStreet, addressPostalcode, addressCity, addressCountry,
 					   phoneWork, phoneHome, phoneMobile, phoneFax, phoneOther,
-					   email1, email2);
+					   email1, email2,
+					   accountId, accountName);
+	setProperty("newEntry", false);
 }

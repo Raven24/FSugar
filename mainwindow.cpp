@@ -72,9 +72,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	crm = SugarCrm::getInstance();
 	accountModel = AccountModel::getInstance();
-        filterModel = new AccountProxyModel(this);
-        filterModel->setSourceModel(accountModel);
-        settings = SugarSettings::getInstance();;
+	filterModel = new AccountProxyModel(this);
+	filterModel->setSourceModel(accountModel);
+	settings = SugarSettings::getInstance();;
 
         // QML display
 	//centerView = new QmlView(this);
@@ -102,10 +102,12 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui->actionAboutQt, SIGNAL(triggered()),
 			qApp, SLOT(aboutQt()));
 
-	//connect(crm, SIGNAL(sendingMessage(QString)),
-	//		this, SLOT(debug(QString)));
+	// DEBUG XML COMMUNICATION
+	connect(crm, SIGNAL(sendingMessage(QString)),
+			this, SLOT(debug(QString)));
 	connect(crm->trans, SIGNAL(newSoapMessage(QString)),
 			this, SLOT(debug(QString)));
+
 	connect(crm, SIGNAL(unknownAction(QString)),
 			this, SLOT(unknownAction(QString)));
 
@@ -295,7 +297,7 @@ void MainWindow::debug(QString msg)
 
 	setStatusMsg(tr("Antwort erhalten"), 1000);
 	//dockWidget->text->append(msg);
-	//qDebug() << msg;
+	qDebug() << msg;
 
 }
 

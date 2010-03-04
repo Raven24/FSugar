@@ -74,7 +74,7 @@ void AccountDetail::initDialog()
 	catChkBox = new QCheckBox();
 
 	QLabel *accountDescLbl = new QLabel(tr("Beschreibung"));
-	QTabWidget *childrenTab = new QTabWidget(this);
+	childrenTab = new QTabWidget(this);
 	newContact = new QPushButton(QIcon(":add-contact.png"), tr("Neuer Kontakt"));
 
 	connect(newContact, SIGNAL(pressed()),
@@ -156,8 +156,13 @@ void AccountDetail::hideButtons(bool _var)
 {
 	AbstractItemDetail::hideButtons(_var);
 
-	if(_var) { newContact->hide(); }
-	else { newContact->show(); }
+	if(_var) {
+		newContact->hide();
+		childrenTab->hide();
+	} else {
+		newContact->show();
+		childrenTab->show();
+	}
 }
 
 void AccountDetail::fillData()
@@ -206,6 +211,7 @@ void AccountDetail::addContact()
 	Contact *c = contactsModel->newContact();
 	c->accountId = getItem()->id;
 	c->accountName = getItem()->name;
+	c->setProperty("newEntry", true);
 
 	contactDetail->retrieveContact(c);
 

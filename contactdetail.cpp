@@ -108,10 +108,8 @@ void ContactDetail::retrieveContact(Contact* _c)
 {
 	item = _c;
 
-	// something bad happens here...
-	//if(_c->id.isEmpty()) hideButtons(true);
-
 	initDialog();
+	if(getItem()->property("newEntry").toBool()) hideButtons(true);
 	fillData();
 
 	connect(crm, SIGNAL(entryCreated(QString)),

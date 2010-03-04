@@ -21,7 +21,7 @@ void AbstractItem::getNotes()
 	connect(crm, SIGNAL(notesAvailable(QString)),
 			this, SLOT(populateNotes(QString)));
 
-	crm->getRelatedNotes("Accounts", id);
+	crm->getRelatedNotes(type, id);
 }
 
 void AbstractItem::populateNotes(QString _id)
