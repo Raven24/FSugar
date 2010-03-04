@@ -141,6 +141,8 @@ void SugarCrm::getRelatedNotes(const QString _module, const QString _id)
 {
 	notes.clear();
 
+	//qDebug() << _id << _module << "wants notes";
+
 	QtSoapMessage msg = createMessage("get_related_notes");
 	msg.addMethodArgument("session", "", session);
 	msg.addMethodArgument("module_name", "", _module);
@@ -581,7 +583,7 @@ void SugarCrm::decideAction(const QString action, const QtSoapStruct data)
 				listEntries[pair["name"].value().toString()] = pair["value"].value().toString();
 			}
 			notes.insert(QString(listEntries.value("id")), listEntries);
-			parentId = listEntries["parent_id"];
+			parentId = (listEntries["contact_id"].isEmpty()) ? listEntries["parent_id"] : listEntries["contact_id"];
 		}
 		emit notesAvailable(parentId);
 		return;

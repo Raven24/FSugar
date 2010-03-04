@@ -19,11 +19,11 @@ public:
 	virtual AbstractItem* getItem() = 0;
 
 public slots:
-	void displayNotes();
-	void createNewNote();
+	virtual void displayNotes();
+	virtual void createNewNote();
 
 	virtual void saveChanges() = 0;
-	void afterSaveAct();
+	virtual void afterSaveAct();
 
 	void progress(bool _p = false);
 	void endProgress();

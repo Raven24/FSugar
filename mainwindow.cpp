@@ -103,8 +103,8 @@ MainWindow::MainWindow(QWidget *parent) :
 			qApp, SLOT(aboutQt()));
 
 	// DEBUG XML COMMUNICATION
-	connect(crm, SIGNAL(sendingMessage(QString)),
-			this, SLOT(debug(QString)));
+	//connect(crm, SIGNAL(sendingMessage(QString)),
+	//		this, SLOT(debug(QString)));
 	connect(crm->trans, SIGNAL(newSoapMessage(QString)),
 			this, SLOT(debug(QString)));
 

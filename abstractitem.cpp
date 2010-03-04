@@ -1,3 +1,4 @@
+#include <QtCore>
 #include "abstractitem.h"
 
 AbstractItem::AbstractItem(QObject *parent) :
@@ -21,11 +22,15 @@ void AbstractItem::getNotes()
 	connect(crm, SIGNAL(notesAvailable(QString)),
 			this, SLOT(populateNotes(QString)));
 
+	//qDebug() << toString() << "wants notes";
+
 	crm->getRelatedNotes(type, id);
 }
 
 void AbstractItem::populateNotes(QString _id)
 {
+	qDebug() << _id << "we got notes for you...";
+
 	if(_id.isEmpty()) emit notesAvailable();
 	if(_id != id) return;
 
@@ -47,12 +52,13 @@ void AbstractItem::populateNotes(QString _id)
 
 		notes.append(tmp);
 	}
+
 	emit notesAvailable();
 }
 
 QString AbstractItem::toString()
 {
-	return QString("Account %1, Cat %2").arg(id, category);
+	return QString("Item %1, type %2").arg(id, type);
 }
 
 QList<Note*>* AbstractItem::getNotesList()

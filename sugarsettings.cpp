@@ -10,9 +10,6 @@ SugarSettings::SugarSettings(QObject *parent) :
 	QDir::setCurrent(MainWindow::appPath);
 	m_settings = new QSettings("config.ini", QSettings::IniFormat, this);
 	assignVars();
-
-	connect(this, SIGNAL(settingsChanged()),
-			this, SLOT(assignVars()));
 }
 
 SugarSettings* SugarSettings::getInstance()
@@ -35,5 +32,6 @@ void SugarSettings::assignVars()
 void SugarSettings::makeUpdate()
 {
 	m_settings->sync();
+	assignVars();
 	emit settingsChanged();
 }
