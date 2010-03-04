@@ -25,6 +25,9 @@ public:
     ~MainWindow();
 
 	static QString appPath;
+	static MainWindow* getInstance();
+
+	QTabWidget *mainWidget;
 
 signals:
 	void listReady();
@@ -48,6 +51,8 @@ protected:
 private:
     Ui::MainWindow *ui;
 
+	static MainWindow *instance;
+
 	LoginDialog *loginDialog;
 	LoadingDialog *loadingDialog;
 	DockWidget *dockWidget;
@@ -57,7 +62,6 @@ private:
 
 	QAction *addAccountAct, *openCalAct, *pressViewAct;
 	QListView *listView, *pressList;
-	QTabWidget *mainWidget;
 	AccountDetail *accountDetail;
 	QWebView *webView;
 

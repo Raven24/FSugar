@@ -153,7 +153,88 @@ void SugarCrm::updateContact(const QString _id, const QString _firstName, const 
 							 const QString _phoneWork, const QString _phoneHome, const QString _phoneMobile, const QString _phoneFax, const QString _phoneOther,
 							 const QString _email1, const QString _email2)
 {
-	// TODO: write me!
+	QtSoapStruct *id = new QtSoapStruct(QtSoapQName("name_value"));
+	id->insert(new QtSoapSimpleType(QtSoapQName("name"), "id"));
+	id->insert(new QtSoapSimpleType(QtSoapQName("value"), _id));
+
+	QtSoapStruct *firstName = new QtSoapStruct(QtSoapQName("name_value"));
+	firstName->insert(new QtSoapSimpleType(QtSoapQName("name"), "first_name"));
+	firstName->insert(new QtSoapSimpleType(QtSoapQName("value"), _firstName));
+
+	QtSoapStruct *lastName = new QtSoapStruct(QtSoapQName("name_value"));
+	lastName->insert(new QtSoapSimpleType(QtSoapQName("name"), "last_name"));
+	lastName->insert(new QtSoapSimpleType(QtSoapQName("value"), _lastName));
+
+	QtSoapStruct *desc = new QtSoapStruct(QtSoapQName("name_value"));
+	desc->insert(new QtSoapSimpleType(QtSoapQName("name"), "description"));
+	desc->insert(new QtSoapSimpleType(QtSoapQName("value"), _description));
+
+	QtSoapStruct *addrSt = new QtSoapStruct(QtSoapQName("name_value"));
+	addrSt->insert(new QtSoapSimpleType(QtSoapQName("name"), "primary_address_street"));
+	addrSt->insert(new QtSoapSimpleType(QtSoapQName("value"), _addressStreet));
+
+	QtSoapStruct *addrCi = new QtSoapStruct(QtSoapQName("name_value"));
+	addrCi->insert(new QtSoapSimpleType(QtSoapQName("name"), "primary_address_city"));
+	addrCi->insert(new QtSoapSimpleType(QtSoapQName("value"), _addressCity));
+
+	QtSoapStruct *addrPo = new QtSoapStruct(QtSoapQName("name_value"));
+	addrPo->insert(new QtSoapSimpleType(QtSoapQName("name"), "primary_address_postalcode"));
+	addrPo->insert(new QtSoapSimpleType(QtSoapQName("value"), _addressPostalcode));
+
+	QtSoapStruct *addrCo = new QtSoapStruct(QtSoapQName("name_value"));
+	addrCo->insert(new QtSoapSimpleType(QtSoapQName("name"), "primary_address_country"));
+	addrCo->insert(new QtSoapSimpleType(QtSoapQName("value"), _addressCountry));
+
+	QtSoapStruct *phW = new QtSoapStruct(QtSoapQName("name_value"));
+	phW->insert(new QtSoapSimpleType(QtSoapQName("name"), "phone_work"));
+	phW->insert(new QtSoapSimpleType(QtSoapQName("value"), _phoneWork));
+
+	QtSoapStruct *phF = new QtSoapStruct(QtSoapQName("name_value"));
+	phF->insert(new QtSoapSimpleType(QtSoapQName("name"), "phone_fax"));
+	phF->insert(new QtSoapSimpleType(QtSoapQName("value"), _phoneFax));
+
+	QtSoapStruct *phH = new QtSoapStruct(QtSoapQName("name_value"));
+	phH->insert(new QtSoapSimpleType(QtSoapQName("name"), "phone_home"));
+	phH->insert(new QtSoapSimpleType(QtSoapQName("value"), _phoneHome));
+
+	QtSoapStruct *phM = new QtSoapStruct(QtSoapQName("name_value"));
+	phM->insert(new QtSoapSimpleType(QtSoapQName("name"), "phone_mobile"));
+	phM->insert(new QtSoapSimpleType(QtSoapQName("value"), _phoneMobile));
+
+	QtSoapStruct *phO = new QtSoapStruct(QtSoapQName("name_value"));
+	phO->insert(new QtSoapSimpleType(QtSoapQName("name"), "phone_other"));
+	phO->insert(new QtSoapSimpleType(QtSoapQName("value"), _phoneOther));
+
+	QtSoapStruct *email = new QtSoapStruct(QtSoapQName("name_value"));
+	email->insert(new QtSoapSimpleType(QtSoapQName("name"), "email1"));
+	email->insert(new QtSoapSimpleType(QtSoapQName("value"), _email1));
+
+	QtSoapStruct *email2 = new QtSoapStruct(QtSoapQName("name_value"));
+	email2->insert(new QtSoapSimpleType(QtSoapQName("name"), "email2"));
+	email2->insert(new QtSoapSimpleType(QtSoapQName("value"), _email2));
+
+	QtSoapArray *contact = new QtSoapArray(QtSoapQName("name_value_list"));
+	contact->insert(0, id);
+	contact->insert(1, firstName);
+	contact->insert(2, lastName);
+	contact->insert(3, desc);
+	contact->insert(4, addrCi);
+	contact->insert(5, addrPo);
+	contact->insert(6, addrCo);
+	contact->insert(7, addrSt);
+	contact->insert(8, phW);
+	contact->insert(9, phF);
+	contact->insert(10, phH);
+	contact->insert(11, phM);
+	contact->insert(12, phO);
+	contact->insert(13, email);
+	contact->insert(14, email2);
+
+	QtSoapMessage msg = createMessage("set_entry");
+	msg.addMethodArgument("session", "", session);
+	msg.addMethodArgument("module_name", "", "Contacts");
+	msg.addMethodArgument(contact);
+	submit(msg, "set_entry");
 
 }
 

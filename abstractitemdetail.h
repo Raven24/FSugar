@@ -37,7 +37,7 @@ public slots:
 protected:
 	virtual void retrieveItem();
 	virtual void fillData();
-	void hideButtons(const bool _var);
+	virtual void hideButtons(const bool _var);
 	void paintEvent(QPaintEvent *);
 
 	bool inProgress;

@@ -61,6 +61,7 @@ void Account::populateContacts(const QString _id)
 		tmp->id = i.value().value("id");
 		tmp->firstName = i.value().value("first_name");
 		tmp->lastName = i.value().value("last_name");
+		tmp->description = i.value().value("description");
 		tmp->phoneWork = i.value().value("phone_work");
 		tmp->phoneFax = i.value().value("phone_fax");
 		tmp->phoneHome = i.value().value("phone_home");

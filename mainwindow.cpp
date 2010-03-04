@@ -16,6 +16,7 @@
 #include "cookiejar.h"
 
 QString MainWindow::appPath = QString("");
+MainWindow* MainWindow::instance = NULL;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -198,6 +199,14 @@ MainWindow::~MainWindow()
 {
 	delete webView->page()->networkAccessManager()->cookieJar();
 	delete ui;
+}
+
+MainWindow* MainWindow::getInstance()
+{
+	if(MainWindow::instance == NULL) {
+		MainWindow::instance = new MainWindow();
+	}
+	return MainWindow::instance;
 }
 
 void MainWindow::addAccount()

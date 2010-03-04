@@ -25,11 +25,14 @@ public slots:
 	void displayContacts();
 	void saveChanges();
 	void initDialog();
+	void addContact();
 	void openContact(QModelIndex _index);
 
 private:
 	void retrieveItem(const QModelIndex *_index);
 	void fillData();
+	void hideButtons(bool _var);
+
 	QTableView *contactsTable;
 
 	QLineEdit *accountName, *accountAddress1,
@@ -41,6 +44,7 @@ private:
 	QTextEdit *accountDescription;
 
 	QCheckBox *catChkBox;
+	QPushButton *newContact;
 
 	Account *item;
 

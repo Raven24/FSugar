@@ -5,16 +5,16 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    MainWindow w;
-    w.show();
+	MainWindow *w = MainWindow::getInstance();
+	w->show();
 
 	qApp->setStyleSheet("QWidget { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop:0 #333, stop:0.3 #232323 stop: 1 #333); color: #FFF; }"
 						"QWebView { background: #FFF; color: #000 }"
-						"AccountDetail { background: qradialgradient(cx:0, cy:-0.2, radius: 1, fx:0.5, fy:0.5, stop:0 #888, stop:1 #555); } "
-						"AccountDetail QTabBar { background: transparent; }"
-						"AccountDetail QTabWidget::pane { top: -2px; }"
-						"AccountDetail QTabBar::tab { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #444, stop: 1 #222); }"
-						"AccountDetail QTabBar::tab:selected { background: #222; }"
+						"AccountDetail, ContactDetail { background: qradialgradient(cx:0, cy:-0.2, radius: 1, fx:0.5, fy:0.5, stop:0 #888, stop:1 #555); } "
+						"AccountDetail QTabBar, ContactDetail QTabBar { background: transparent; }"
+						"AccountDetail QTabWidget::pane ContactDetail QTabWidget::pane { top: -2px; }"
+						"AccountDetail QTabBar::tab, ContactDetail QTabBar::tab { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #444, stop: 1 #222); }"
+						"AccountDetail QTabBar::tab:selected, ContactDetail QTabBar::tab:selected { background: #222; }"
 						"LoadingDialog { background: none; }"
 
 						"QMenuBar { background: #222; border-bottom: 1px solid #BBB; padding: 2px; }"

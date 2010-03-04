@@ -76,8 +76,8 @@ void ContactDetail::initDialog()
 	layout->addWidget(descriptionLabel, 0, Qt::AlignTop);
 	layout->addWidget(contactDescriptionEdit, 1, Qt::AlignTop);
 	layout->addStretch(3);
-	layout->addLayout(itemsContainer);
-	layout->addWidget(notesTable);
+	layout->addLayout(itemsContainer, 1);
+	layout->addWidget(notesTable, 3);
 
 	setLayout(layout);
 }
@@ -107,6 +107,10 @@ void ContactDetail::saveChanges()
 void ContactDetail::retrieveContact(Contact* _c)
 {
 	item = _c;
+
+	// something bad happens here...
+	//if(_c->id.isEmpty()) hideButtons(true);
+
 	initDialog();
 	fillData();
 

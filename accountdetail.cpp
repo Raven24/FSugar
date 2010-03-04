@@ -8,6 +8,7 @@
 #include "createnotedialog.h"
 #include "abstractitemdetail.h"
 #include "contactdetail.h"
+#include "mainwindow.h"
 
 AccountDetail::AccountDetail(QWidget *parent) :
 	AbstractItemDetail(parent)
@@ -74,6 +75,10 @@ void AccountDetail::initDialog()
 
 	QLabel *accountDescLbl = new QLabel(tr("Beschreibung"));
 	QTabWidget *childrenTab = new QTabWidget(this);
+	newContact = new QPushButton(QIcon(":add-contact.png"), tr("Neuer Kontakt"));
+
+	connect(newContact, SIGNAL(pressed()),
+			this, SLOT(addContact()));
 
 	// layout population
 	address->setLabelAlignment(Qt::AlignRight);
@@ -100,6 +105,7 @@ void AccountDetail::initDialog()
 	itemsContainer->addStretch(3);
 	itemsContainer->addWidget(newNote, 0, Qt::AlignRight);
 	itemsContainer->addWidget(newDocument, 0, Qt::AlignRight);
+	itemsContainer->addWidget(newContact, 0, Qt::AlignRight);
 
 	contactInfo->addLayout(address);
 	contactInfo->addLayout(rightLayout);
@@ -146,6 +152,14 @@ void AccountDetail::retrieveItem(const QModelIndex *index)
 	getItem()->getChildren();
 }
 
+void AccountDetail::hideButtons(bool _var)
+{
+	AbstractItemDetail::hideButtons(_var);
+
+	if(_var) { newContact->hide(); }
+	else { newContact->show(); }
+}
+
 void AccountDetail::fillData()
 {
 	//qDebug() << "supposed to fill in data now";
@@ -180,8 +194,23 @@ void AccountDetail::openContact(QModelIndex _index)
 {
 	ContactDetail *contactDetail = new ContactDetail();
 	contactDetail->retrieveContact(contactsModel->getContact(_index.row()));
-	dynamic_cast<QTabWidget *>(parent())->setCurrentIndex(dynamic_cast<QTabWidget *>(parent())->addTab(contactDetail, tr("Detailansicht")));
+	//dynamic_cast<QTabWidget *>(qApp->activeWindow())->setCurrentIndex(dynamic_cast<QTabWidget *>(qApp->activeWindow())->addTab(contactDetail, tr("Detailansicht")));
 	//parent()->objectName();
+	MainWindow *w = MainWindow::getInstance();
+	w->mainWidget->setCurrentIndex(w->mainWidget->addTab(contactDetail, tr("Detailansicht")));
+}
+
+void AccountDetail::addContact()
+{
+	ContactDetail *contactDetail = new ContactDetail();
+	Contact *c = contactsModel->newContact();
+	c->accountId = getItem()->id;
+	c->accountName = getItem()->name;
+
+	contactDetail->retrieveContact(c);
+
+	MainWindow *w = MainWindow::getInstance();
+	w->mainWidget->setCurrentIndex(w->mainWidget->addTab(contactDetail, tr("Neuer Kontakt")));
 }
 
 void AccountDetail::saveChanges()
