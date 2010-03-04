@@ -78,6 +78,7 @@ void AbstractItemDetail::displayNotes()
 	notesModel->read(&(getItem()->notes));
 	notesTable->setModel(notesModel);
 	notesTable->resizeRowsToContents();
+	notesTable->resizeColumnToContents(1);
 	progress(false);
 }
 

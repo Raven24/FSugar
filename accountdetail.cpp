@@ -189,6 +189,7 @@ void AccountDetail::displayContacts()
 	contactsModel->read(&(getItem()->contacts));
 	contactsTable->setModel(contactsModel);
 	contactsTable->resizeRowsToContents();
+	contactsTable->resizeColumnToContents(2);
 	progress(false);
 }
 

@@ -2,9 +2,9 @@
 
 #include "contactmodel.h"
 
-bool compareContactsGreaterThan(const Contact *c1, const Contact *c2)
+bool compareContactsLessThan(const Contact *c1, const Contact *c2)
 {
-	return c1->lastName > c2->lastName;
+	return c1->lastName < c2->lastName;
 }
 
 ContactModel::ContactModel(QObject *parent) :
@@ -105,7 +105,7 @@ void ContactModel::processNewContact()
 
 void ContactModel::sortData()
 {
-	qSort(contacts->begin(), contacts->end(), compareContactsGreaterThan);
+	qSort(contacts->begin(), contacts->end(), compareContactsLessThan);
 }
 
 Contact* ContactModel::getContact(const int num)
