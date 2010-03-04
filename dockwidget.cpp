@@ -5,7 +5,6 @@
 DockWidget::DockWidget(QWidget *parent) :
     QDockWidget(parent)
 {
-	//setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 	setWindowTitle(tr("Server-Kommunikation"));
 	setFixedHeight(100);
 

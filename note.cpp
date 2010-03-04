@@ -18,8 +18,6 @@ Note::Note(QObject *parent) :
 
 void Note::save()
 {
-	//qDebug() << "inside Note::save()";
-
 	if (!fileName.isEmpty() && id.isEmpty())
 		prepareAttachment();
 
@@ -33,7 +31,6 @@ void Note::save()
 
 void Note::afterSave(const QString _id)
 {
-	//qDebug() << "inside Note::afterSave()";
 	if(_id == id) {
 		emit saved();
 		return;
@@ -78,7 +75,6 @@ void Note::downloadAttachment()
 	QByteArray ba;
 
 	if(fileData.isEmpty()) {
-		//qDebug() << "fetch attachment here!";
 		crm->getNoteAttachment(id);
 		return;
 	} else {

@@ -33,7 +33,6 @@ LoginDialog::LoginDialog(QWidget *parent)
 	connect(ok, SIGNAL(pressed()),
 			this, SLOT(accept()));
 
-
 	setLayout(layout);
 }
 

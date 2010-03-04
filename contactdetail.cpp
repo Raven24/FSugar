@@ -144,3 +144,21 @@ void ContactDetail::fillData()
 	addressCountryEdit->setText(getItem()->addressCountry);
 	contactDescriptionEdit->setText(getItem()->description);
 }
+
+void ContactDetail::createNewNote()
+{
+	progress(true);
+
+	Note *newNote = notesModel->newNote();
+	newNote->name = newNoteDialog->noteName;
+	newNote->description = newNoteDialog->noteDescription;
+	if(!newNoteDialog->fileName.isEmpty())
+		newNote->fileName = newNoteDialog->fileName;
+	newNote->parentType = getItem()->type;
+	newNote->contactId = getItem()->id;
+
+	newNote->save();
+
+	connect(newNote, SIGNAL(saved()),
+			this, SLOT(displayNotes()));
+}

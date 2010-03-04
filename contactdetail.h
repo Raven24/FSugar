@@ -24,6 +24,7 @@ public slots:
 	void saveChanges();
 	void initDialog();
 	void retrieveContact(Contact* _c);
+	void createNewNote();
 
 private:
 	void fillData();

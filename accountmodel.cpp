@@ -53,8 +53,6 @@ int AccountModel::columnCount(const QModelIndex &parent)
 
 QVariant AccountModel::data(const QModelIndex &index, int role) const
 {
-	//qDebug() << QString("request: [%1,%2], %3").arg(index.row()).arg(index.column()).arg(role);
-
 	if(accounts.isEmpty()) {
 		return QVariant();
 	}
@@ -131,14 +129,12 @@ void AccountModel::processData(const QString _id)
 	if(!_id.isEmpty()) return;
 	if (crm->entries->size() < 1) return;
 
-	//qDebug() << "processing data";
 	accounts.clear();
 	QMap<QString, QMap<QString, QString> >::const_iterator i = crm->entries->begin();
 
 	while (i != crm->entries->end()) {
 		Account *tmp = new Account();
 
-		//qDebug() << i.value().value("id");
 		tmp->id = i.value().value("id");
 		tmp->name = i.value().value("name");
 		tmp->address_street = i.value().value("billing_address_street");
@@ -156,11 +152,9 @@ void AccountModel::processData(const QString _id)
 		accounts.append(tmp);
 		i++;
 	}
-
-	//emit dataChanged(QModelIndex(), QModelIndex());
 	sortData();
 	reset();
-	//qDebug() << accounts.size();
+
 	emit dataReady();
 }
 
@@ -182,5 +176,4 @@ void AccountModel::processNewAccount()
 void AccountModel::sortData()
 {
 	qSort(accounts.begin(), accounts.end(), compareAccountsLessThan);
-	//reset();
 }

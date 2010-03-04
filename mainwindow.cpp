@@ -105,8 +105,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	// DEBUG XML COMMUNICATION
 	//connect(crm, SIGNAL(sendingMessage(QString)),
 	//		this, SLOT(debug(QString)));
-	connect(crm->trans, SIGNAL(newSoapMessage(QString)),
-			this, SLOT(debug(QString)));
+	//connect(crm->trans, SIGNAL(newSoapMessage(QString)),
+	//		this, SLOT(debug(QString)));
 
 	connect(crm, SIGNAL(unknownAction(QString)),
 			this, SLOT(unknownAction(QString)));
@@ -179,7 +179,6 @@ void MainWindow::displayAccounts()
 
 void MainWindow::displayAccount(const QModelIndex index)
 {
-	//qDebug() << index;	
 	mainWidget->setCurrentIndex(mainWidget->addTab(new AccountDetail(&index), tr("Detailansicht")));
 }
 
@@ -213,7 +212,6 @@ MainWindow* MainWindow::getInstance()
 
 void MainWindow::addAccount()
 {
-	//qDebug() << "here we will show the form to add an account";
 	mainWidget->setCurrentIndex(mainWidget->addTab(new AccountDetail(accountModel->newAccount()), tr("Neue Firma")));
 }
 
@@ -308,7 +306,6 @@ void MainWindow::unknownAction(QString action)
 
 void MainWindow::displayPressList()
 {
-	//qDebug() << "here we show the list through a filter";
 	filterModel->setFilterRole(256); // 265 == acc.category;
 	filterModel->setFilterRegExp(QRegExp("press", Qt::CaseInsensitive, QRegExp::FixedString));
 

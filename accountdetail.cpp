@@ -135,8 +135,6 @@ void AccountDetail::initDialog()
 
 void AccountDetail::retrieveItem(const QModelIndex *index)
 {
-	//qDebug() << index->row();
-
 	AccountModel *model = AccountModel::getInstance();
 	item = model->getAccount(index->row());
 
@@ -167,7 +165,6 @@ void AccountDetail::hideButtons(bool _var)
 
 void AccountDetail::fillData()
 {
-	//qDebug() << "supposed to fill in data now";
 	accountName->setText(getItem()->name);
 	accountAddress1->setText(getItem()->address_street);
 	accountAddress2->setText(getItem()->address_postalcode);
@@ -199,8 +196,6 @@ void AccountDetail::openContact(QModelIndex _index)
 {
 	ContactDetail *contactDetail = new ContactDetail();
 	contactDetail->retrieveContact(contactsModel->getContact(_index.row()));
-	//dynamic_cast<QTabWidget *>(qApp->activeWindow())->setCurrentIndex(dynamic_cast<QTabWidget *>(qApp->activeWindow())->addTab(contactDetail, tr("Detailansicht")));
-	//parent()->objectName();
 	MainWindow *w = MainWindow::getInstance();
 	w->mainWidget->setCurrentIndex(w->mainWidget->addTab(contactDetail, tr("Detailansicht")));
 }
@@ -243,8 +238,6 @@ void AccountDetail::saveChanges()
 	} else {
 		getItem()->category = "";
 	}
-
-	//qDebug() << acc->toString();
 
 	getItem()->save();
 }

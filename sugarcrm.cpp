@@ -521,8 +521,6 @@ void SugarCrm::decideAction(const QString action, const QtSoapStruct data)
 			entries->insert(QString(listEntries.value("id")), listEntries);
 			parentId = (listEntries["parent_id"].isEmpty()) ? listEntries["account_id"] : listEntries["parent_id"];
 		}
-		//qDebug() << entries.size() << "=" << ent.count();
-		//qDebug() << "parent" << parentId;
 		emit dataAvailable(parentId);
 		return;
 	}

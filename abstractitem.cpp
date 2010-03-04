@@ -21,16 +21,11 @@ void AbstractItem::getNotes()
 	notes.clear();
 	connect(crm, SIGNAL(notesAvailable(QString)),
 			this, SLOT(populateNotes(QString)));
-
-	//qDebug() << toString() << "wants notes";
-
 	crm->getRelatedNotes(type, id);
 }
 
 void AbstractItem::populateNotes(QString _id)
 {
-	qDebug() << _id << "we got notes for you...";
-
 	if(_id.isEmpty()) emit notesAvailable();
 	if(_id != id) return;
 
@@ -68,7 +63,6 @@ QList<Note*>* AbstractItem::getNotesList()
 
 void AbstractItem::seeWhoSaved(QString _id)
 {
-	//qDebug() << _id;
 	if(id == _id){
 		emit saved();
 	}

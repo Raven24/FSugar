@@ -75,8 +75,6 @@ void AbstractItemDetail::afterSaveAct()
 
 void AbstractItemDetail::displayNotes()
 {
-//	qDebug() << "notes:" << item->getNotesList()->size();
-//	return;
 	notesModel->read(&(getItem()->notes));
 	notesTable->setModel(notesModel);
 	notesTable->resizeRowsToContents();
@@ -86,7 +84,6 @@ void AbstractItemDetail::displayNotes()
 void AbstractItemDetail::createNewNote()
 {
 	progress(true);
-	//qDebug() << "should create a note right about here";
 
 	Note *newNote = notesModel->newNote();
 	newNote->name = newNoteDialog->noteName;

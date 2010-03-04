@@ -6,7 +6,7 @@ CookieJar::CookieJar(QObject* parent) :
 		QNetworkCookieJar(parent)
 {
 	populateCookies();
-	qDebug() << "number of cookies read:" << allCookies().size();
+	//qDebug() << "number of cookies read:" << allCookies().size();
 }
 
 CookieJar::~CookieJar()
@@ -34,7 +34,7 @@ void CookieJar::populateCookies()
 
 void CookieJar::saveCookies()
 {
-	qDebug() << "saving cookies";
+	//qDebug() << "saving cookies";
 
 	QDir::setCurrent(MainWindow::appPath);
 	QFile f("cookies.txt");
@@ -47,7 +47,6 @@ void CookieJar::saveCookies()
 
 	QListIterator<QNetworkCookie> i(allCookies());
 	while(i.hasNext()) {
-		//qDebug() << i.next().toRawForm();
 		bytesWritten += f.write(i.next().toRawForm());
 		bytesWritten += f.write("\n");
 	}

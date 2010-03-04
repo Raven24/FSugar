@@ -15,11 +15,6 @@ NotesModel::NotesModel(QObject *parent) :
 {
 }
 
-/*NotesModel::NotesModel(Account *acc, QObject *parent) :
-		QAbstractTableModel(parent), acc(acc)
-{
-}*/
-
 int NotesModel::rowCount(const QModelIndex &parent) const
 {
 	Q_UNUSED(parent)
@@ -37,7 +32,6 @@ QVariant NotesModel::headerData(int section, Qt::Orientation orientation, int ro
 	if (orientation == Qt::Vertical) {
 		return QVariant();
 	}
-	//qDebug() << "section header" << section << "role" << role;
 
 	switch(role) {
 		case 0:

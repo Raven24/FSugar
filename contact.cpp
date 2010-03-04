@@ -8,7 +8,6 @@ Contact::Contact(QObject *parent) :
 
 void Contact::save()
 {
-	//TODO: change this
 	crm->updateContact(id, firstName, lastName, description,
 					   addressStreet, addressPostalcode, addressCity, addressCountry,
 					   phoneWork, phoneHome, phoneMobile, phoneFax, phoneOther,
