@@ -13,6 +13,7 @@
 #include "accountmodel.h"
 #include "accountproxymodel.h"
 #include "accountdetail.h"
+#include "cookiejar.h"
 
 namespace Ui {
     class MainWindow;
@@ -44,6 +45,8 @@ public slots:
 	void displayPressList();
 	void displaySettings();
 
+	void cleanup();
+
 protected:
     void changeEvent(QEvent *e);
 	void paintEvent(QPaintEvent * event);
@@ -59,6 +62,7 @@ private:
 	QToolBar *toolBar;
 	SugarCrm *crm;
 	SugarSettings *settings;
+	CookieJar *cookieJar;
 
 	QAction *addAccountAct, *openCalAct, *pressViewAct;
 	QListView *listView, *pressList;

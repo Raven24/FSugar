@@ -125,7 +125,7 @@ void AccountDetail::initDialog()
 	layout->addWidget(accountDescription, 1, Qt::AlignTop);
 	layout->addStretch(3);
 	layout->addLayout(itemsContainer, 1);
-	layout->addWidget(childrenTab, 3);
+	layout->addWidget(childrenTab, 4);
 
 	connect(contactsTable, SIGNAL(doubleClicked(QModelIndex)),
 			this, SLOT(openContact(QModelIndex)));

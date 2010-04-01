@@ -101,6 +101,8 @@ MainWindow::MainWindow(QWidget *parent) :
 			crm, SLOT(getSugarFlavor()));
 	connect(ui->actionAboutQt, SIGNAL(triggered()),
 			qApp, SLOT(aboutQt()));
+	connect(qApp, SIGNAL(aboutToQuit()),
+			this, SLOT(cleanup()));
 
 	// DEBUG XML COMMUNICATION
 	//connect(crm, SIGNAL(sendingMessage(QString)),
@@ -147,9 +149,11 @@ MainWindow::MainWindow(QWidget *parent) :
 	pressList->setAlternatingRowColors(true);
 
 	QNetworkAccessManager *nwManager = new QNetworkAccessManager();
-	nwManager->setCookieJar(new CookieJar(this));
-	webView = new QWebView();
+	cookieJar = new CookieJar(this);
+	nwManager->setCookieJar(cookieJar);
+	webView = new QWebView(this);
 	webView->page()->setNetworkAccessManager(nwManager);
+	webView->hide();
 
 	mainWidget = new QTabWidget(this);
 	mainWidget->setVisible(false);
@@ -196,9 +200,13 @@ void MainWindow::closeAccountTab(const int index)
 	}
 }
 
+void MainWindow::cleanup()
+{
+	delete cookieJar;
+}
+
 MainWindow::~MainWindow()
 {
-	delete webView->page()->networkAccessManager()->cookieJar();
 	delete ui;
 }
 
@@ -310,7 +318,7 @@ void MainWindow::unknownAction(QString action)
 
 void MainWindow::displayPressList()
 {
-	filterModel->setFilterRole(256); // 265 == acc.category;
+	filterModel->setFilterRole(256); // 256 == acc.category;
 	filterModel->setFilterRegExp(QRegExp("press", Qt::CaseInsensitive, QRegExp::FixedString));
 
 	pressList->setModel(filterModel);

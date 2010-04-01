@@ -77,7 +77,7 @@ void ContactDetail::initDialog()
 	layout->addWidget(contactDescriptionEdit, 1, Qt::AlignTop);
 	layout->addStretch(3);
 	layout->addLayout(itemsContainer, 1);
-	layout->addWidget(notesTable, 3);
+	layout->addWidget(notesTable, 4);
 
 	setLayout(layout);
 }
