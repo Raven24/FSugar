@@ -12,7 +12,8 @@ public:
 	static SugarSettings *getInstance();
 	void makeUpdate();
 
-	QString sugarHost, sugarPath, calendarUrl;
+	QString sugarHost, sugarPath, calendarUrl,
+			sugarUser, sugarPass;
 	bool useSsl;
 	QSettings *m_settings;
 

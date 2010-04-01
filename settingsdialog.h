@@ -19,8 +19,9 @@ public slots:
 private:
 	SugarSettings *settings;
 
-	QLineEdit *hostEdit, *pathEdit, *calPathEdit;
+	QLineEdit *hostEdit, *pathEdit, *calPathEdit, *usernameEdit, *passwordEdit;
 	QCheckBox *useSslEdit;
+
 
 };
 

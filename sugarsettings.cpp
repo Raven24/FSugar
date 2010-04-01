@@ -25,6 +25,8 @@ void SugarSettings::assignVars()
 	sugarHost = m_settings->value("SugarCrm/hostname", "www.example.com").toString();
 	sugarPath = m_settings->value("SugarCrm/path", "/sugar/soap.php").toString();
 	useSsl = m_settings->value("SugarCrm/useSsl", true).toBool();
+	sugarUser = m_settings->value("SugarCrm/username", "User").toString();
+	sugarPass = m_settings->value("SugarCrm/password", "pass").toString();
 
 	calendarUrl = m_settings->value("Calendar/url", "http://calendar.google.com").toString();
 }

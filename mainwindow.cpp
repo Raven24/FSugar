@@ -252,13 +252,17 @@ void MainWindow::login()
 	centralWidget()->hide();
 
 	// ordinary table view
-	if(loginDialog->exec() == QDialog::Accepted) {
-		loadingDialog->show();
+	if(settings->sugarUser != "User") {
+		user = settings->sugarUser;
+		pass = settings->sugarPass.toUtf8();
+	} else if(loginDialog->exec() == QDialog::Accepted) {
 		user = loginDialog->getUsername();
 		pass = loginDialog->getPassword().toUtf8();
 	} else {
 		return;
 	}
+
+	loadingDialog->show();
 
 	// qml login
 	//user = rootComponent->property("username").toString();

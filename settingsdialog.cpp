@@ -22,11 +22,17 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 	calPathEdit = new QLineEdit(settings->calendarUrl);
 	useSslEdit = new QCheckBox();
 	useSslEdit->setChecked(settings->useSsl);
+	usernameEdit = new QLineEdit(settings->sugarUser);
+	passwordEdit = new QLineEdit(settings->sugarPass);
+	passwordEdit->setEchoMode(QLineEdit::Password);
+
 	QPushButton *saveBtn = new QPushButton(QIcon(":save.png"), tr("Speichern"));
 
 	sugarForm->addRow(tr("Hostname"), hostEdit);
 	sugarForm->addRow(tr("Pfad"), pathEdit);
 	sugarForm->addRow(tr("Verschl\374sselung"), useSslEdit);
+	sugarForm->addRow(tr("Benutzername"), usernameEdit);
+	sugarForm->addRow(tr("Passwort"), passwordEdit);
 	sugarBox->setLayout(sugarForm);
 
 	calForm->addRow(tr("Adresse"), calPathEdit);
@@ -36,7 +42,11 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 	buttons->addWidget(saveBtn);
 
 	layout->addWidget(header);
+
+	layout->addWidget(new QLabel(tr("Um die Aenderungen zu uebernehmen, muss das Programm neu gestartet werden!")), 1, Qt::AlignCenter);
+
 	layout->addWidget(sugarBox);
+
 	layout->addWidget(calBox);
 	layout->addStretch(3);
 	layout->addLayout(buttons);
@@ -52,6 +62,8 @@ void SettingsDialog::saveSettings()
 	settings->m_settings->setValue("SugarCrm/hostname", hostEdit->text());
 	settings->m_settings->setValue("SugarCrm/path", pathEdit->text());
 	settings->m_settings->setValue("SugarCrm/useSsl", useSslEdit->isChecked());
+	settings->m_settings->setValue("SugarCrm/username", usernameEdit->text());
+	settings->m_settings->setValue("SugarCrm/password", passwordEdit->text());
 
 	settings->m_settings->setValue("Calendar/url", calPathEdit->text());
 
