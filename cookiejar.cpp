@@ -12,7 +12,6 @@ CookieJar::CookieJar(QObject* parent) :
 CookieJar::~CookieJar()
 {
 	saveCookies();
-
 }
 
 void CookieJar::populateCookies()
