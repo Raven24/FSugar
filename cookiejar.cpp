@@ -61,7 +61,7 @@ void CookieJar::saveCookies()
 
 	QDir::setCurrent(MainWindow::appPath);
 	QFile f("cookies.txt");
-	qint64 bytesWritten;
+	qint64 bytesWritten = 0;
 
 	if (!f.open(QIODevice::ReadWrite)) {
 		qDebug() << "unable to save cookies";
