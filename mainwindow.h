@@ -102,6 +102,7 @@ private slots:
 	void debug(QString msg);
 
 	void closeAccountTab(const int index);
+	void loadStyle();
 
 };
 

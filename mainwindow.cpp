@@ -50,6 +50,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	MainWindow::appPath = qApp->applicationDirPath();
 
+	loadStyle();
+
 	dockWidget = new DockWidget;
 	addDockWidget(Qt::BottomDockWidgetArea, dockWidget);
 	dockWidget->hide();
@@ -122,6 +124,8 @@ MainWindow::MainWindow(QWidget *parent) :
 			crm, SLOT(getServerTime()));
 	connect(ui->actionSugarFlavor, SIGNAL(triggered()),
 			crm, SLOT(getSugarFlavor()));
+	connect(ui->actionReloadStyle, SIGNAL(triggered()),
+			this, SLOT(loadStyle()));
 	connect(ui->actionAboutQt, SIGNAL(triggered()),
 			qApp, SLOT(aboutQt()));
 	connect(qApp, SIGNAL(aboutToQuit()),
@@ -358,4 +362,16 @@ void MainWindow::doSearch()
 void MainWindow::setStatusMsg(QString msg, int time)
 {
 	statusBar()->showMessage(msg, time);
+}
+
+void MainWindow::loadStyle()
+{
+	QDir::setCurrent(MainWindow::appPath); // make sure we are in the app's dir
+	QFile style("style.css");
+	if(!style.open(QIODevice::ReadOnly | QIODevice::Text)) {
+		qDebug() << "could not open stylesheet";
+		return;
+	}
+	QString stylesheet(style.readAll());
+	qApp->setStyleSheet(stylesheet);
 }

@@ -20,7 +20,7 @@
      <x>0</x>
      <y>0</y>
      <width>796</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuTest">
@@ -40,6 +40,8 @@
     </property>
     <addaction name="actionServer_Zeit"/>
     <addaction name="actionSugarFlavor"/>
+    <addaction name="separator"/>
+    <addaction name="actionReloadStyle"/>
    </widget>
    <widget class="QMenu" name="menuHilfe">
     <property name="title">
@@ -54,7 +56,7 @@
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionLogin">
    <property name="icon">
-    <iconset>
+    <iconset resource="app.qrc">
      <normaloff>:/login.png</normaloff>:/login.png</iconset>
    </property>
    <property name="text">
@@ -66,7 +68,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="app.qrc">
      <normaloff>:/settings.png</normaloff>:/settings.png</iconset>
    </property>
    <property name="text">
@@ -75,7 +77,7 @@
   </action>
   <action name="actionBeenden">
    <property name="icon">
-    <iconset>
+    <iconset resource="app.qrc">
      <normaloff>:/exit.png</normaloff>:/exit.png</iconset>
    </property>
    <property name="text">
@@ -87,7 +89,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="app.qrc">
      <normaloff>:/logout.png</normaloff>:/logout.png</iconset>
    </property>
    <property name="text">
@@ -106,15 +108,22 @@
   </action>
   <action name="actionAboutQt">
    <property name="icon">
-    <iconset>
+    <iconset resource="app.qrc">
      <normaloff>:/help.png</normaloff>:/help.png</iconset>
    </property>
    <property name="text">
     <string>Über Qt</string>
    </property>
   </action>
+  <action name="actionReloadStyle">
+   <property name="text">
+    <string>Style neu laden</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="app.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionBeenden</sender>
