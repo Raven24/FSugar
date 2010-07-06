@@ -72,7 +72,12 @@ void Account::getContacts()
 
 void Account::openEmail()
 {
-	QDesktopServices::openUrl(QUrl(QString("mailto:").append(email)));
+	useAttribute(email, "email");
+}
+
+void Account::gotoWebsite()
+{
+	useAttribute(website, "website");
 }
 
 void Account::populateContacts(const QString _id)

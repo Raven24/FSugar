@@ -52,6 +52,7 @@ HEADERS += mainwindow.h \
 FORMS += mainwindow.ui
 RESOURCES += app.qrc
 OTHER_FILES += SugarCrm.qml \
+	style.css \
     content/AccountView.qml \
     content/AuthView.qml \
     content/TestListModel.qml \

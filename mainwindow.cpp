@@ -216,7 +216,9 @@ void MainWindow::displayAccounts()
 
 void MainWindow::displayAccount(const QModelIndex index)
 {
-	mainWidget->setCurrentIndex(mainWidget->addTab(new AccountDetail(&index), tr("Detailansicht")));
+	Account *item = accountModel->getAccount(index.row());
+	qDebug() << "[accounts] opening " << item->name;
+	mainWidget->setCurrentIndex(mainWidget->addTab(new AccountDetail(&index), item->name));
 }
 
 void MainWindow::displayPressAccount(const QModelIndex index)

@@ -63,7 +63,7 @@ private:
 
 	QTextEdit *contactDescriptionEdit;
 
-	QPushButton *openEmailBtn;
+	QPushButton *openEmailBtn, *openEmail2Btn;
 
 };
 

@@ -40,7 +40,8 @@ void ContactDetail::initDialog()
 	QHBoxLayout *itemsContainer = new QHBoxLayout();
 	QHBoxLayout *contactInfoLayout = new QHBoxLayout();
 	QVBoxLayout *layout = new QVBoxLayout();
-	QHBoxLayout *email = new QHBoxLayout();
+	QHBoxLayout *email1 = new QHBoxLayout();
+	QHBoxLayout *email2 = new QHBoxLayout();
 
 	// edit fields
 	firstNameEdit = new QLineEdit();
@@ -58,7 +59,12 @@ void ContactDetail::initDialog()
 	addressCountryEdit = new QLineEdit();
 	leadSourceEdit = new QLineEdit();
 	contactDescriptionEdit = new QTextEdit();
-	openEmailBtn = new QPushButton(QIcon(":new-email.png"), tr("Email schreiben"));
+	openEmailBtn = new QPushButton(QIcon(":new-email.png"), tr(""));
+	openEmailBtn->setProperty("btnType", "right");
+	openEmailBtn->setToolTip(tr("Email schreiben"));
+	openEmail2Btn = new QPushButton(QIcon(":new-email.png"), tr(""));
+	openEmail2Btn->setProperty("btnType", "right");
+	openEmail2Btn->setToolTip(tr("Email schreiben"));
 
 	QFont f = firstNameEdit->font();
 	f.setPixelSize(14);
@@ -71,9 +77,12 @@ void ContactDetail::initDialog()
 	nameLayout->addWidget(lastNameEdit);
 	nameLayout->addWidget(firstNameEdit);
 
-	email->addWidget(new QLabel("Email"), 1, Qt::AlignRight);
-	email->addWidget(email1Edit, 4);
-	email->addWidget(openEmailBtn,1);
+	email1->setSpacing(0);
+	email1->addWidget(email1Edit, 3);
+	email1->addWidget(openEmailBtn, 0, Qt::AlignLeft);
+	email2->setSpacing(0);
+	email2->addWidget(email2Edit, 3);
+	email2->addWidget(openEmail2Btn, 0, Qt::AlignLeft);
 
 	addressLayout->setLabelAlignment(Qt::AlignRight);
 	addressLayout->addRow(tr("Adresse"), addressStreetEdit);
@@ -81,8 +90,8 @@ void ContactDetail::initDialog()
 	addressLayout->addRow(tr("Ort"), addressCityEdit);
 	addressLayout->addRow(tr("Land"), addressCountryEdit);
 
-	addressLayout->addRow(email);
-	addressLayout->addRow(tr("Email 2"), email2Edit);
+	addressLayout->addRow(tr("Email 1"), email1);
+	addressLayout->addRow(tr("Email 2"), email2);
 
 	phoneLayout->addRow(tr("Telefon Arbeit"), phoneWorkEdit);
 	phoneLayout->addRow(tr("Mobil"), phoneMobileEdit);
@@ -149,6 +158,8 @@ void ContactDetail::retrieveContact(Contact* _c)
 			this, SLOT(displayNotes()));
 	connect(openEmailBtn, SIGNAL(pressed()),
 			getItem(), SLOT(openEmail()));
+	connect(openEmail2Btn, SIGNAL(pressed()),
+			getItem(), SLOT(openEmail2()));
 
 	getItem()->getChildren();
 }

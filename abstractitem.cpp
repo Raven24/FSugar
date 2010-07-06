@@ -21,7 +21,7 @@
  *
  ***********************************************/
 
-#include <QtCore>
+#include <QtGui>
 #include "abstractitem.h"
 
 AbstractItem::AbstractItem(QObject *parent) :
@@ -97,4 +97,19 @@ void AbstractItem::gotCreated(QString _id)
 		id = _id;
 		emit saved();
 	}
+}
+
+void AbstractItem::useAttribute(const QString _attr, const QString _type)
+{
+	QUrl url;
+
+	if(_type.contains("email")) {
+		url = QUrl(QString("mailto:").append(_attr));
+	} else if (_type.contains("website")) {
+		QString addr(_attr);
+		if(!_attr.contains("http")) addr.prepend("http://");
+		url = QUrl(addr);
+	}
+
+	QDesktopServices::openUrl(url);
 }

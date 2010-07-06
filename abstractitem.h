@@ -49,7 +49,6 @@ signals:
 
 public slots:
 	virtual void save() = 0;
-	virtual void openEmail() = 0;
 	void populateNotes(QString _id);
 	void getChildren();
 	void getNotes();
@@ -57,6 +56,9 @@ public slots:
 	void seeWhoSaved(QString _id);
 
 	QString toString();
+
+protected:
+	void useAttribute(const QString _attr, const QString _type);
 
 };
 

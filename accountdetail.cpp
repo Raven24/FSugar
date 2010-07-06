@@ -78,6 +78,7 @@ void AccountDetail::initDialog()
 	QHBoxLayout *itemsContainer = new QHBoxLayout();
 	QHBoxLayout *contactInfo = new QHBoxLayout();
 	QHBoxLayout *email = new QHBoxLayout();
+	QHBoxLayout *website = new QHBoxLayout();
 
 	// edit fields
 	accountName = new QLineEdit();
@@ -96,7 +97,12 @@ void AccountDetail::initDialog()
 	accountPhoneAlt = new QLineEdit();
 	accountDescription = new QTextEdit();
 	catChkBox = new QCheckBox();
-	openEmailBtn = new QPushButton(QIcon(":new-email.png"), tr("Email schreiben"));
+	openEmailBtn = new QPushButton(QIcon(":new-email.png"), tr(""));
+	openEmailBtn->setProperty("btnType", "right");
+	openEmailBtn->setToolTip(tr("Email schreiben"));
+	gotoWebsiteBtn = new QPushButton(QIcon(":visit-website.png"), tr(""));
+	gotoWebsiteBtn->setProperty("btnType", "right");
+	gotoWebsiteBtn->setToolTip(tr("Homepage oeffnen"));
 
 	QLabel *accountDescLbl = new QLabel(tr("Beschreibung"));
 	childrenTab = new QTabWidget(this);
@@ -106,17 +112,21 @@ void AccountDetail::initDialog()
 			this, SLOT(addContact()));
 
 	// layout population
-	email->addWidget(new QLabel("Email"), 1, Qt::AlignRight);
+	email->setSpacing(0);
 	email->addWidget(accountEmail, 3);
-	email->addWidget(openEmailBtn,1);
+	email->addWidget(openEmailBtn, 0, Qt::AlignLeft);
+
+	website->setSpacing(0);
+	website->addWidget(accountWebsite, 3);
+	website->addWidget(gotoWebsiteBtn, 0, Qt::AlignLeft);
 
 	address->setLabelAlignment(Qt::AlignRight);
 	address->addRow(tr("Adresse"), accountAddress1);
 	address->addRow(tr("PLZ"), accountAddress2);
 	address->addRow(tr("Ort"), accountAddress3);
 	address->addRow(tr("Land"), accountAddress4);
-	address->addRow(email);
-	address->addRow(tr("Homepage"), accountWebsite);
+	address->addRow(tr("Email"), email);
+	address->addRow(tr("Homepage"), website);
 
 	catLayout->addRow(tr("Pressekontakt"), catChkBox);
 
@@ -177,6 +187,8 @@ void AccountDetail::retrieveItem(const QModelIndex *index)
 			this, SLOT(displayNotes()));
 	connect(openEmailBtn, SIGNAL(pressed()),
 			getItem(), SLOT(openEmail()));
+	connect(gotoWebsiteBtn, SIGNAL(clicked()),
+			getItem(), SLOT(gotoWebsite()));
 
 	getItem()->getChildren();
 }

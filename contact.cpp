@@ -42,5 +42,9 @@ void Contact::save()
 
 void Contact::openEmail()
 {
-	QDesktopServices::openUrl(QUrl(QString("mailto:").append(email1)));
+	useAttribute(email1, "email");
+}
+void Contact::openEmail2()
+{
+	useAttribute(email2, "email");
 }

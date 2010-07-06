@@ -68,7 +68,7 @@ private:
 	QTextEdit *accountDescription;
 
 	QCheckBox *catChkBox;
-	QPushButton *newContact, *openEmailBtn;
+	QPushButton *newContact, *openEmailBtn, *gotoWebsiteBtn;
 
 	Account *item;
 
