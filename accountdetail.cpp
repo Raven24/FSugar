@@ -77,6 +77,7 @@ void AccountDetail::initDialog()
 	QFormLayout *catLayout = new QFormLayout();
 	QHBoxLayout *itemsContainer = new QHBoxLayout();
 	QHBoxLayout *contactInfo = new QHBoxLayout();
+	QHBoxLayout *email = new QHBoxLayout();
 
 	// edit fields
 	accountName = new QLineEdit();
@@ -95,6 +96,7 @@ void AccountDetail::initDialog()
 	accountPhoneAlt = new QLineEdit();
 	accountDescription = new QTextEdit();
 	catChkBox = new QCheckBox();
+	openEmailBtn = new QPushButton(QIcon(":new-email.png"), tr("Email schreiben"));
 
 	QLabel *accountDescLbl = new QLabel(tr("Beschreibung"));
 	childrenTab = new QTabWidget(this);
@@ -104,12 +106,16 @@ void AccountDetail::initDialog()
 			this, SLOT(addContact()));
 
 	// layout population
+	email->addWidget(new QLabel("Email"), 1, Qt::AlignRight);
+	email->addWidget(accountEmail, 3);
+	email->addWidget(openEmailBtn,1);
+
 	address->setLabelAlignment(Qt::AlignRight);
 	address->addRow(tr("Adresse"), accountAddress1);
 	address->addRow(tr("PLZ"), accountAddress2);
 	address->addRow(tr("Ort"), accountAddress3);
 	address->addRow(tr("Land"), accountAddress4);
-	address->addRow(tr("Email"), accountEmail);
+	address->addRow(email);
 	address->addRow(tr("Homepage"), accountWebsite);
 
 	catLayout->addRow(tr("Pressekontakt"), catChkBox);
@@ -169,6 +175,8 @@ void AccountDetail::retrieveItem(const QModelIndex *index)
 			this, SLOT(afterSaveAct()));
 	connect(getItem(), SIGNAL(notesAvailable()),
 			this, SLOT(displayNotes()));
+	connect(openEmailBtn, SIGNAL(pressed()),
+			getItem(), SLOT(openEmail()));
 
 	getItem()->getChildren();
 }

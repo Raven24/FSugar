@@ -147,6 +147,12 @@ MainWindow::MainWindow(QWidget *parent) :
 			this, SLOT(loginResponse()));
 
 
+	connect(crm, SIGNAL(returnedFaultyMessage(QString)),
+			loadingDialog, SLOT(hide()));
+
+	connect(crm, SIGNAL(returnedFaultyMessage(QString)),
+			this, SLOT(setStatusMsg(QString)));
+
 	//TODO: change this when it works
 	//setCentralWidget(centerView);
 	//centerView->execute();

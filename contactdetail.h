@@ -63,6 +63,8 @@ private:
 
 	QTextEdit *contactDescriptionEdit;
 
+	QPushButton *openEmailBtn;
+
 };
 
 #endif // CONTACTDETAIL_H

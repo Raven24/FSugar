@@ -21,6 +21,7 @@
  *
  ***********************************************/
 
+#include <QtGui>
 #include "contact.h"
 
 Contact::Contact(QObject *parent) :
@@ -37,4 +38,9 @@ void Contact::save()
 					   email1, email2,
 					   accountId, accountName);
 	setProperty("newEntry", false);
+}
+
+void Contact::openEmail()
+{
+	QDesktopServices::openUrl(QUrl(QString("mailto:").append(email1)));
 }

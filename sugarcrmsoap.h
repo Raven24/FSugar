@@ -26,13 +26,14 @@
 
 #include <QObject>
 #include <qtsoap.h>
+#include <sugarsettings.h>
 
 class SugarCrmSoap : public QObject
 {
 	Q_OBJECT
 
 public:
-	SugarCrmSoap(QString host);
+	SugarCrmSoap();
 	void setAction(const QString &action);
 
 signals:
@@ -40,14 +41,16 @@ signals:
 	void newSoapMessage(const QString msg);
 
 public slots:
-	void submitRequest(QtSoapMessage &request, const QString &path = "");
+	void submitRequest(QtSoapMessage &request);
 
 private slots:
 	void debugSoapResponse(QtSoapMessage msg);
 	void handleSslError(QNetworkReply* reply, const QList<QSslError> &errors);
+	void setHost();
 
 private:
 	QtSoapHttpTransport http;
+	SugarSettings *settings;
 
 };
 

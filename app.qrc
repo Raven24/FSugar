@@ -17,5 +17,6 @@
         <file alias="attachment.png">images/attachment.png</file>
         <file alias="calendar.png">images/calendar.png</file>
         <file alias="news.png">images/news.png</file>
+        <file alias="new-email.png">images/mail-message-new.png</file>
     </qresource>
 </RCC>

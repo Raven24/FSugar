@@ -52,6 +52,7 @@ signals:
 
 public slots:
 	void save();
+	void openEmail();
 	void getChildren();
 	void populateContacts(const QString _id);
 

@@ -32,7 +32,7 @@ SugarCrm::SugarCrm(QObject *parent) :
     QObject(parent)
 {
 	settings = new SugarSettings();
-	trans = new SugarCrmSoap(settings->sugarHost);
+	trans = new SugarCrmSoap();
 
 	loggedin = false;
 
@@ -363,7 +363,7 @@ void SugarCrm::submit(QtSoapMessage msg, QString action)
 
 	emit sendingMessage(msg.toXmlString());
 	trans->setAction(action);
-	trans->submitRequest(msg, settings->sugarPath);
+	trans->submitRequest(msg);
 
 }
 
@@ -385,6 +385,7 @@ void SugarCrm::processResponse(const QtSoapMessage msg)
 {
 	if(msg.isFault()) {
 		qDebug() << msg.faultString().value().toString();
+		emit returnedFaultyMessage(msg.faultString().value().toString());
 		return;
 	}
 

@@ -54,6 +54,7 @@ signals:
 	void attachmentAvailable(QString id);
 	void entryCreated(QString id);
 	void entryUpdated(QString id);
+	void returnedFaultyMessage(QString msg);
 	void unknownAction(QString action);
 
 public slots:

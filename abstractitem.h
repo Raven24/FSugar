@@ -49,6 +49,7 @@ signals:
 
 public slots:
 	virtual void save() = 0;
+	virtual void openEmail() = 0;
 	void populateNotes(QString _id);
 	void getChildren();
 	void getNotes();

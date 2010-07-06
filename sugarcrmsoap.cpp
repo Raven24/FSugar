@@ -27,9 +27,13 @@
 #include "sugarcrmsoap.h"
 #include "sugarsettings.h"
 
-SugarCrmSoap::SugarCrmSoap(QString host)
+SugarCrmSoap::SugarCrmSoap()
 {
-	http.setHost(host, SugarSettings::getInstance()->useSsl );
+	settings = SugarSettings::getInstance();
+	setHost();
+
+	connect(settings, SIGNAL(settingsChanged()),
+			this, SLOT(setHost()));
 
 	connect(&http, SIGNAL(responseReady(QtSoapMessage)),
 			this, SIGNAL(responseReady(QtSoapMessage)));
@@ -40,14 +44,21 @@ SugarCrmSoap::SugarCrmSoap(QString host)
 
 }
 
+void SugarCrmSoap::setHost()
+{
+	qDebug() << "[soap] setting host to " << settings->sugarHost;
+	http.setHost(settings->sugarHost, settings->useSsl );
+}
+
 void SugarCrmSoap::setAction(const QString &action)
 {
 	http.setAction(action);
 }
 
-void SugarCrmSoap::submitRequest(QtSoapMessage &request, const QString &path)
+void SugarCrmSoap::submitRequest(QtSoapMessage &request)
 {
-	http.submitRequest(request, path);
+	qDebug() << "[soap] sending request, path: " << settings->sugarPath;
+	http.submitRequest(request, settings->sugarPath);
 }
 
 void SugarCrmSoap::debugSoapResponse(QtSoapMessage msg)
@@ -59,6 +70,6 @@ void SugarCrmSoap::handleSslError(QNetworkReply* reply, const QList<QSslError> &
 {
 	Q_UNUSED(errors)
 
-	qDebug() << reply->sslConfiguration().peerCertificate().issuerInfo(QSslCertificate::CommonName);
+	qDebug() << "[ssl] server host: " << reply->sslConfiguration().peerCertificate().issuerInfo(QSslCertificate::CommonName);
 	reply->ignoreSslErrors();
 }

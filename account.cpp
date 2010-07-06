@@ -70,6 +70,11 @@ void Account::getContacts()
 					  0);
 }
 
+void Account::openEmail()
+{
+	QDesktopServices::openUrl(QUrl(QString("mailto:").append(email)));
+}
+
 void Account::populateContacts(const QString _id)
 {
 	if(_id.isEmpty()) emit contactsAvailable();

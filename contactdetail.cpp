@@ -40,6 +40,7 @@ void ContactDetail::initDialog()
 	QHBoxLayout *itemsContainer = new QHBoxLayout();
 	QHBoxLayout *contactInfoLayout = new QHBoxLayout();
 	QVBoxLayout *layout = new QVBoxLayout();
+	QHBoxLayout *email = new QHBoxLayout();
 
 	// edit fields
 	firstNameEdit = new QLineEdit();
@@ -57,6 +58,7 @@ void ContactDetail::initDialog()
 	addressCountryEdit = new QLineEdit();
 	leadSourceEdit = new QLineEdit();
 	contactDescriptionEdit = new QTextEdit();
+	openEmailBtn = new QPushButton(QIcon(":new-email.png"), tr("Email schreiben"));
 
 	QFont f = firstNameEdit->font();
 	f.setPixelSize(14);
@@ -69,13 +71,17 @@ void ContactDetail::initDialog()
 	nameLayout->addWidget(lastNameEdit);
 	nameLayout->addWidget(firstNameEdit);
 
+	email->addWidget(new QLabel("Email"), 1, Qt::AlignRight);
+	email->addWidget(email1Edit, 4);
+	email->addWidget(openEmailBtn,1);
+
 	addressLayout->setLabelAlignment(Qt::AlignRight);
 	addressLayout->addRow(tr("Adresse"), addressStreetEdit);
 	addressLayout->addRow(tr("PLZ"), addressPostalcodeEdit);
 	addressLayout->addRow(tr("Ort"), addressCityEdit);
 	addressLayout->addRow(tr("Land"), addressCountryEdit);
 
-	addressLayout->addRow(tr("Email"), email1Edit);
+	addressLayout->addRow(email);
 	addressLayout->addRow(tr("Email 2"), email2Edit);
 
 	phoneLayout->addRow(tr("Telefon Arbeit"), phoneWorkEdit);
@@ -141,6 +147,8 @@ void ContactDetail::retrieveContact(Contact* _c)
 			this, SLOT(afterSaveAct()));
 	connect(getItem(), SIGNAL(notesAvailable()),
 			this, SLOT(displayNotes()));
+	connect(openEmailBtn, SIGNAL(pressed()),
+			getItem(), SLOT(openEmail()));
 
 	getItem()->getChildren();
 }
