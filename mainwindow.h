@@ -37,6 +37,7 @@
 #include "accountproxymodel.h"
 #include "accountdetail.h"
 #include "cookiejar.h"
+#include "searchfield.h"
 
 namespace Ui {
     class MainWindow;
@@ -63,6 +64,7 @@ public slots:
 	void displayAccounts();
 	void displayAccount(const QModelIndex index);
 	void displayPressAccount(const QModelIndex index);
+	void displayFilteredAccount(const QModelIndex index);
 	void addAccount();
 	void displayCalendar();
 	void displayPressList();
@@ -93,11 +95,12 @@ private:
 	QWebView *webView;
 
 	AccountModel *accountModel;
-	AccountProxyModel *filterModel;
+	AccountProxyModel *filterModel, *searchFilterModel;
+	SearchField *search;
 
 private slots:
 	void login();
-	void doSearch();
+	void doSearch(QString phrase);
 	void loginResponse();
 	void debug(QString msg);
 

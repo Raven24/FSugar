@@ -19,5 +19,6 @@
         <file alias="news.png">images/news.png</file>
         <file alias="new-email.png">images/mail-message-new.png</file>
         <file alias="visit-website.png">images/applications-internet.png</file>
+        <file alias="search.png">images/search.png</file>
     </qresource>
 </RCC>

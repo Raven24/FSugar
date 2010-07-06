@@ -56,6 +56,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	addDockWidget(Qt::BottomDockWidgetArea, dockWidget);
 	dockWidget->hide();
 
+	search = new SearchField();
+
 	toolBar = new QToolBar(tr("Aktionen"));
 	toolBar->setIconSize(QSize(42, 42));
 	toolBar->setMovable(false);
@@ -97,8 +99,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	crm = SugarCrm::getInstance();
 	accountModel = AccountModel::getInstance();
+
 	filterModel = new AccountProxyModel(this);
 	filterModel->setSourceModel(accountModel);
+
+	searchFilterModel = new AccountProxyModel(this);
+	searchFilterModel->setSourceModel(accountModel);
+
 	settings = SugarSettings::getInstance();;
 
         // QML display
@@ -192,15 +199,18 @@ MainWindow::MainWindow(QWidget *parent) :
 	mainWidget->setVisible(false);
 	mainWidget->setTabsClosable(true);
 	mainWidget->addTab(listView, tr("Liste"));
+	mainWidget->setCornerWidget(search, Qt::TopRightCorner);
 
 	connect(accountModel, SIGNAL(dataReady()),
 			this, SLOT(displayAccounts()));
 	connect(listView, SIGNAL(doubleClicked(QModelIndex)),
-			this, SLOT(displayAccount(QModelIndex)));
+			this, SLOT(displayFilteredAccount(QModelIndex)));
 	connect(pressList, SIGNAL(doubleClicked(QModelIndex)),
 			this, SLOT(displayPressAccount(QModelIndex)));
 	connect(mainWidget, SIGNAL(tabCloseRequested(int)),
 			this, SLOT(closeAccountTab(int)));
+	connect(search, SIGNAL(searchPhraseChanged(QString)),
+			this, SLOT(doSearch(QString)));
 
 	setStatusMsg(tr("Bereit"), 2500);
 }
@@ -208,7 +218,7 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::displayAccounts()
 {
 	loadingDialog->hide();
-	listView->setModel(accountModel);
+	listView->setModel(searchFilterModel);
 	setCentralWidget(mainWidget);
 	toolBar->show();
 	mainWidget->show();
@@ -224,6 +234,11 @@ void MainWindow::displayAccount(const QModelIndex index)
 void MainWindow::displayPressAccount(const QModelIndex index)
 {
 	displayAccount(filterModel->mapToSource(index));
+}
+
+void MainWindow::displayFilteredAccount(const QModelIndex index)
+{
+	displayAccount(searchFilterModel->mapToSource(index));
 }
 
 void MainWindow::closeAccountTab(const int index)
@@ -357,14 +372,14 @@ void MainWindow::displayPressList()
 	filterModel->setFilterRegExp(QRegExp("press", Qt::CaseInsensitive, QRegExp::FixedString));
 
 	pressList->setModel(filterModel);
-        pressList->setProperty("doNotDelete", true);
+	pressList->setProperty("doNotDelete", true);
 
 	mainWidget->setCurrentIndex(mainWidget->addTab(pressList, tr("Pressekontakte")));
 }
 
-void MainWindow::doSearch()
+void MainWindow::doSearch(const QString phrase)
 {
-
+	searchFilterModel->setFilterRegExp(QRegExp(phrase, Qt::CaseInsensitive, QRegExp::FixedString));
 }
 
 void MainWindow::setStatusMsg(QString msg, int time)
