@@ -33,7 +33,8 @@ SearchField::SearchField(QWidget *parent) :
 	searchBtn->setFlat(true);
 
 	searchField = new QLineEdit();
-	//searchField->setPlaceholderText(tr("Suche"));
+	searchField->setPlaceholderText(tr("Suche"));
+	searchField->installEventFilter(this);
 
 	QHBoxLayout *layout = new QHBoxLayout();
 	layout->setSpacing(0);
@@ -47,4 +48,20 @@ SearchField::SearchField(QWidget *parent) :
 	setLayout(layout);
 }
 
+bool SearchField::eventFilter(QObject *obj, QEvent *event)
+{
+	if(obj != searchField) {
+		return QWidget::eventFilter(obj, event);
+	}
 
+	if(event->type() == QEvent::KeyPress) {
+		int key = static_cast<QKeyEvent*>(event)->key();
+		if(key == Qt::Key_Escape) {
+			searchField->clear();
+			return true;
+		}
+
+		return false;
+	}
+
+}

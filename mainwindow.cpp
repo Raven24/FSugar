@@ -56,10 +56,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	addDockWidget(Qt::BottomDockWidgetArea, dockWidget);
 	dockWidget->hide();
 
-	search = new SearchField();
+	//search = new SearchField();
 
 	toolBar = new QToolBar(tr("Aktionen"));
-	toolBar->setIconSize(QSize(42, 42));
+	toolBar->setIconSize(QSize(38, 38));
 	toolBar->setMovable(false);
 
 	addAccountAct = new QAction(QIcon(":add-account.png"), tr("Neue Firma"), this);
@@ -106,9 +106,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	searchFilterModel = new AccountProxyModel(this);
 	searchFilterModel->setSourceModel(accountModel);
 
-	settings = SugarSettings::getInstance();;
+	settings = SugarSettings::getInstance();
 
-        // QML display
+	// QML display
 	//centerView = new QmlView(this);
 
 	//centerView->setUrl(QUrl("SugarCrm.qml"));
@@ -183,10 +183,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 	// ordinary display
-	listView = new QListView();
-	listView->setAlternatingRowColors(true);
-	pressList = new QListView();
-	pressList->setAlternatingRowColors(true);
+	//listView = new QListView();
+	//listView->setAlternatingRowColors(true);
+	//pressList = new QListView();
+	//pressList->setAlternatingRowColors(true);
 
 	QNetworkAccessManager *nwManager = new QNetworkAccessManager();
 	cookieJar = new CookieJar(this);
@@ -195,22 +195,24 @@ MainWindow::MainWindow(QWidget *parent) :
 	webView->page()->setNetworkAccessManager(nwManager);
 	webView->hide();
 
-	mainWidget = new QTabWidget(this);
-	mainWidget->setVisible(false);
-	mainWidget->setTabsClosable(true);
-	mainWidget->addTab(listView, tr("Liste"));
-	mainWidget->setCornerWidget(search, Qt::TopRightCorner);
+	//mainWidget = new QTabWidget(this);
+	//mainWidget->setVisible(false);
+	//mainWidget->setTabsClosable(true);
+	//mainWidget->addTab(listView, tr("Liste"));
+	//mainWidget->setCornerWidget(search, Qt::TopRightCorner);
+
+	accountList = new AccountList();
 
 	connect(accountModel, SIGNAL(dataReady()),
 			this, SLOT(displayAccounts()));
-	connect(listView, SIGNAL(doubleClicked(QModelIndex)),
-			this, SLOT(displayFilteredAccount(QModelIndex)));
-	connect(pressList, SIGNAL(doubleClicked(QModelIndex)),
-			this, SLOT(displayPressAccount(QModelIndex)));
-	connect(mainWidget, SIGNAL(tabCloseRequested(int)),
-			this, SLOT(closeAccountTab(int)));
-	connect(search, SIGNAL(searchPhraseChanged(QString)),
-			this, SLOT(doSearch(QString)));
+	//connect(listView, SIGNAL(doubleClicked(QModelIndex)),
+	//		this, SLOT(displayFilteredAccount(QModelIndex)));
+	//connect(pressList, SIGNAL(doubleClicked(QModelIndex)),
+	//		this, SLOT(displayPressAccount(QModelIndex)));
+	//connect(mainWidget, SIGNAL(tabCloseRequested(int)),
+	//		this, SLOT(closeAccountTab(int)));
+	//connect(search, SIGNAL(searchPhraseChanged(QString)),
+	//		this, SLOT(doSearch(QString)));
 
 	setStatusMsg(tr("Bereit"), 2500);
 }
@@ -218,37 +220,36 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::displayAccounts()
 {
 	loadingDialog->hide();
-	listView->setModel(searchFilterModel);
-	setCentralWidget(mainWidget);
+	accountList->setModel(searchFilterModel);
+	setCentralWidget(accountList);
 	toolBar->show();
-	mainWidget->show();
 }
 
-void MainWindow::displayAccount(const QModelIndex index)
-{
-	Account *item = accountModel->getAccount(index.row());
-	qDebug() << "[accounts] opening " << item->name;
-	mainWidget->setCurrentIndex(mainWidget->addTab(new AccountDetail(&index), item->name));
-}
+// void MainWindow::displayAccount(const QModelIndex index)
+// {
+// 	Account *item = accountModel->getAccount(index.row());
+// 	qDebug() << "[accounts] opening " << item->name;
+// 	mainWidget->setCurrentIndex(mainWidget->addTab(new AccountDetail(&index), item->name));
+// }
 
-void MainWindow::displayPressAccount(const QModelIndex index)
-{
-	displayAccount(filterModel->mapToSource(index));
-}
+// void MainWindow::displayPressAccount(const QModelIndex index)
+// {
+// 	displayAccount(filterModel->mapToSource(index));
+// }
 
-void MainWindow::displayFilteredAccount(const QModelIndex index)
-{
-	displayAccount(searchFilterModel->mapToSource(index));
-}
+// void MainWindow::displayFilteredAccount(const QModelIndex index)
+// {
+// 	displayAccount(searchFilterModel->mapToSource(index));
+// }
 
-void MainWindow::closeAccountTab(const int index)
-{
-	QWidget *tab = mainWidget->widget(index);
-	mainWidget->removeTab(index);
-	if(!tab->property("doNotDelete").toBool()) {
-		tab->deleteLater();
-	}
-}
+// void MainWindow::closeAccountTab(const int index)
+// {
+// 	QWidget *tab = mainWidget->widget(index);
+// 	mainWidget->removeTab(index);
+// 	if(!tab->property("doNotDelete").toBool()) {
+// 		tab->deleteLater();
+// 	}
+// }
 
 void MainWindow::cleanup()
 {
@@ -377,10 +378,10 @@ void MainWindow::displayPressList()
 	mainWidget->setCurrentIndex(mainWidget->addTab(pressList, tr("Pressekontakte")));
 }
 
-void MainWindow::doSearch(const QString phrase)
-{
-	searchFilterModel->setFilterRegExp(QRegExp(phrase, Qt::CaseInsensitive, QRegExp::FixedString));
-}
+// void MainWindow::doSearch(const QString phrase)
+// {
+// 	searchFilterModel->setFilterRegExp(QRegExp(phrase, Qt::CaseInsensitive, QRegExp::FixedString));
+// }
 
 void MainWindow::setStatusMsg(QString msg, int time)
 {
@@ -392,7 +393,7 @@ void MainWindow::loadStyle()
 	QDir::setCurrent(MainWindow::appPath); // make sure we are in the app's dir
 	QFile style("style.css");
 	if(!style.open(QIODevice::ReadOnly | QIODevice::Text)) {
-		qDebug() << "could not open stylesheet";
+		qDebug() << "[app] could not open stylesheet";
 		return;
 	}
 	QString stylesheet(style.readAll());

@@ -38,6 +38,7 @@
 #include "accountdetail.h"
 #include "cookiejar.h"
 #include "searchfield.h"
+#include "accountlist.h"
 
 namespace Ui {
     class MainWindow;
@@ -62,9 +63,9 @@ public slots:
 	void setStatusMsg(QString msg, int time=1500);
 
 	void displayAccounts();
-	void displayAccount(const QModelIndex index);
-	void displayPressAccount(const QModelIndex index);
-	void displayFilteredAccount(const QModelIndex index);
+// 	void displayAccount(const QModelIndex index);
+// 	void displayPressAccount(const QModelIndex index);
+// 	void displayFilteredAccount(const QModelIndex index);
 	void addAccount();
 	void displayCalendar();
 	void displayPressList();
@@ -96,15 +97,15 @@ private:
 
 	AccountModel *accountModel;
 	AccountProxyModel *filterModel, *searchFilterModel;
-	SearchField *search;
+	AccountList *accountList;
 
 private slots:
 	void login();
-	void doSearch(QString phrase);
+// 	void doSearch(QString phrase);
 	void loginResponse();
 	void debug(QString msg);
 
-	void closeAccountTab(const int index);
+// 	void closeAccountTab(const int index);
 	void loadStyle();
 
 };

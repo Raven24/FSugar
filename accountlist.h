@@ -21,27 +21,35 @@
  *
  ***********************************************/
 
-#ifndef SEARCHFIELD_H
-#define SEARCHFIELD_H
+#ifndef ACCOUNTLIST_H
+#define ACCOUNTLIST_H
 
 #include <QtGui>
+#include "accountproxymodel.h"
+#include "searchfield.h"
 
-class SearchField : public QWidget
+class AccountList : public QWidget
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-    explicit SearchField(QWidget *parent = 0);
-	bool eventFilter(QObject *obj, QEvent *event);
+    explicit AccountList(QWidget *parent = 0);
+	void setModel(AccountProxyModel *model);
 
 signals:
-	void searchPhraseChanged(QString phrase);
 
 public slots:
+	void openAccountDetails(const QModelIndex index);
+	void filterAccountList(QString phrase);
+	void closeAccountTab(const int index);
 
-protected:
-	QPushButton *searchBtn;
-	QLineEdit *searchField;
+private:
+	QListView *accountList;
+	QTabWidget *accountTabs;
+	QLabel *welcomeText;
+	AccountProxyModel *accountModel;
+	SearchField *search;
+	QStackedLayout *stack;
 
 };
 
-#endif // SEARCHFIELD_H
+#endif // ACCOUNTLIST_H
