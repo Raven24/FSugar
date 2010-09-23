@@ -20,5 +20,8 @@
         <file alias="new-email.png">images/mail-message-new.png</file>
         <file alias="visit-website.png">images/applications-internet.png</file>
         <file alias="search.png">images/search.png</file>
+        <file alias="accounts.png">images/go-home.png</file>
+        <file alias="contacts.png">images/user-identity.png</file>
+        <file alias="projects.png">images/run-build.png</file>
     </qresource>
 </RCC>

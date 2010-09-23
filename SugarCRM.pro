@@ -29,7 +29,8 @@ SOURCES += main.cpp \
     contactdetail.cpp \
     abstractitemdetail.cpp \
     searchfield.cpp \
-    accountlist.cpp
+    accountlist.cpp \
+    calendarwidget.cpp
 HEADERS += mainwindow.h \
     sugarcrmsoap.h \
     logindialog.h \
@@ -52,7 +53,8 @@ HEADERS += mainwindow.h \
     contactdetail.h \
     abstractitemdetail.h \
     searchfield.h \
-    accountlist.h
+    accountlist.h \
+    calendarwidget.h
 FORMS += mainwindow.ui
 RESOURCES += app.qrc
 OTHER_FILES += SugarCrm.qml \

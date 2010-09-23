@@ -52,19 +52,35 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	loadStyle();
 
-	dockWidget = new DockWidget;
+	// member initialization
+	dockWidget	= new DockWidget;
+	calWidget	= new CalendarWidget;
+	toolBar		= new QToolBar(tr("Aktionen"));
+	accountList = new AccountList(this);
+	mainLayout	= new QStackedLayout();
+	settings	= SugarSettings::getInstance();
+
 	addDockWidget(Qt::BottomDockWidgetArea, dockWidget);
 	dockWidget->hide();
+	accountList->hide();
+	calWidget->setAddress(QUrl(settings->calendarUrl));
+	mainLayout->addWidget(accountList);
+	//mainLayout->addWidget(contactList);
+	//mainLayout->addWidget(projectList);
+	mainLayout->addWidget(calWidget);
 
-	//search = new SearchField();
-
-	toolBar = new QToolBar(tr("Aktionen"));
-	toolBar->setIconSize(QSize(38, 38));
+	toolBar->setIconSize(QSize(14, 14));
+	toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	toolBar->setMovable(false);
+
+	QAction *accountsAct = new QAction(QIcon(":accounts.png"), tr("Firmen"), this);
+	QAction *contactsAct = new QAction(QIcon(":contacts.png"), tr("Kontakte"), this);
+	QAction *projectsAct = new QAction(QIcon(":projects.png"), tr("Projekte"), this);
 
 	addAccountAct = new QAction(QIcon(":add-account.png"), tr("Neue Firma"), this);
 	openCalAct = new QAction(QIcon(":calendar.png"), tr("Kalender"), this);
 	pressViewAct = new QAction(QIcon(":news.png"), tr("Pressekontakte"), this);
+
 	//toolBar->addAction(QIcon(":add-contact.png"), tr("Neuer Kontakt"));
 	//toolBar->addAction(QIcon(":add-task.png"),    tr("Neue Aufgabe"));
 
@@ -74,9 +90,16 @@ MainWindow::MainWindow(QWidget *parent) :
 			this, SLOT(displayCalendar()));
 	connect(pressViewAct, SIGNAL(triggered()),
 			this, SLOT(displayPressList()));
+	connect(accountsAct, SIGNAL(triggered()),
+			this, SLOT(displayAccounts()));
 
-	toolBar->addAction(addAccountAct);
+	toolBar->addWidget(new QLabel(tr("Ansichten")));
+	toolBar->addAction(accountsAct);
+	toolBar->addAction(contactsAct);
+	toolBar->addAction(projectsAct);
 	toolBar->addAction(openCalAct);
+	toolBar->addWidget(new QLabel(tr("Aktionen")));
+	toolBar->addAction(addAccountAct);
 	toolBar->addAction(pressViewAct);
 
 	addToolBar(Qt::LeftToolBarArea, toolBar);
@@ -87,9 +110,15 @@ MainWindow::MainWindow(QWidget *parent) :
 			this, SLOT(login()));
 	QGridLayout *l = new QGridLayout(this);
 	QWidget *c = new QWidget(this);
+	QWidget *w = new QWidget(this);
+
 	l->addWidget(loginBtn, 1, 1, Qt::AlignCenter);
 	c->setLayout(l);
-	setCentralWidget(c);
+	mainLayout->addWidget(c);
+	mainLayout->setCurrentWidget(c);
+	w->setLayout(mainLayout);
+	setCentralWidget(w);
+
 
 	// initialize dialogs
 	loadingDialog = new LoadingDialog(this);
@@ -105,8 +134,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	searchFilterModel = new AccountProxyModel(this);
 	searchFilterModel->setSourceModel(accountModel);
-
-	settings = SugarSettings::getInstance();
 
 	// QML display
 	//centerView = new QmlView(this);
@@ -188,23 +215,17 @@ MainWindow::MainWindow(QWidget *parent) :
 	//pressList = new QListView();
 	//pressList->setAlternatingRowColors(true);
 
-	QNetworkAccessManager *nwManager = new QNetworkAccessManager();
-	cookieJar = new CookieJar(this);
-	nwManager->setCookieJar(cookieJar);
-	webView = new QWebView(this);
-	webView->page()->setNetworkAccessManager(nwManager);
-	webView->hide();
-
 	//mainWidget = new QTabWidget(this);
 	//mainWidget->setVisible(false);
 	//mainWidget->setTabsClosable(true);
 	//mainWidget->addTab(listView, tr("Liste"));
 	//mainWidget->setCornerWidget(search, Qt::TopRightCorner);
 
-	accountList = new AccountList();
+
 
 	connect(accountModel, SIGNAL(dataReady()),
 			this, SLOT(displayAccounts()));
+
 	//connect(listView, SIGNAL(doubleClicked(QModelIndex)),
 	//		this, SLOT(displayFilteredAccount(QModelIndex)));
 	//connect(pressList, SIGNAL(doubleClicked(QModelIndex)),
@@ -221,7 +242,7 @@ void MainWindow::displayAccounts()
 {
 	loadingDialog->hide();
 	accountList->setModel(searchFilterModel);
-	setCentralWidget(accountList);
+	mainLayout->setCurrentWidget(accountList);
 	toolBar->show();
 }
 
@@ -253,7 +274,7 @@ void MainWindow::displayAccounts()
 
 void MainWindow::cleanup()
 {
-	delete cookieJar;
+	//delete cookieJar;
 }
 
 MainWindow::~MainWindow()
@@ -308,7 +329,6 @@ void MainWindow::login()
 {
 	QString user;
 	QByteArray pass;
-	centralWidget()->hide();
 
 	// ordinary table view
 	if(settings->sugarUser != "User") {
@@ -347,9 +367,7 @@ void MainWindow::loginResponse()
 
 void MainWindow::displayCalendar()
 {
-	webView->setProperty("doNotDelete", true);
-	webView->load(QUrl(settings->calendarUrl));
-	mainWidget->setCurrentIndex(mainWidget->addTab(webView, tr("Kalender")));
+	mainLayout->setCurrentWidget(calWidget);
 }
 
 void MainWindow::debug(QString msg)

@@ -41,7 +41,7 @@ AccountList::AccountList(QWidget *parent) :
 	QVBoxLayout *left = new QVBoxLayout();
 	stack = new QStackedLayout();
 
-	left->setSpacing(0);
+	left->setSpacing(4);
 	left->addWidget(search);
 	left->addWidget(accountList);
 
@@ -50,8 +50,8 @@ AccountList::AccountList(QWidget *parent) :
 	stack->setCurrentWidget(welcomeText);
 
 	layout->setSpacing(0);
-	layout->addLayout(left, 2);
-	layout->addLayout(stack, 3);
+	layout->addLayout(left, 1);
+	layout->addLayout(stack, 2);
 
 	setLayout(layout);
 

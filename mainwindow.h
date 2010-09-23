@@ -25,7 +25,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QtWebKit>
 
 #include "logindialog.h"
 #include "loadingdialog.h"
@@ -36,9 +35,9 @@
 #include "accountmodel.h"
 #include "accountproxymodel.h"
 #include "accountdetail.h"
-#include "cookiejar.h"
 #include "searchfield.h"
 #include "accountlist.h"
+#include "calendarwidget.h"
 
 namespace Ui {
     class MainWindow;
@@ -88,16 +87,16 @@ private:
 	QToolBar *toolBar;
 	SugarCrm *crm;
 	SugarSettings *settings;
-	CookieJar *cookieJar;
 
 	QAction *addAccountAct, *openCalAct, *pressViewAct;
+	QStackedLayout *mainLayout;
 	QListView *listView, *pressList;
 	AccountDetail *accountDetail;
-	QWebView *webView;
 
 	AccountModel *accountModel;
 	AccountProxyModel *filterModel, *searchFilterModel;
 	AccountList *accountList;
+	CalendarWidget *calWidget;
 
 private slots:
 	void login();
