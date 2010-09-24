@@ -23,11 +23,12 @@ QMenu::item:disabled { background: none; border: 1px dotted #444; color: #787878
 QMenu::item::icon:selected { border: none; }
 QMenu::separator { border-top: 1px solid qlineargradient(x1:0, y1:0, x2:1, y2: 0, stop: 0 transparent, stop: 0.5 #888, stop: 1 transparent); margin-top: 3px; height: 3px; }
 
-QToolBar { background: #202020; border-right: 1px solid #121212; }
+QToolBar { background: #555; border-right: 1px solid #121212; spacing: 0px; padding: 10px 5px; }
 QToolBar::handle, QToolBar::separator { border-top: qlineargradient(x1:0, y1:0, x2:1, y2: 0, stop: 0 transparent, stop: 0.5 #888, stop: 1 transparent); border-bottom: qlineargradient(x1:0, y1:0, x2:1, y2: 0, stop: 0 transparent, stop: 0.5 #888, stop: 1 transparent); }
-QToolBar QToolButton { margin: 2px 2.5px 2px; padding: 5px; border-radius: 4px; background: #555; }
-QToolBar QToolButton, QToolBar QToolButton:hover { border-top: 1px solid #676767; border-right: 1px solid #676767; border-bottom: 1px solid #343434; }
-QToolBar QToolButton:hover { background: rgba(200, 200, 200, 50); }
+QToolBar QToolButton { margin: 0px; padding: 3px 5px; background: #555; border-top: 1px solid qlineargradient(x1:0, y1:0, x2:1, y2: 0, stop: 0 transparent, stop: 0.5 #777, stop: 1 transparent); border-bottom: 1px solid qlineargradient(x1:0, y1:0, x2:1, y2: 0, stop: 0 transparent, stop: 0.5 #333, stop: 1 transparent); width: 130%; }
+QToolBar QToolButton:hover { background: #5F5F5F; }
+QToolBar QToolButton:pressed { background: #505050; }
+QToolBar QLabel { margin: 15px 0px 5px; border-bottom: 1px solid #333; font-size: 11px; }
 
 QListView { background: url(:stripes.png); alternate-background-color: rgba(0, 0, 0, 60%); border: 1px solid #333; }
 QListView::item { padding: 7px 4px; }
@@ -46,8 +47,8 @@ QPushButton { border: none; background: qlineargradient(x1: 0, y1: 0, x2: 0, y2:
 QPushButton:pressed { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #121212, stop: 0.7 #222, stop: 1 #343434); }
 
 QCheckBox { background: transparent; }
-QCheckBox::indicator { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #BBB, stop: 1 #888); border: 2px solid #555; border-radius: 2px; }
-QCheckBox::indicator:checked { border: 2px solid #777; background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #000, stop: 1 #555); }
+QCheckBox::indicator { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #BBB, stop: 1 #888); border: 2px solid #555; border-radius: 4px; }
+QCheckBox::indicator:checked { border: 2px solid #555; border-radius: 4px; background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #000, stop: 1 #555); }
 
 *[mandatoryField="true"] { border: 2px solid #B22222; border-radius: 2px; background-color: #eec0c0; }
 *[heading="true"] { font-size: 15px; font-weight: bold; }
