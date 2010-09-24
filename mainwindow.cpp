@@ -35,8 +35,6 @@
 #include "accountmodel.h"
 #include "accountproxymodel.h"
 #include "accountdetail.h"
-#include "settingsdialog.h"
-#include "cookiejar.h"
 
 QString MainWindow::appPath = QString("");
 MainWindow* MainWindow::instance = NULL;
@@ -59,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	accountList = new AccountList(this);
 	mainLayout	= new QStackedLayout();
 	settings	= SugarSettings::getInstance();
+	settingsDialog = new SettingsDialog;
 
 	addDockWidget(Qt::BottomDockWidgetArea, dockWidget);
 	dockWidget->hide();
@@ -68,6 +67,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	//mainLayout->addWidget(contactList);
 	//mainLayout->addWidget(projectList);
 	mainLayout->addWidget(calWidget);
+	mainLayout->addWidget(settingsDialog);
 
 	toolBar->setIconSize(QSize(14, 14));
 	toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -297,12 +297,7 @@ void MainWindow::addAccount()
 
 void MainWindow::displaySettings()
 {
-	if(mainWidget->isHidden()) {
-		setCentralWidget(new SettingsDialog);
-		return;
-	}
-
-	mainWidget->setCurrentIndex(mainWidget->addTab(new SettingsDialog, tr("Einstellungen")));
+	mainLayout->setCurrentWidget(settingsDialog);
 }
 
 void MainWindow::changeEvent(QEvent *e)

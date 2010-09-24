@@ -38,6 +38,7 @@
 #include "searchfield.h"
 #include "accountlist.h"
 #include "calendarwidget.h"
+#include "settingsdialog.h"
 
 namespace Ui {
     class MainWindow;
@@ -97,6 +98,7 @@ private:
 	AccountProxyModel *filterModel, *searchFilterModel;
 	AccountList *accountList;
 	CalendarWidget *calWidget;
+	SettingsDialog *settingsDialog;
 
 private slots:
 	void login();
