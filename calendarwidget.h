@@ -33,6 +33,7 @@ class CalendarWidget : public QWidget
     Q_OBJECT
 public:
     explicit CalendarWidget(QWidget *parent = 0);
+	~CalendarWidget();
 	void setAddress(QUrl link);
 
 signals:

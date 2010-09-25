@@ -274,7 +274,7 @@ void MainWindow::displayAccounts()
 
 void MainWindow::cleanup()
 {
-	//delete cookieJar;
+	delete calWidget;
 }
 
 MainWindow::~MainWindow()

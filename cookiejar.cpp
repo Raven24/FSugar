@@ -44,7 +44,7 @@ void CookieJar::populateCookies()
 	QDir::setCurrent(MainWindow::appPath); // make sure we are in the app's dir
 	QFile f("cookies.txt");
 	if(!f.open(QIODevice::ReadOnly)) {
-		qDebug() << "could not open cookies";
+		qDebug() << "[calendar] could not open cookies";
 		return;
 	}
 	while(!f.atEnd()) {

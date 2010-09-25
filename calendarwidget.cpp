@@ -38,6 +38,11 @@ CalendarWidget::CalendarWidget(QWidget *parent) :
 	setLayout(layout);
 }
 
+CalendarWidget::~CalendarWidget()
+{
+	delete cookieJar;
+}
+
 void CalendarWidget::setAddress(QUrl link)
 {
 	webView->load(link);
