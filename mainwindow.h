@@ -51,6 +51,7 @@ public:
     ~MainWindow();
 
 	static QString appPath;
+	static QUrl projectWebsite;
 	static MainWindow* getInstance();
 
 	QTabWidget *mainWidget;
@@ -70,6 +71,7 @@ public slots:
 	void displayCalendar();
 	void displayPressList();
 	void displaySettings();
+	void openProjectHomepage();
 
 	void cleanup();
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>796</width>
-    <height>596</height>
+    <width>900</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,13 +19,13 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>796</width>
-     <height>26</height>
+     <width>900</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuTest">
     <property name="title">
-     <string>Datei</string>
+     <string>Programm</string>
     </property>
     <addaction name="actionLogin"/>
     <addaction name="actionLogout"/>
@@ -47,6 +47,8 @@
     <property name="title">
      <string>Hilfe</string>
     </property>
+    <addaction name="actionWebsite"/>
+    <addaction name="separator"/>
     <addaction name="actionAboutQt"/>
    </widget>
    <addaction name="menuTest"/>
@@ -118,6 +120,21 @@
   <action name="actionReloadStyle">
    <property name="text">
     <string>Style neu laden</string>
+   </property>
+   <property name="toolTip">
+    <string>Stylesheet neu laden</string>
+   </property>
+  </action>
+  <action name="actionWebsite">
+   <property name="icon">
+    <iconset resource="app.qrc">
+     <normaloff>:/visit-website.png</normaloff>:/visit-website.png</iconset>
+   </property>
+   <property name="text">
+    <string>Website</string>
+   </property>
+   <property name="toolTip">
+    <string>Öffnet die Projektseite</string>
    </property>
   </action>
  </widget>

@@ -37,6 +37,7 @@
 #include "accountdetail.h"
 
 QString MainWindow::appPath = QString("");
+QUrl MainWindow::projectWebsite = QUrl("http://github.com/Raven24/FSugar");
 MainWindow* MainWindow::instance = NULL;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -162,6 +163,8 @@ MainWindow::MainWindow(QWidget *parent) :
 			this, SLOT(loadStyle()));
 	connect(ui->actionAboutQt, SIGNAL(triggered()),
 			qApp, SLOT(aboutQt()));
+	connect(ui->actionWebsite, SIGNAL(triggered()),
+			this, SLOT(openProjectHomepage()));
 	connect(qApp, SIGNAL(aboutToQuit()),
 			this, SLOT(cleanup()));
 
@@ -411,4 +414,9 @@ void MainWindow::loadStyle()
 	}
 	QString stylesheet(style.readAll());
 	qApp->setStyleSheet(stylesheet);
+}
+
+void MainWindow::openProjectHomepage()
+{
+	QDesktopServices::openUrl(MainWindow::projectWebsite);
 }
