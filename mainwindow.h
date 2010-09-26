@@ -37,6 +37,7 @@
 #include "accountdetail.h"
 #include "searchfield.h"
 #include "accountlist.h"
+#include "contactlist.h"
 #include "calendarwidget.h"
 #include "settingsdialog.h"
 
@@ -64,12 +65,13 @@ public slots:
 	void setStatusMsg(QString msg, int time=1500);
 
 	void displayAccounts();
+	void displayContacts();
 // 	void displayAccount(const QModelIndex index);
 // 	void displayPressAccount(const QModelIndex index);
 // 	void displayFilteredAccount(const QModelIndex index);
 	void addAccount();
 	void displayCalendar();
-	void displayPressList();
+	//void displayPressList();
 	void displaySettings();
 	void openProjectHomepage();
 
@@ -97,8 +99,14 @@ private:
 	AccountDetail *accountDetail;
 
 	AccountModel *accountModel;
-	AccountProxyModel *filterModel, *searchFilterModel;
+	ContactModel *contactModel;
+
+	AccountProxyModel *accountsFilterModel;
+	ContactProxyModel *contactsFilterModel;
+
 	AccountList *accountList;
+	ContactList *contactList;
+
 	CalendarWidget *calWidget;
 	SettingsDialog *settingsDialog;
 

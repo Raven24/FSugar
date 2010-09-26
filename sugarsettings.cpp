@@ -52,6 +52,8 @@ void SugarSettings::assignVars()
 	sugarPass = m_settings->value("SugarCrm/password", "pass").toString();
 
 	calendarUrl = m_settings->value("Calendar/url", "http://calendar.google.com").toString();
+
+	windowGeometry = m_settings->value("Application/geometry").toByteArray();
 }
 
 void SugarSettings::makeUpdate()

@@ -38,6 +38,7 @@ public:
 	QString sugarHost, sugarPath, calendarUrl,
 			sugarUser, sugarPass;
 	bool useSsl;
+	QByteArray windowGeometry;
 	QSettings *m_settings;
 
 signals:

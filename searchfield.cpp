@@ -60,8 +60,6 @@ bool SearchField::eventFilter(QObject *obj, QEvent *event)
 			searchField->clear();
 			return true;
 		}
-
-		return false;
 	}
-
+	return false;
 }

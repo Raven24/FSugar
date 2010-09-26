@@ -21,28 +21,26 @@
  *
  ***********************************************/
 
-#ifndef ACCOUNTLIST_H
-#define ACCOUNTLIST_H
+#ifndef CONTACTLIST_H
+#define CONTACTLIST_H
 
 #include "abstractitemlist.h"
-#include "accountproxymodel.h"
+#include "contactproxymodel.h"
 
-class AccountList : public AbstractItemList
+class ContactList : public AbstractItemList
 {
-    Q_OBJECT
-public:
-	explicit AccountList(QWidget *parent = 0);
-	void setModel(AccountProxyModel *model);
-	AccountProxyModel* getModel();
+	Q_OBJECT
 
-signals:
+public:
+	explicit ContactList(QWidget *parent = 0);
+	void setModel(ContactProxyModel *model);
+	ContactProxyModel* getModel();
 
 public slots:
 	void openDetail(const QModelIndex index);
 
 protected:
-	AccountProxyModel *itemsModel;
-
+	ContactProxyModel *itemsModel;
 };
 
-#endif // ACCOUNTLIST_H
+#endif // CONTACTLIST_H

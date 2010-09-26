@@ -21,28 +21,34 @@
  *
  ***********************************************/
 
-#ifndef ACCOUNTLIST_H
-#define ACCOUNTLIST_H
+#ifndef ABSTRACTITEMLIST_H
+#define ABSTRACTITEMLIST_H
 
-#include "abstractitemlist.h"
-#include "accountproxymodel.h"
+#include <QtGui>
+#include "searchfield.h"
 
-class AccountList : public AbstractItemList
+class AbstractItemList : public QWidget
 {
     Q_OBJECT
 public:
-	explicit AccountList(QWidget *parent = 0);
-	void setModel(AccountProxyModel *model);
-	AccountProxyModel* getModel();
+    explicit AbstractItemList(QWidget *parent = 0);
+	//virtual void setModel(QSortFilterProxyModel *model) = 0;
+	virtual QSortFilterProxyModel* getModel() = 0;
 
 signals:
 
 public slots:
-	void openDetail(const QModelIndex index);
+	virtual void openDetail(const QModelIndex index) = 0;
+	void closeDetail(const int index);
+	void filterList(QString phrase);
 
 protected:
-	AccountProxyModel *itemsModel;
+	QListView *listView;
+	QTabWidget *tabView;
+	QLabel *welcomeText;
+	SearchField *search;
+	QStackedLayout *stack;
 
 };
 
-#endif // ACCOUNTLIST_H
+#endif // ABSTRACTITEMLIST_H

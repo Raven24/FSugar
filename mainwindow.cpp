@@ -56,6 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	calWidget	= new CalendarWidget;
 	toolBar		= new QToolBar(tr("Aktionen"));
 	accountList = new AccountList(this);
+	contactList = new ContactList(this);
 	mainLayout	= new QStackedLayout();
 	settings	= SugarSettings::getInstance();
 	settingsDialog = new SettingsDialog;
@@ -65,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	accountList->hide();
 	calWidget->setAddress(QUrl(settings->calendarUrl));
 	mainLayout->addWidget(accountList);
-	//mainLayout->addWidget(contactList);
+	mainLayout->addWidget(contactList);
 	//mainLayout->addWidget(projectList);
 	mainLayout->addWidget(calWidget);
 	mainLayout->addWidget(settingsDialog);
@@ -77,22 +78,24 @@ MainWindow::MainWindow(QWidget *parent) :
 	QAction *accountsAct = new QAction(QIcon(":accounts.png"), tr("Firmen"), this);
 	QAction *contactsAct = new QAction(QIcon(":contacts.png"), tr("Kontakte"), this);
 	QAction *projectsAct = new QAction(QIcon(":projects.png"), tr("Projekte"), this);
+	openCalAct			 = new QAction(QIcon(":calendar.png"), tr("Kalender"), this);
 
-	addAccountAct = new QAction(QIcon(":add-account.png"), tr("Neue Firma"), this);
-	openCalAct = new QAction(QIcon(":calendar.png"), tr("Kalender"), this);
-	pressViewAct = new QAction(QIcon(":news.png"), tr("Pressekontakte"), this);
-
-	//toolBar->addAction(QIcon(":add-contact.png"), tr("Neuer Kontakt"));
-	//toolBar->addAction(QIcon(":add-task.png"),    tr("Neue Aufgabe"));
+	addAccountAct			= new QAction(QIcon(":add-account.png"), tr("Neue Firma"), this);
+	QAction *addContactAct	= new QAction(QIcon(":add-contact.png"), tr("Neuer Kontakt"), this);
+	QAction *addProjectAct	= new QAction(QIcon(":add-project.png"), tr("Neues Projekt"), this);
+	QAction *addTaskAct		= new QAction(QIcon(":add-task.png"),    tr("Neue Aufgabe"), this);
+	pressViewAct			= new QAction(QIcon(":news.png"), tr("Pressekontakte"), this);
 
 	connect(addAccountAct, SIGNAL(triggered()),
 			this, SLOT(addAccount()));
 	connect(openCalAct, SIGNAL(triggered()),
 			this, SLOT(displayCalendar()));
-	connect(pressViewAct, SIGNAL(triggered()),
-			this, SLOT(displayPressList()));
+	//connect(pressViewAct, SIGNAL(triggered()),
+	//		this, SLOT(displayPressList()));
 	connect(accountsAct, SIGNAL(triggered()),
 			this, SLOT(displayAccounts()));
+	connect(contactsAct, SIGNAL(triggered()),
+			this, SLOT(displayContacts()));
 
 	toolBar->addWidget(new QLabel(tr("Ansichten")));
 	toolBar->addAction(accountsAct);
@@ -100,8 +103,12 @@ MainWindow::MainWindow(QWidget *parent) :
 	toolBar->addAction(projectsAct);
 	toolBar->addAction(openCalAct);
 	toolBar->addWidget(new QLabel(tr("Aktionen")));
+	// TODO: fix this
 	toolBar->addAction(addAccountAct);
-	toolBar->addAction(pressViewAct);
+	toolBar->addAction(addContactAct);
+	toolBar->addAction(addProjectAct);
+	toolBar->addAction(addTaskAct);
+	//toolBar->addAction(pressViewAct);
 
 	addToolBar(Qt::LeftToolBarArea, toolBar);
 	toolBar->hide();
@@ -120,7 +127,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	w->setLayout(mainLayout);
 	setCentralWidget(w);
 
-
 	// initialize dialogs
 	loadingDialog = new LoadingDialog(this);
 	loginDialog   = new LoginDialog(this);
@@ -129,12 +135,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	crm = SugarCrm::getInstance();
 	accountModel = AccountModel::getInstance();
+	contactModel = ContactModel::getInstance();
 
-	filterModel = new AccountProxyModel(this);
-	filterModel->setSourceModel(accountModel);
+	accountsFilterModel = new AccountProxyModel(this);
+	contactsFilterModel = new ContactProxyModel(this);
 
-	searchFilterModel = new AccountProxyModel(this);
-	searchFilterModel->setSourceModel(accountModel);
+	//filterModel = new AccountProxyModel(this);
+	//filterModel->setSourceModel(accountModel);
+
+	accountsFilterModel->setSourceModel(accountModel);
+	contactsFilterModel->setSourceModel(contactModel);
+
+	restoreGeometry(settings->windowGeometry);
 
 	// QML display
 	//centerView = new QmlView(this);
@@ -149,6 +161,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	//contx->setContextProperty("qmlViewer", this);
 	//contx->setContextProperty("accountModel", proxyModel);
 
+	// connecting ui actions
 	connect(ui->actionLogin, SIGNAL(triggered()),
 			this, SLOT(login()));
 	connect(ui->actionEinstellungen, SIGNAL(triggered()),
@@ -180,15 +193,20 @@ MainWindow::MainWindow(QWidget *parent) :
 	// login response
 	connect(crm, SIGNAL(loginFailed()),
 			this, SLOT(loginResponse()));
+
 	connect(crm, SIGNAL(loginSuccessful()),
 			this, SLOT(loginResponse()));
 
-
+	// soap error handling
+	// TODO: improve!
 	connect(crm, SIGNAL(returnedFaultyMessage(QString)),
 			loadingDialog, SLOT(hide()));
 
 	connect(crm, SIGNAL(returnedFaultyMessage(QString)),
 			this, SLOT(setStatusMsg(QString)));
+
+	connect(accountModel, SIGNAL(dataReady()),
+			this, SLOT(displayAccounts()));
 
 	//TODO: change this when it works
 	//setCentralWidget(centerView);
@@ -211,73 +229,32 @@ MainWindow::MainWindow(QWidget *parent) :
 	//connect(accountModel, SIGNAL(dataReady()),
 	//		rootComponent, SLOT(displayAccounts()));
 
-
-	// ordinary display
-	//listView = new QListView();
-	//listView->setAlternatingRowColors(true);
-	//pressList = new QListView();
-	//pressList->setAlternatingRowColors(true);
-
-	//mainWidget = new QTabWidget(this);
-	//mainWidget->setVisible(false);
-	//mainWidget->setTabsClosable(true);
-	//mainWidget->addTab(listView, tr("Liste"));
-	//mainWidget->setCornerWidget(search, Qt::TopRightCorner);
-
-
-
-	connect(accountModel, SIGNAL(dataReady()),
-			this, SLOT(displayAccounts()));
-
-	//connect(listView, SIGNAL(doubleClicked(QModelIndex)),
-	//		this, SLOT(displayFilteredAccount(QModelIndex)));
-	//connect(pressList, SIGNAL(doubleClicked(QModelIndex)),
-	//		this, SLOT(displayPressAccount(QModelIndex)));
-	//connect(mainWidget, SIGNAL(tabCloseRequested(int)),
-	//		this, SLOT(closeAccountTab(int)));
-	//connect(search, SIGNAL(searchPhraseChanged(QString)),
-	//		this, SLOT(doSearch(QString)));
-
 	setStatusMsg(tr("Bereit"), 2500);
 }
 
 void MainWindow::displayAccounts()
 {
 	loadingDialog->hide();
-	accountList->setModel(searchFilterModel);
+	accountList->setModel(accountsFilterModel);
 	mainLayout->setCurrentWidget(accountList);
 	toolBar->show();
 }
 
-// void MainWindow::displayAccount(const QModelIndex index)
-// {
-// 	Account *item = accountModel->getAccount(index.row());
-// 	qDebug() << "[accounts] opening " << item->name;
-// 	mainWidget->setCurrentIndex(mainWidget->addTab(new AccountDetail(&index), item->name));
-// }
-
-// void MainWindow::displayPressAccount(const QModelIndex index)
-// {
-// 	displayAccount(filterModel->mapToSource(index));
-// }
-
-// void MainWindow::displayFilteredAccount(const QModelIndex index)
-// {
-// 	displayAccount(searchFilterModel->mapToSource(index));
-// }
-
-// void MainWindow::closeAccountTab(const int index)
-// {
-// 	QWidget *tab = mainWidget->widget(index);
-// 	mainWidget->removeTab(index);
-// 	if(!tab->property("doNotDelete").toBool()) {
-// 		tab->deleteLater();
-// 	}
-// }
+void MainWindow::displayContacts()
+{
+	loadingDialog->hide();
+	contactList->setModel(contactsFilterModel);
+	mainLayout->setCurrentWidget(contactList);
+	toolBar->show();
+}
 
 void MainWindow::cleanup()
 {
+	settings->m_settings->setValue("Application/geometry", saveGeometry());
+	settings->makeUpdate();
 	delete calWidget;
+
+	qDebug() << "[app] about to close now";
 }
 
 MainWindow::~MainWindow()
@@ -295,7 +272,7 @@ MainWindow* MainWindow::getInstance()
 
 void MainWindow::addAccount()
 {
-	mainWidget->setCurrentIndex(mainWidget->addTab(new AccountDetail(accountModel->newAccount()), tr("Neue Firma")));
+	//mainWidget->setCurrentIndex(mainWidget->addTab(new AccountDetail(accountModel->newAccount()), tr("Neue Firma")));
 }
 
 void MainWindow::displaySettings()
@@ -383,7 +360,7 @@ void MainWindow::unknownAction(QString action)
 	setStatusMsg(tr("Unbekannte Antwort: '%1'").arg(action), 2500);
 }
 
-void MainWindow::displayPressList()
+/*void MainWindow::displayPressList()
 {
 	filterModel->setFilterRole(256); // 256 == acc.category;
 	filterModel->setFilterRegExp(QRegExp("press", Qt::CaseInsensitive, QRegExp::FixedString));
@@ -392,7 +369,7 @@ void MainWindow::displayPressList()
 	pressList->setProperty("doNotDelete", true);
 
 	mainWidget->setCurrentIndex(mainWidget->addTab(pressList, tr("Pressekontakte")));
-}
+}*/
 
 // void MainWindow::doSearch(const QString phrase)
 // {

@@ -21,28 +21,32 @@
  *
  ***********************************************/
 
-#ifndef ACCOUNTLIST_H
-#define ACCOUNTLIST_H
+#include "contactlist.h"
+#include "contactdetail.h"
 
-#include "abstractitemlist.h"
-#include "accountproxymodel.h"
-
-class AccountList : public AbstractItemList
+ContactList::ContactList(QWidget *parent) :
+		AbstractItemList(parent)
 {
-    Q_OBJECT
-public:
-	explicit AccountList(QWidget *parent = 0);
-	void setModel(AccountProxyModel *model);
-	AccountProxyModel* getModel();
+}
 
-signals:
+void ContactList::setModel(ContactProxyModel *model)
+{
+	itemsModel = model;
+	listView->setModel(itemsModel);
+}
 
-public slots:
-	void openDetail(const QModelIndex index);
+ContactProxyModel* ContactList::getModel()
+{
+	return itemsModel;
+}
 
-protected:
-	AccountProxyModel *itemsModel;
+void ContactList::openDetail(const QModelIndex index)
+{
+	QModelIndex num(getModel()->mapToSource(index));
+	qDebug() << "[app] now's a good time to open the info for " << num.row();
+	ContactDetail *item = new ContactDetail(&num);
+	tabView->setCurrentIndex(tabView->addTab(item, QString(item->getItem()->firstName).append(" ").append(item->getItem()->lastName)));
 
-};
-
-#endif // ACCOUNTLIST_H
+	// make the tabwidget visible
+	stack->setCurrentWidget(tabView);
+}

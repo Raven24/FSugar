@@ -30,9 +30,19 @@ bool compareContactsLessThan(const Contact *c1, const Contact *c2)
 	return c1->lastName < c2->lastName;
 }
 
+ContactModel *ContactModel::instance = NULL;
+
 ContactModel::ContactModel(QObject *parent) :
 		QAbstractTableModel(parent)
 {
+}
+
+ContactModel *ContactModel::getInstance()
+{
+	if(ContactModel::instance == NULL) {
+		ContactModel::instance = new ContactModel();
+	}
+	return ContactModel::instance;
 }
 
 int ContactModel::rowCount(const QModelIndex &parent) const

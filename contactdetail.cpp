@@ -23,10 +23,18 @@
 
 #include "abstractitemdetail.h"
 #include "contactdetail.h"
+#include "contactmodel.h"
 
 ContactDetail::ContactDetail(QWidget *parent) :
 	AbstractItemDetail(parent)
 {
+}
+
+ContactDetail::ContactDetail(const QModelIndex *index)
+{
+	initDialog();
+	retrieveItem(index);
+	fillData();
 }
 
 void ContactDetail::initDialog()
@@ -203,4 +211,23 @@ void ContactDetail::createNewNote()
 
 	connect(newNote, SIGNAL(saved()),
 			this, SLOT(displayNotes()));
+}
+
+void ContactDetail::retrieveItem(const QModelIndex *_index)
+{
+	ContactModel *model = ContactModel::getInstance();
+	item = model->getContact(_index->row());
+
+	connect(getItem(), SIGNAL(contactsAvailable()),
+			this, SLOT(displayContacts()));
+	connect(crm, SIGNAL(entryCreated(QString)),
+			getItem(), SLOT(getNotes()));
+	connect(getItem(), SIGNAL(saved()),
+			this, SLOT(afterSaveAct()));
+	connect(getItem(), SIGNAL(notesAvailable()),
+			this, SLOT(displayNotes()));
+	connect(openEmailBtn, SIGNAL(pressed()),
+			getItem(), SLOT(openEmail()));
+
+	getItem()->getChildren();
 }

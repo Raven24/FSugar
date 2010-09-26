@@ -50,6 +50,7 @@ public slots:
 	void createNewNote();
 
 private:
+	void retrieveItem(const QModelIndex *_index);
 	void fillData();
 
 	Contact *item;

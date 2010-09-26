@@ -34,6 +34,8 @@ class ContactModel : public QAbstractTableModel
 public:
 	ContactModel(QObject *parent = 0);
 
+	static ContactModel *getInstance();
+
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
 	int columnCount(const QModelIndex &parent = QModelIndex()) const;
 
@@ -51,6 +53,8 @@ public slots:
 
 private:
 	QList<Contact*> *contacts;
+
+	static ContactModel *instance;
 
 	void sortData();
 
