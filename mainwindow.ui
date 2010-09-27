@@ -48,6 +48,7 @@
      <string>Hilfe</string>
     </property>
     <addaction name="actionWebsite"/>
+    <addaction name="actionSpenden"/>
     <addaction name="separator"/>
     <addaction name="actionAboutQt"/>
    </widget>
@@ -135,6 +136,18 @@
    </property>
    <property name="toolTip">
     <string>Öffnet die Projektseite</string>
+   </property>
+  </action>
+  <action name="actionSpenden">
+   <property name="icon">
+    <iconset resource="app.qrc">
+     <normaloff>:/pledge.png</normaloff>:/pledge.png</iconset>
+   </property>
+   <property name="text">
+    <string>Spenden</string>
+   </property>
+   <property name="toolTip">
+    <string>Spenden Sie für diese Software</string>
    </property>
   </action>
  </widget>

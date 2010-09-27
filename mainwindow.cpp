@@ -38,6 +38,7 @@
 
 QString MainWindow::appPath = QString("");
 QUrl MainWindow::projectWebsite = QUrl("http://github.com/Raven24/FSugar");
+QUrl MainWindow::donateWebsite  = QUrl("http://pledgie.com/campaigns/13546");
 MainWindow* MainWindow::instance = NULL;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -178,6 +179,8 @@ MainWindow::MainWindow(QWidget *parent) :
 			qApp, SLOT(aboutQt()));
 	connect(ui->actionWebsite, SIGNAL(triggered()),
 			this, SLOT(openProjectHomepage()));
+	connect(ui->actionSpenden, SIGNAL(triggered()),
+			this, SLOT(openDonationWebsite()));
 	connect(qApp, SIGNAL(aboutToQuit()),
 			this, SLOT(cleanup()));
 
@@ -396,4 +399,9 @@ void MainWindow::loadStyle()
 void MainWindow::openProjectHomepage()
 {
 	QDesktopServices::openUrl(MainWindow::projectWebsite);
+}
+
+void MainWindow::openDonationWebsite()
+{
+	QDesktopServices::openUrl(MainWindow::donateWebsite);
 }

@@ -53,6 +53,7 @@ public:
 
 	static QString appPath;
 	static QUrl projectWebsite;
+	static QUrl donateWebsite;
 	static MainWindow* getInstance();
 
 	QTabWidget *mainWidget;
@@ -74,6 +75,7 @@ public slots:
 	//void displayPressList();
 	void displaySettings();
 	void openProjectHomepage();
+	void openDonationWebsite();
 
 	void cleanup();
 

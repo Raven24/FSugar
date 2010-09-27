@@ -23,5 +23,6 @@
         <file alias="accounts.png">images/go-home.png</file>
         <file alias="contacts.png">images/user-identity.png</file>
         <file alias="projects.png">images/run-build.png</file>
+        <file alias="pledge.png">images/favorites.png</file>
     </qresource>
 </RCC>
