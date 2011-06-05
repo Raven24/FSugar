@@ -34,9 +34,13 @@ public:
 	CookieJar(QObject* parent = 0);
 	~CookieJar();
 
+	static CookieJar *getInstance();
+
 private:
 	void populateCookies();
 	void saveCookies();
+
+	static CookieJar *instance;
 };
 
 #endif // COOKIEJAR_H

@@ -53,8 +53,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	loadStyle();
 
 	// member initialization
-	dockWidget	= new DockWidget;
-	calWidget	= new CalendarWidget;
+	dockWidget	 = new DockWidget;
+	calWidget	= new BrowserWidget;
+	crmWidget   = new BrowserWidget;
+
 	toolBar		= new QToolBar(tr("Aktionen"));
 	accountList = new AccountList(this);
 	contactList = new ContactList(this);
@@ -66,10 +68,12 @@ MainWindow::MainWindow(QWidget *parent) :
 	dockWidget->hide();
 	accountList->hide();
 	calWidget->setAddress(QUrl(settings->calendarUrl));
+	crmWidget->setAddress(QUrl(settings->crmUrl));
 	mainLayout->addWidget(accountList);
 	mainLayout->addWidget(contactList);
 	//mainLayout->addWidget(projectList);
 	mainLayout->addWidget(calWidget);
+	mainLayout->addWidget(crmWidget);
 	mainLayout->addWidget(settingsDialog);
 
 	toolBar->setIconSize(QSize(14, 14));
@@ -80,6 +84,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	QAction *contactsAct = new QAction(QIcon(":contacts.png"), tr("Kontakte"), this);
 	QAction *projectsAct = new QAction(QIcon(":projects.png"), tr("Projekte"), this);
 	openCalAct			 = new QAction(QIcon(":calendar.png"), tr("Kalender"), this);
+	openCrmAct			 = new QAction(QIcon(":calendar.png"), tr("SugarCrm"), this);
 
 	addAccountAct			= new QAction(QIcon(":add-account.png"), tr("Neue Firma"), this);
 	QAction *addContactAct	= new QAction(QIcon(":add-contact.png"), tr("Neuer Kontakt"), this);
@@ -91,6 +96,8 @@ MainWindow::MainWindow(QWidget *parent) :
 			this, SLOT(addAccount()));
 	connect(openCalAct, SIGNAL(triggered()),
 			this, SLOT(displayCalendar()));
+	connect(openCrmAct, SIGNAL(triggered()),
+			this, SLOT(displayCrm()));
 	//connect(pressViewAct, SIGNAL(triggered()),
 	//		this, SLOT(displayPressList()));
 	connect(accountsAct, SIGNAL(triggered()),
@@ -103,6 +110,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	toolBar->addAction(contactsAct);
 	toolBar->addAction(projectsAct);
 	toolBar->addAction(openCalAct);
+	toolBar->addAction(openCrmAct);
 	toolBar->addWidget(new QLabel(tr("Aktionen")));
 	// TODO: fix this
 	toolBar->addAction(addAccountAct);
@@ -346,6 +354,11 @@ void MainWindow::loginResponse()
 void MainWindow::displayCalendar()
 {
 	mainLayout->setCurrentWidget(calWidget);
+}
+
+void MainWindow::displayCrm()
+{
+	mainLayout->setCurrentWidget(crmWidget);
 }
 
 void MainWindow::debug(QString msg)

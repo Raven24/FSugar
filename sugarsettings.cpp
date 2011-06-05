@@ -45,13 +45,19 @@ SugarSettings* SugarSettings::getInstance()
 
 void SugarSettings::assignVars()
 {
-	sugarHost = m_settings->value("SugarCrm/hostname", "www.example.com").toString();
-	sugarPath = m_settings->value("SugarCrm/path", "/sugar/soap.php").toString();
-	useSsl = m_settings->value("SugarCrm/useSsl", true).toBool();
-	sugarUser = m_settings->value("SugarCrm/username", "User").toString();
-	sugarPass = m_settings->value("SugarCrm/password", "pass").toString();
+	sugarHost   = m_settings->value("SugarCrm/hostname", "www.example.com").toString();
+	sugarPath   = m_settings->value("SugarCrm/path", "/sugar/soap.php").toString();
+	useSsl      = m_settings->value("SugarCrm/useSsl", true).toBool();
+	sugarUser   = m_settings->value("SugarCrm/username", "User").toString();
+	sugarPass   = m_settings->value("SugarCrm/password", "pass").toString();
 
 	calendarUrl = m_settings->value("Calendar/url", "http://calendar.google.com").toString();
+	crmUrl      = QString("http://")
+					.append(sugarHost)
+					.append(sugarPath.mid(0, sugarPath.length() - QString("soap.php").length() ))
+					.append("index.php");
+
+	//qDebug() << "[debug]" << crmUrl;
 
 	windowGeometry = m_settings->value("Application/geometry").toByteArray();
 }

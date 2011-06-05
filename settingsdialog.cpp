@@ -40,10 +40,10 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
 	QLabel *header = new QLabel(tr("Einstellungen"));
 	header->setProperty("heading", true);
-	hostEdit = new QLineEdit(settings->sugarHost);
-	pathEdit = new QLineEdit(settings->sugarPath);
-	calPathEdit = new QLineEdit(settings->calendarUrl);
-	useSslEdit = new QCheckBox();
+	hostEdit     = new QLineEdit(settings->sugarHost);
+	pathEdit     = new QLineEdit(settings->sugarPath);
+	calPathEdit  = new QLineEdit(settings->calendarUrl);
+	useSslEdit   = new QCheckBox();
 	useSslEdit->setChecked(settings->useSsl);
 	usernameEdit = new QLineEdit(settings->sugarUser);
 	passwordEdit = new QLineEdit(settings->sugarPass);
@@ -86,6 +86,9 @@ void SettingsDialog::saveSettings()
 	settings->m_settings->setValue("SugarCrm/path", pathEdit->text());
 	settings->m_settings->setValue("SugarCrm/useSsl", useSslEdit->isChecked());
 	settings->m_settings->setValue("SugarCrm/username", usernameEdit->text());
+
+	// TODO: "encrypt" password
+	// http://lists.trolltech.com/qt-interest/2007-11/thread00001-0.html
 	settings->m_settings->setValue("SugarCrm/password", passwordEdit->text());
 
 	settings->m_settings->setValue("Calendar/url", calPathEdit->text());

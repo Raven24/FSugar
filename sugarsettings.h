@@ -36,7 +36,7 @@ public:
 	void makeUpdate();
 
 	QString sugarHost, sugarPath, calendarUrl,
-			sugarUser, sugarPass;
+			sugarUser, sugarPass, crmUrl;
 	bool useSsl;
 	QByteArray windowGeometry;
 	QSettings *m_settings;

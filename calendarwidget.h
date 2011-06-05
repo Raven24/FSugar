@@ -28,21 +28,25 @@
 #include <QtWebKit>
 #include "cookiejar.h"
 
-class CalendarWidget : public QWidget
+class BrowserWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CalendarWidget(QWidget *parent = 0);
-	~CalendarWidget();
+    explicit BrowserWidget(QWidget *parent = 0);
+	~BrowserWidget();
 	void setAddress(QUrl link);
 
 signals:
 
 public slots:
 
+
 private:
 	CookieJar *cookieJar;
 	QWebView *webView;
+
+private slots:
+	void handleSslError(QNetworkReply* reply, const QList<QSslError> &errors);
 
 };
 

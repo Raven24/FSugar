@@ -72,6 +72,7 @@ public slots:
 // 	void displayFilteredAccount(const QModelIndex index);
 	void addAccount();
 	void displayCalendar();
+	void displayCrm();
 	//void displayPressList();
 	void displaySettings();
 	void openProjectHomepage();
@@ -95,7 +96,7 @@ private:
 	SugarCrm *crm;
 	SugarSettings *settings;
 
-	QAction *addAccountAct, *openCalAct, *pressViewAct;
+	QAction *addAccountAct, *openCalAct, *openCrmAct, *pressViewAct;
 	QStackedLayout *mainLayout;
 	QListView *listView, *pressList;
 	AccountDetail *accountDetail;
@@ -109,7 +110,8 @@ private:
 	AccountList *accountList;
 	ContactList *contactList;
 
-	CalendarWidget *calWidget;
+	BrowserWidget *calWidget;
+	BrowserWidget *crmWidget;
 	SettingsDialog *settingsDialog;
 
 private slots:

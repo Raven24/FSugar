@@ -23,11 +23,11 @@
 
 #include "calendarwidget.h"
 
-CalendarWidget::CalendarWidget(QWidget *parent) :
+BrowserWidget::BrowserWidget(QWidget *parent) :
     QWidget(parent)
 {
 	QNetworkAccessManager *nwManager = new QNetworkAccessManager();
-	cookieJar = new CookieJar(this);
+	cookieJar = CookieJar::getInstance();
 	nwManager->setCookieJar(cookieJar);
 	webView = new QWebView(this);
 	webView->page()->setNetworkAccessManager(nwManager);
@@ -35,15 +35,26 @@ CalendarWidget::CalendarWidget(QWidget *parent) :
 	QVBoxLayout *layout = new QVBoxLayout();
 	layout->addWidget(webView);
 
+	connect(nwManager, SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)),
+			this, SLOT(handleSslError(QNetworkReply*,QList<QSslError>)));
+
 	setLayout(layout);
 }
 
-CalendarWidget::~CalendarWidget()
+BrowserWidget::~BrowserWidget()
 {
 	delete cookieJar;
 }
 
-void CalendarWidget::setAddress(QUrl link)
+void BrowserWidget::setAddress(QUrl link)
 {
 	webView->load(link);
+}
+
+void BrowserWidget::handleSslError(QNetworkReply *reply, const QList<QSslError> &errors)
+{
+	Q_UNUSED(errors)
+
+	qDebug() << "[ssl] server host: " << reply->sslConfiguration().peerCertificate().issuerInfo(QSslCertificate::CommonName);
+	reply->ignoreSslErrors();
 }

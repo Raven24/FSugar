@@ -528,6 +528,9 @@ void SugarCrm::decideAction(const QString action, const QtSoapStruct data)
 		entries->clear();
 		QString parentId;
 		QtSoapArray ent((QtSoapArray &) data["return"]["entry_list"]);
+
+		//qDebug() << "number of entries" << ent.count();
+		
 		for(int i = 0; i < ent.count(); i++) {
 
 			QtSoapStruct tmp((QtSoapStruct &) ent.at(i));

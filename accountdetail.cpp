@@ -238,10 +238,15 @@ void AccountDetail::displayContacts()
 
 void AccountDetail::openContact(QModelIndex _index)
 {
+	QMessageBox msgBox;
+	msgBox.setText(QString("This would open contact #").append(_index.row()).append(". \nUnfortunately the implementation is broken..."));
+	msgBox.exec();
+	/*
 	ContactDetail *contactDetail = new ContactDetail();
 	contactDetail->retrieveContact(contactsModel->getContact(_index.row()));
 	MainWindow *w = MainWindow::getInstance();
 	w->mainWidget->setCurrentIndex(w->mainWidget->addTab(contactDetail, tr("Detailansicht")));
+	*/
 }
 
 void AccountDetail::addContact()

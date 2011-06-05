@@ -65,7 +65,7 @@ public slots:
 	void getAvailableModules();
 	void getEntryList(const QString _module, const QString _query = "",
 					  const QString _orderBy = "accounts.name ASC",
-					  const int _offset = 0, const int _maxResults = 290,
+					  const int _offset = 0, const int _maxResults = 270,
 					  const int _deleted = 0);
 	void getRelatedNotes(const QString _module, const QString _id);
 	void createNote(const QString _module = "Notes", const QString _name = "",
