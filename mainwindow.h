@@ -38,7 +38,7 @@
 #include "searchfield.h"
 #include "accountlist.h"
 #include "contactlist.h"
-#include "calendarwidget.h"
+#include "browserwidget.h"
 #include "settingsdialog.h"
 
 namespace Ui {

@@ -21,7 +21,7 @@
  *
  ***********************************************/
 
-#include "calendarwidget.h"
+#include "browserwidget.h"
 
 BrowserWidget::BrowserWidget(QWidget *parent) :
     QWidget(parent)

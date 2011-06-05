@@ -21,8 +21,8 @@
  *
  ***********************************************/
 
-#ifndef CALENDARWIDGET_H
-#define CALENDARWIDGET_H
+#ifndef BROWSERWIDGET_H
+#define BROWSERWIDGET_H
 
 #include <QtGui>
 #include <QtWebKit>
@@ -50,4 +50,4 @@ private slots:
 
 };
 
-#endif // CALENDARWIDGET_H
+#endif // BROWSERWIDGET_H
