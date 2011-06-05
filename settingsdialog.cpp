@@ -35,12 +35,16 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 	QVBoxLayout *layout = new QVBoxLayout();
 	QGroupBox *sugarBox = new QGroupBox(tr("SugarCRM Konfiguration"));
 	QGroupBox *calBox = new QGroupBox(tr("Kalender Konfiguration"));
-	QFormLayout *sugarForm = new QFormLayout();
+	QFormLayout *settingsForm = new QFormLayout();
 	QFormLayout *calForm = new QFormLayout();
 	QHBoxLayout *buttons = new QHBoxLayout();
 
 	QLabel *header = new QLabel(tr("Einstellungen"));
 	header->setProperty("heading", true);
+
+	settingsSaved  = new QLabel(tr("Einstellungen gespeichert."));
+	settingsSaved->hide();
+
 	hostEdit     = new QLineEdit(settings->sugarHost);
 	pathEdit     = new QLineEdit(settings->sugarPath);
 	calPathEdit  = new QLineEdit(settings->calendarUrl);
@@ -52,22 +56,25 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
 	QPushButton *saveBtn = new QPushButton(QIcon(":save.png"), tr("Speichern"));
 
-	sugarForm->addRow(tr("Hostname"), hostEdit);
-	sugarForm->addRow(tr("Pfad"), pathEdit);
-	sugarForm->addRow(tr("Verschl\374sselung"), useSslEdit);
-	sugarForm->addRow(tr("Benutzername"), usernameEdit);
-	sugarForm->addRow(tr("Passwort"), passwordEdit);
-	sugarBox->setLayout(sugarForm);
+	settingsForm->addRow(tr("Hostname"), hostEdit);
+	settingsForm->addRow(tr("Pfad"), pathEdit);
+	settingsForm->addRow(tr("Verschl\374sselung"), useSslEdit);
+	settingsForm->addRow(tr("Benutzername"), usernameEdit);
+	settingsForm->addRow(tr("Passwort"), passwordEdit);
+	sugarBox->setLayout(settingsForm);
 
 	calForm->addRow(tr("Adresse"), calPathEdit);
 	calBox->setLayout(calForm);
 
 	buttons->addStretch(5);
+	buttons->addWidget(settingsSaved);
 	buttons->addWidget(saveBtn);
 
 	layout->addWidget(header);
 
-	layout->addWidget(new QLabel(tr("Um die Aenderungen zu uebernehmen, muss das Programm neu gestartet werden!")), 1, Qt::AlignCenter);
+	QLabel *saveNote = new QLabel(tr("Um alle Aenderungen zu uebernehmen,\nmuss das Programm neu gestartet werden!"));
+	saveNote->setAlignment(Qt::AlignCenter);
+	layout->addWidget(saveNote, 1, Qt::AlignCenter);
 
 	layout->addWidget(sugarBox);
 
@@ -105,9 +112,18 @@ void SettingsDialog::saveSettings()
 void SettingsDialog::showSettingsUpdated()
 {
 	if( userChange ) {
-		QMessageBox msgBox;
-		msgBox.setText(tr("The settings have been updated..."));
-		msgBox.exec();
+		settingsSaved->show();
+
+		QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect(settingsSaved);
+		settingsSaved->setGraphicsEffect(effect);
+		QPropertyAnimation *anim = new QPropertyAnimation(effect, "opacity");
+		anim->setStartValue(1.0);
+		anim->setEndValue(0.01);
+		anim->setDuration(2000);
+		connect(anim, SIGNAL(finished()),
+				settingsSaved, SLOT(hide()));
+
+		anim->start();
 		userChange = false;
 	}
 }

@@ -146,21 +146,46 @@ void SugarCrm::getAvailableModules()
 	submit(msg, "get_available_modules");
 }
 
+void SugarCrm::getAccountList()
+{
+	getEntryList("Accounts",		  // module
+				 "",				  // query
+				 "accounts.name ASC", // order
+				 0,  				  // offset
+				 "accounts.name",	  // select fields
+				 500,				  // max results
+				 0					  // deleted
+	);
+}
+
+void SugarCrm::getContactList()
+{
+	getEntryList("Contacts",				// module
+				 "",						// query
+				 "contacts.last_name ASC",	// order
+				 0,							// offset
+				 "contacts.last_name,contacts.first_name", // select fields
+				 500,						// max results
+				 0							// deleted
+	);
+}
+
 void SugarCrm::getEntryList(const QString _module, const QString _query,
 							const QString _orderBy, const int _offset,
+							const QString _selectFields,
 							const int _maxResults, const int _deleted)
 {
 	entries = new QMap<QString, QMap<QString, QString> > ();
 
 	QtSoapMessage msg = createMessage("get_entry_list");
-	msg.addMethodArgument("session", "", session);
-	msg.addMethodArgument("module_name", "", _module );
-	msg.addMethodArgument("query", "", _query);
-	msg.addMethodArgument("order_by", "", _orderBy);
-	msg.addMethodArgument("offset", "", _offset);
-	msg.addMethodArgument("select_fields", "", "");
-	msg.addMethodArgument("max_results", "", _maxResults);
-	msg.addMethodArgument("deleted", "", _deleted);
+	msg.addMethodArgument("session",	 "",   session);
+	msg.addMethodArgument("module_name", "",   _module );
+	msg.addMethodArgument("query",		 "",   _query);
+	msg.addMethodArgument("order_by",	 "",   _orderBy);
+	msg.addMethodArgument("offset",		 "",   _offset);
+	msg.addMethodArgument("select_fields", "", _selectFields);
+	msg.addMethodArgument("max_results", "",   _maxResults);
+	msg.addMethodArgument("deleted",	 "",   _deleted);
 
 	submit(msg, "get_entry_list");
 }

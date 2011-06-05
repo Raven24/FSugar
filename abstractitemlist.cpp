@@ -29,8 +29,9 @@ AbstractItemList::AbstractItemList(QWidget *parent) :
 {
 	// initialize members
 	listView = new QListView();
-	tabView = new QTabWidget();
-	welcomeText = new QLabel(tr("Waehlen sie in der Liste einen Eintrag aus, um hier die dazugehoerigen Details anzuzeigen."));
+	tabView  = new QTabWidget();
+	welcomeText = new QLabel(tr("Waehlen sie in der Liste einen Eintrag aus, \num hier die dazugehoerigen Details anzuzeigen."));
+	welcomeText->setAlignment(Qt::AlignCenter);
 	search		= new SearchField();
 
 	listView->setAlternatingRowColors(true);

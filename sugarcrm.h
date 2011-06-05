@@ -63,10 +63,16 @@ public slots:
 	void getServerTime();
 	void getSugarFlavor();
 	void getAvailableModules();
+
+	void getAccountList();
+	void getContactList();
+
 	void getEntryList(const QString _module, const QString _query = "",
 					  const QString _orderBy = "accounts.name ASC",
-					  const int _offset = 0, const int _maxResults = 270,
+					  const int _offset = 0, const QString _selectFields = "",
+					  const int _maxResults = 270,
 					  const int _deleted = 0);
+
 	void getRelatedNotes(const QString _module, const QString _id);
 	void createNote(const QString _module = "Notes", const QString _name = "",
 					const QString _description = "", const QString _parentType = "",

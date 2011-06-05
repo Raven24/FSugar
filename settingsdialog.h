@@ -45,6 +45,7 @@ private:
 
 	QLineEdit *hostEdit, *pathEdit, *calPathEdit, *usernameEdit, *passwordEdit;
 	QCheckBox *useSslEdit;
+	QLabel *settingsSaved;
 
 private slots:
 	void showSettingsUpdated();

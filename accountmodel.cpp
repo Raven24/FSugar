@@ -37,9 +37,9 @@ AccountModel::AccountModel(QObject *parent) :
 	QAbstractListModel(parent)
 {
 	QHash<int, QByteArray> roles;
-	roles.insert(16, "name");
-	roles.insert(32, "address");
-	roles.insert(64, "address2");
+	roles.insert(16,  "name");
+	roles.insert(32,  "address");
+	roles.insert(64,  "address2");
 	roles.insert(128, "telephone");
 
 	setRoleNames(roles);
@@ -143,8 +143,7 @@ Account* AccountModel::getAccount(const int num)
 
 void AccountModel::fetchData()
 {
-
-	crm->getEntryList("Accounts");
+	crm->getAccountList();
 }
 
 void AccountModel::processData(const QString _id)

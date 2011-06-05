@@ -72,11 +72,13 @@ CreateNoteDialog::CreateNoteDialog(QWidget *parent)
 
 void CreateNoteDialog::saveNote()
 {
+	QString mandatoryStyle = QString("border: 2px solid #B22222; border-radius: 2px; background-color: #eec0c0;");
+
 	if (name->text().isEmpty()) {
 		name->setProperty("mandatoryField", true);
 		// styling doesn't work due to a bug...
 		// ... so we need to set it manually
-		name->setStyleSheet("border: 2px solid #B22222; border-radius: 2px; background-color: #eec0c0;");
+		name->setStyleSheet(mandatoryStyle);
 		return;
 	}
 	name->setStyleSheet(""); name->setProperty("mandatoryField", false);
@@ -84,13 +86,13 @@ void CreateNoteDialog::saveNote()
 		description->setProperty("mandatoryField", true);
 		// styling doesn't work due to a bug...
 		// ... so we need to set it manually
-		description->setStyleSheet("border: 2px solid #B22222; border-radius: 2px; background-color: #eec0c0;");
+		description->setStyleSheet(mandatoryStyle);
 		return;
 	}
 	description->setStyleSheet(""); description->setProperty("mandatoryField", false);
 	if (fileNameEdit->text().isEmpty() && fileNameEdit->isVisible()) {
 		fileNameEdit->setProperty("mandatoryField", true);
-		fileNameEdit->setStyleSheet("border: 2px solid #B22222; border-radius: 2px; background-color: #eec0c0;");
+		fileNameEdit->setStyleSheet(mandatoryStyle);
 		return;
 	}
 	fileNameEdit->setStyleSheet(""); fileNameEdit->setProperty("mandatoryField", false);

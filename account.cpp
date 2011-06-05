@@ -66,6 +66,7 @@ void Account::getContacts()
 					  QString("account_id = \"%1\"").arg(id),
 					  "last_name",
 					  0,
+					  "",
 					  70,
 					  0);
 }
