@@ -30,10 +30,10 @@ SOURCES += main.cpp \
     abstractitemdetail.cpp \
     searchfield.cpp \
     accountlist.cpp \
-    calendarwidget.cpp \
     abstractitemlist.cpp \
     contactlist.cpp \
-    contactproxymodel.cpp
+    contactproxymodel.cpp \
+    browserwidget.cpp
 HEADERS += mainwindow.h \
     sugarcrmsoap.h \
     logindialog.h \
@@ -57,10 +57,10 @@ HEADERS += mainwindow.h \
     abstractitemdetail.h \
     searchfield.h \
     accountlist.h \
-    calendarwidget.h \
     abstractitemlist.h \
     contactlist.h \
-    contactproxymodel.h
+    contactproxymodel.h \
+    browserwidget.h
 FORMS += mainwindow.ui
 RESOURCES += app.qrc
 OTHER_FILES += SugarCrm.qml \
