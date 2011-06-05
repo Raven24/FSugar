@@ -30,6 +30,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     QDialog(parent)
 {
 	settings = SugarSettings::getInstance();
+	userChange = false;
 
 	QVBoxLayout *layout = new QVBoxLayout();
 	QGroupBox *sugarBox = new QGroupBox(tr("SugarCRM Konfiguration"));
@@ -78,10 +79,15 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
 	connect(saveBtn, SIGNAL(pressed()),
 			this, SLOT(saveSettings()));
+	connect(settings, SIGNAL(settingsChanged()),
+			this, SLOT(showSettingsUpdated()));
 }
 
 void SettingsDialog::saveSettings()
 {
+	userChange = true;
+	qDebug() << "[settings] saving settings";
+
 	settings->m_settings->setValue("SugarCrm/hostname", hostEdit->text());
 	settings->m_settings->setValue("SugarCrm/path", pathEdit->text());
 	settings->m_settings->setValue("SugarCrm/useSsl", useSslEdit->isChecked());
@@ -94,4 +100,14 @@ void SettingsDialog::saveSettings()
 	settings->m_settings->setValue("Calendar/url", calPathEdit->text());
 
 	settings->makeUpdate();
+}
+
+void SettingsDialog::showSettingsUpdated()
+{
+	if( userChange ) {
+		QMessageBox msgBox;
+		msgBox.setText(tr("The settings have been updated..."));
+		msgBox.exec();
+		userChange = false;
+	}
 }

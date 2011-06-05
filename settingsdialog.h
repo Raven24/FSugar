@@ -41,10 +41,13 @@ public slots:
 
 private:
 	SugarSettings *settings;
+	bool userChange;
 
 	QLineEdit *hostEdit, *pathEdit, *calPathEdit, *usernameEdit, *passwordEdit;
 	QCheckBox *useSslEdit;
 
+private slots:
+	void showSettingsUpdated();
 
 };
 
